@@ -4,6 +4,15 @@ import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import Logo from './Logo';
 import { Button } from '@/components/ui/button';
+import {
+  NavigationMenu,
+  NavigationMenuContent,
+  NavigationMenuItem,
+  NavigationMenuLink,
+  NavigationMenuList,
+  NavigationMenuTrigger,
+} from "@/components/ui/navigation-menu";
+import { cn } from "@/lib/utils";
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
@@ -42,39 +51,46 @@ const Navbar = () => {
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-darkBg/95 backdrop-blur-md py-3' : 'py-5'
+        isScrolled ? 'bg-darkBg/95 backdrop-blur-md py-3 shadow-lg' : 'py-5'
       }`}
     >
       <div className="container flex items-center justify-between">
         <Logo />
 
-        {/* Desktop Navigation */}
-        <nav className="hidden md:flex space-x-2">
-          {navLinks.map((link) => (
-            <Link
-              key={link.name}
-              to={link.path}
-              className={`px-3 py-2 text-sm font-medium transition-colors duration-200 ${
-                location.pathname === link.path
-                  ? 'text-orange'
-                  : 'text-white hover:text-orange/80'
-              }`}
-            >
-              {link.name}
-            </Link>
-          ))}
-        </nav>
+        {/* Desktop Navigation - Modern styled with NavigationMenu */}
+        <div className="hidden md:flex items-center space-x-4">
+          <NavigationMenu className="hidden md:flex">
+            <NavigationMenuList>
+              {navLinks.map((link) => (
+                <NavigationMenuItem key={link.name}>
+                  <Link to={link.path}>
+                    <NavigationMenuLink 
+                      className={cn(
+                        "px-3 py-2 text-sm font-medium transition-colors duration-200 hover:text-orange hover:underline decoration-orange decoration-2 underline-offset-8",
+                        location.pathname === link.path 
+                          ? "text-orange underline decoration-orange decoration-2 underline-offset-8" 
+                          : "text-white"
+                      )}
+                    >
+                      {link.name}
+                    </NavigationMenuLink>
+                  </Link>
+                </NavigationMenuItem>
+              ))}
+            </NavigationMenuList>
+          </NavigationMenu>
 
-        {/* CTA Button */}
-        <Link to="/contact" className="hidden md:block">
-          <Button className="bg-orange hover:bg-orange-dark text-white rounded-md font-bold">
-            SKONTAKTUJ SIĘ!
-          </Button>
-        </Link>
+          {/* CTA Button */}
+          <Link to="/contact">
+            <Button className="bg-orange hover:bg-orange-dark text-white rounded-md font-bold transition-all duration-300 shadow-lg hover:shadow-orange/20">
+              SKONTAKTUJ SIĘ!
+            </Button>
+          </Link>
+        </div>
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-white"
+          className="md:hidden text-white rounded-full p-2 hover:bg-darkCard transition-colors"
           onClick={toggleMobileMenu}
           aria-label="Toggle Menu"
         >
@@ -82,34 +98,36 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile Menu */}
+      {/* Mobile Menu - with modern slide-in animation */}
       <div
-        className={`md:hidden absolute top-full left-0 w-full bg-darkBg/95 backdrop-blur-md transition-all duration-300 ${
-          isMobileMenuOpen ? 'max-h-96 py-4' : 'max-h-0 py-0 overflow-hidden'
+        className={`md:hidden fixed top-[60px] right-0 h-screen w-3/4 bg-darkBg/98 backdrop-blur-md shadow-xl transition-all duration-300 ease-in-out transform ${
+          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >
-        <div className="container flex flex-col space-y-4">
+        <div className="flex flex-col space-y-4 p-6 pt-8">
           {navLinks.map((link) => (
             <Link
               key={link.name}
               to={link.path}
-              className={`px-3 py-2 text-sm font-medium ${
+              className={`px-4 py-3 text-sm font-medium border-l-2 transition-all ${
                 location.pathname === link.path
-                  ? 'text-orange'
-                  : 'text-white hover:text-orange/80'
+                  ? 'text-orange border-orange'
+                  : 'text-white border-transparent hover:border-orange/50 hover:text-orange/80'
               }`}
               onClick={() => setIsMobileMenuOpen(false)}
             >
               {link.name}
             </Link>
           ))}
-          <Link
-            to="/contact"
-            className="btn-primary text-center"
-            onClick={() => setIsMobileMenuOpen(false)}
-          >
-            SKONTAKTUJ SIĘ!
-          </Link>
+          <div className="pt-6">
+            <Link
+              to="/contact"
+              className="w-full btn-primary text-center block py-3 rounded-md bg-orange text-white font-bold"
+              onClick={() => setIsMobileMenuOpen(false)}
+            >
+              SKONTAKTUJ SIĘ!
+            </Link>
+          </div>
         </div>
       </div>
     </header>
