@@ -1,5 +1,6 @@
 
 import { motion } from 'framer-motion';
+import { Mail, Phone } from 'lucide-react';
 import Hero from '@/components/Hero';
 import TeamSection from '@/components/TeamSection';
 import ServicesSection from '@/components/ServicesSection';
