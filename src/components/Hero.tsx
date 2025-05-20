@@ -3,11 +3,48 @@ import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
 import { ArrowRight } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
 
 const Hero = () => {
+  const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const videoRef = useRef<HTMLVideoElement>(null);
+
+  useEffect(() => {
+    const videoElement = videoRef.current;
+    if (videoElement) {
+      videoElement.addEventListener('loadeddata', () => {
+        setIsVideoLoaded(true);
+      });
+
+      return () => {
+        videoElement.removeEventListener('loadeddata', () => {
+          setIsVideoLoaded(true);
+        });
+      };
+    }
+  }, []);
+
   return (
-    <section className="relative h-screen flex items-center">
+    <section className="relative h-screen flex items-center overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-darkBg z-10"></div>
+      
+      {/* Video Background */}
+      <div className={`absolute inset-0 w-full h-full ${isVideoLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-1000`}>
+        <video
+          ref={videoRef}
+          autoPlay
+          muted
+          loop
+          playsInline
+          className="absolute inset-0 w-full h-full object-cover"
+        >
+          <source src="/videos/hero-video.mp4" type="video/mp4" />
+          {/* Fallback to image if video fails to load */}
+          Your browser does not support the video tag.
+        </video>
+      </div>
+
+      {/* Fallback background image (displays while video is loading or if it fails) */}
       <div className="absolute inset-0 bg-[url('/images/hero-bg.jpg')] bg-cover bg-center bg-no-repeat"></div>
       
       <div className="container relative z-20">
