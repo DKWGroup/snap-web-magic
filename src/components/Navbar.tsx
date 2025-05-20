@@ -54,7 +54,7 @@ const Navbar = () => {
         isScrolled ? 'bg-darkBg/95 backdrop-blur-md py-3 shadow-lg' : 'py-5'
       }`}
     >
-      <div className="container flex items-center justify-between">
+      <div className="container flex items-center justify-between h-16">
         <Logo />
 
         {/* Desktop Navigation - Modern styled with NavigationMenu */}
