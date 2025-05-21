@@ -6,6 +6,7 @@ import ServicesSection from '@/components/ServicesSection';
 import CTA from '@/components/CTA';
 import ContactForm from '@/components/ContactForm';
 import FAQSection from '@/components/FAQSection';
+import ClientsCarousel from '@/components/ClientsCarousel';
 
 const Index = () => {
   return (
@@ -123,6 +124,9 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      {/* Clients Carousel Section */}
+      <ClientsCarousel />
 
       <FAQSection />
 
