@@ -30,21 +30,21 @@ const Footer = () => {
             <div className="mt-4">
               <div className="flex flex-col space-y-2">
                 <div className="flex items-center">
-                  <span className="text-gray-400 w-16">Dawid:</span>
+                  <span className="text-gray-400 w-20">Dawid:</span>
                   <Phone size={14} className="text-orange mr-2" />
                   <a href="tel:+48517957875" className="text-gray-300 hover:text-white transition-colors">
                     +48 517 957 875
                   </a>
                 </div>
                 <div className="flex items-center">
-                  <span className="text-gray-400 w-16">Kamil:</span>
+                  <span className="text-gray-400 w-20">Kamil:</span>
                   <Phone size={14} className="text-orange mr-2" />
                   <a href="tel:+48881046689" className="text-gray-300 hover:text-white transition-colors">
                     +48 881 046 689
                   </a>
                 </div>
                 <div className="flex items-center">
-                  <span className="text-gray-400 w-16">Wiktoria:</span>
+                  <span className="text-gray-400 w-20">Wiktoria:</span>
                   <Phone size={14} className="text-orange mr-2" />
                   <a href="tel:+48537168645" className="text-gray-300 hover:text-white transition-colors">
                     +48 537 168 645

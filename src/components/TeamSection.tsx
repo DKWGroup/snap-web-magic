@@ -12,7 +12,7 @@ const teamMembers = [
     role: 'Video Producer',
     email: 'dm.mymyszka@gmail.com',
     phone: '+48 517 957 875',
-    photo: '/images/dawid-myszka.jpg',
+    photo: '/images/kamil-krukowski.png',
   },
   {
     id: 2,
@@ -21,7 +21,7 @@ const teamMembers = [
     role: 'Video Editor',
     email: 'kamil.krukowski00@gmail.com',
     phone: '+48 881 046 689',
-    photo: '/images/kamil-krukowski.jpg',
+    photo: '/images/kamil-krukowski.png',
   },
   {
     id: 3,
@@ -30,7 +30,7 @@ const teamMembers = [
     role: 'Marketing Specialist',
     email: 'wskopek.all@gmail.com',
     phone: '+48 537 168 645',
-    photo: '/images/wiktoria-skopek.jpg',
+    photo: '/images/kamil-krukowski.png',
   },
 ];
 
@@ -79,7 +79,7 @@ const TeamSection = () => {
                 <img
                   src={member.photo}
                   alt={`${member.name} ${member.surname}`}
-                  className="w-full h-full object-cover object-center z-0 absolute inset-0"
+                  className="w-full object-cover object-center z-0 absolute inset-0"
                 />
                 <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
                   <h3 className="text-orange text-2xl md:text-3xl font-bold mb-1">

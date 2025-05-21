@@ -51,7 +51,7 @@ const Navbar = () => {
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-darkBg/95 backdrop-blur-md py-3 shadow-lg' : 'py-5'
+        isScrolled ? 'bg-darkBg/50 backdrop-blur-md py-3 shadow-lg' : 'py-5'
       }`}
     >
       <div className="container flex items-center justify-between h-16">

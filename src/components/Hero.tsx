@@ -1,4 +1,3 @@
-
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
 import { motion } from 'framer-motion';
@@ -38,7 +37,7 @@ const Hero = () => {
           playsInline
           className="absolute inset-0 w-full h-full object-cover"
         >
-          <source src="/videos/hero-video.mp4" type="video/mp4" />
+          <source src="/videos/bg.webm" type="video/webm" />
           {/* Fallback to image if video fails to load */}
           Your browser does not support the video tag.
         </video>
