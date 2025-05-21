@@ -79,17 +79,9 @@ const Footer = () => {
         
         <div className="border-t border-gray-800 pt-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
-            <p className="text-gray-400 text-sm mb-4 md:mb-0">
+            <p className="text-gray-400 text-sm">
               &copy; {currentYear} DKW Group. Wszystkie prawa zastrzeżone.
             </p>
-            <div className="flex space-x-4">
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                Polityka prywatności
-              </a>
-              <a href="#" className="text-gray-400 hover:text-white transition-colors">
-                Regulamin
-              </a>
-            </div>
           </div>
         </div>
       </div>
