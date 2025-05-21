@@ -1,4 +1,3 @@
-
 import { motion } from 'framer-motion';
 import { Mail, Phone } from 'lucide-react';
 import Hero from '@/components/Hero';
@@ -6,6 +5,7 @@ import TeamSection from '@/components/TeamSection';
 import ServicesSection from '@/components/ServicesSection';
 import CTA from '@/components/CTA';
 import ContactForm from '@/components/ContactForm';
+import FAQSection from '@/components/FAQSection';
 
 const Index = () => {
   return (
@@ -123,6 +123,8 @@ const Index = () => {
           </div>
         </div>
       </section>
+
+      <FAQSection />
 
       <CTA />
 
