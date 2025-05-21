@@ -1,6 +1,8 @@
 
 import { Mail, Phone } from 'lucide-react';
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
+import { Button } from '@/components/ui/button';
 
 const teamMembers = [
   {
@@ -107,6 +109,24 @@ const TeamSection = () => {
             </motion.div>
           ))}
         </motion.div>
+        
+        {/* Learn More Button */}
+        <div className="mt-12 text-center">
+          <motion.div
+            initial={{ opacity: 0, y: 10 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.6, delay: 0.6 }}
+          >
+            <Button 
+              variant="default" 
+              className="bg-orange hover:bg-orange/80 text-white font-medium px-8 py-6"
+              asChild
+            >
+              <Link to="/about">POZNAJ NAS LEPIEJ</Link>
+            </Button>
+          </motion.div>
+        </div>
       </div>
     </section>
   );
