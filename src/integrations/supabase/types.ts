@@ -9,7 +9,96 @@ export type Json =
 export type Database = {
   public: {
     Tables: {
-      [_ in never]: never
+      admin_users: {
+        Row: {
+          created_at: string
+          email: string
+          id: string
+        }
+        Insert: {
+          created_at?: string
+          email: string
+          id: string
+        }
+        Update: {
+          created_at?: string
+          email?: string
+          id?: string
+        }
+        Relationships: []
+      }
+      blog_posts: {
+        Row: {
+          author: string
+          content: string
+          created_at: string
+          id: string
+          image_url: string | null
+          published_at: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          author: string
+          content: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          published_at?: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          author?: string
+          content?: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          published_at?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
+      case_studies: {
+        Row: {
+          client: string
+          content: string
+          created_at: string
+          id: string
+          image_url: string | null
+          industry: string
+          published_at: string
+          summary: string
+          title: string
+          updated_at: string
+        }
+        Insert: {
+          client: string
+          content: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          industry: string
+          published_at?: string
+          summary: string
+          title: string
+          updated_at?: string
+        }
+        Update: {
+          client?: string
+          content?: string
+          created_at?: string
+          id?: string
+          image_url?: string | null
+          industry?: string
+          published_at?: string
+          summary?: string
+          title?: string
+          updated_at?: string
+        }
+        Relationships: []
+      }
     }
     Views: {
       [_ in never]: never

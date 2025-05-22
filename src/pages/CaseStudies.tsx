@@ -1,132 +1,119 @@
 
-import { motion } from 'framer-motion';
+import { useState, useEffect } from 'react';
+import { supabase } from '@/integrations/supabase/client';
+import { toast } from 'sonner';
+import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
+import { Skeleton } from '@/components/ui/skeleton';
 import { Link } from 'react-router-dom';
-import CTA from '@/components/CTA';
 import { Button } from '@/components/ui/button';
-import { ArrowRight } from 'lucide-react';
 
-const caseStudies = [
-  {
-    id: 'kokpit-kamila',
-    title: 'Obsługa Kanału YouTube dla Eksperta Lotniczego',
-    client: 'Kokpit Kamila',
-    category: 'YouTube Management',
-    description: 'Strategia dla kanału "Kokpit Kamila", który zgromadził 3 mln wyświetleń i 30 tys. subskrybentów, budując silną markę ekspercką w branży lotniczej.',
-    image: '/images/project-1.jpg',
-    stats: [
-      { value: '3 000 000+', label: 'wyświetleń na YouTube' },
-      { value: '30 000+', label: 'subskrybentów' }
-    ],
-    tags: ['YouTube', 'Content Creation', 'Brand Building']
-  },
-  {
-    id: 'investment-partners',
-    title: 'Kampania Reklamowa dla Investment Partners',
-    client: 'Investment Partners',
-    category: 'Video Marketing',
-    description: 'Stworzyliśmy spot reklamowy dla "Metamorfozy Finansowej", osiągając 30,000+ wyświetleń i setki rejestracji, zwiększając zasięg Investment Partners.',
-    image: '/images/project-2.jpg',
-    stats: [
-      { value: 'Setki', label: 'rejestracji' },
-      { value: '30 000+', label: 'wyświetleń' }
-    ],
-    tags: ['Video Ads', 'Lead Generation', 'Financial Industry']
-  },
-  {
-    id: 'grzegorz-kusz',
-    title: 'Obsługa Kanału Grzegorz Kusz - Agent Specjalny',
-    client: 'Grzegorz Kusz',
-    category: 'Content Creation',
-    description: 'Kompleksowa obsługa kanału – od nagrań po publikację, budowanie zaangażowanej społeczności i tworzenie wartościowych treści.',
-    image: '/images/project-3.jpg',
-    stats: [
-      { value: '5 lat', label: 'współpracy' },
-      { value: '+400k', label: 'subskrypcji' }
-    ],
-    tags: ['Channel Management', 'Community Building', 'Content Strategy']
-  }
-];
+interface CaseStudy {
+  id: string;
+  title: string;
+  summary: string;
+  content: string;
+  image_url: string | null;
+  client: string;
+  industry: string;
+}
 
 const CaseStudies = () => {
+  const [caseStudies, setCaseStudies] = useState<CaseStudy[]>([]);
+  const [isLoading, setIsLoading] = useState(true);
+
+  useEffect(() => {
+    const fetchCaseStudies = async () => {
+      try {
+        setIsLoading(true);
+        const { data, error } = await supabase
+          .from('case_studies')
+          .select('*')
+          .order('published_at', { ascending: false });
+
+        if (error) {
+          throw error;
+        }
+
+        setCaseStudies(data || []);
+      } catch (error) {
+        console.error('Error fetching case studies:', error);
+        toast.error('Wystąpił błąd podczas wczytywania case studies');
+      } finally {
+        setIsLoading(false);
+      }
+    };
+
+    fetchCaseStudies();
+  }, []);
+
   return (
-    <main className="bg-darkBg min-h-screen">
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 bg-darkBg">
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-4xl mx-auto text-center"
-          >
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-              Nasze <span className="text-orange">realizacje</span>
-            </h1>
-            <p className="text-lg md:text-xl text-gray-300 mb-8">
-              Poznaj szczegółowe opisy projektów, które zrealizowaliśmy dla naszych klientów i zobacz, jak możemy pomóc również Twojej marce.
-            </p>
-          </motion.div>
-        </div>
-      </section>
+    <div className="container max-w-6xl py-12">
+      <div className="text-center mb-12">
+        <h1 className="text-4xl font-bold mb-4">Case Studies</h1>
+        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+          Poznaj nasze wyniki i sprawdź, jak pomogliśmy naszym klientom osiągnąć sukces w ich branżach.
+        </p>
+      </div>
 
-      {/* Case Studies List */}
-      <section className="py-20 bg-darkBg">
-        <div className="container">
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {caseStudies.map((study, index) => (
-              <motion.div
-                key={study.id}
-                initial={{ opacity: 0, y: 20 }}
-                whileInView={{ opacity: 1, y: 0 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.6, delay: index * 0.2 }}
-              >
-                <div className="bg-darkCard rounded-lg overflow-hidden border border-gray-800 h-full flex flex-col">
-                  <div className="aspect-video relative overflow-hidden">
-                    <img 
-                      src={study.image} 
-                      alt={study.title} 
-                      className="w-full h-full object-cover object-center transition-transform duration-500 hover:scale-105"
-                    />
-                    <div className="absolute top-4 left-4 bg-orange py-1 px-3 rounded-full">
-                      <span className="text-xs font-medium text-white">{study.category}</span>
-                    </div>
-                  </div>
-                  
-                  <div className="p-6 flex-grow">
-                    <h2 className="text-xl font-bold text-white mb-2">{study.title}</h2>
-                    <p className="text-gray-400 mb-4">{study.client}</p>
-                    <p className="text-gray-300 mb-4 line-clamp-3">{study.description}</p>
-                    
-                    <div className="flex gap-2 flex-wrap mb-4">
-                      {study.tags.map((tag, i) => (
-                        <span key={i} className="bg-gray-800 text-xs px-2 py-1 rounded text-gray-300">
-                          {tag}
-                        </span>
-                      ))}
-                    </div>
-                  </div>
-                  
-                  <div className="p-6 pt-0 mt-auto">
-                    <Link to={`/case-studies/${study.id}`}>
-                      <Button 
-                        variant="ghost" 
-                        className="w-full border border-orange/50 text-orange hover:bg-orange/10 hover:text-orange"
-                      >
-                        Zobacz szczegóły
-                        <ArrowRight size={16} />
-                      </Button>
-                    </Link>
-                  </div>
+      {isLoading ? (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {[...Array(4)].map((_, index) => (
+            <Card key={index} className="overflow-hidden">
+              <div className="aspect-video">
+                <Skeleton className="h-full w-full" />
+              </div>
+              <CardHeader>
+                <Skeleton className="h-6 w-3/4" />
+                <Skeleton className="h-4 w-1/2" />
+              </CardHeader>
+              <CardContent>
+                <Skeleton className="h-4 w-full mb-2" />
+                <Skeleton className="h-4 w-full mb-2" />
+                <Skeleton className="h-4 w-3/4" />
+              </CardContent>
+              <CardFooter>
+                <Skeleton className="h-10 w-32" />
+              </CardFooter>
+            </Card>
+          ))}
+        </div>
+      ) : caseStudies.length === 0 ? (
+        <div className="text-center py-12">
+          <h3 className="text-xl font-medium mb-2">Brak case studies</h3>
+          <p className="text-muted-foreground">Nowe case studies pojawią się wkrótce.</p>
+        </div>
+      ) : (
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+          {caseStudies.map((caseStudy) => (
+            <Card key={caseStudy.id} className="overflow-hidden flex flex-col">
+              {caseStudy.image_url && (
+                <div className="aspect-video overflow-hidden">
+                  <img
+                    src={caseStudy.image_url}
+                    alt={caseStudy.title}
+                    className="w-full h-full object-cover transition-transform hover:scale-105"
+                  />
                 </div>
-              </motion.div>
-            ))}
-          </div>
+              )}
+              <CardHeader>
+                <CardTitle className="text-2xl">{caseStudy.title}</CardTitle>
+                <CardDescription>
+                  <span className="font-medium">{caseStudy.client}</span> • {caseStudy.industry}
+                </CardDescription>
+              </CardHeader>
+              <CardContent className="flex-grow">
+                <p className="text-muted-foreground">{caseStudy.summary}</p>
+              </CardContent>
+              <CardFooter>
+                <Button asChild>
+                  <Link to={`/case-studies/${caseStudy.id}`}>Zobacz szczegóły</Link>
+                </Button>
+              </CardFooter>
+            </Card>
+          ))}
         </div>
-      </section>
-
-      <CTA />
-    </main>
+      )}
+    </div>
   );
 };
 
