@@ -1,7 +1,8 @@
+
 import { motion } from 'framer-motion';
 import { Mail, Phone } from 'lucide-react';
 import Hero from '@/components/Hero';
-import TeamSection from '@/components/TeamSection';
+import TeamSectionSimple from '@/components/TeamSectionSimple';
 import ServicesSection from '@/components/ServicesSection';
 import CTA from '@/components/CTA';
 import ContactForm from '@/components/ContactForm';
@@ -55,7 +56,7 @@ const Index = () => {
 
       <ServicesSection />
       
-      <TeamSection />
+      <TeamSectionSimple />
       
       {/* Projects Preview Section */}
       <section className="py-20 bg-darkBg">
