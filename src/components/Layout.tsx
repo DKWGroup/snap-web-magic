@@ -14,7 +14,7 @@ const Layout = ({ children }: LayoutProps) => {
     <div className="min-h-screen flex flex-col">
       <BackgroundEffect />
       <Navbar />
-      <main className="flex-grow">{children}</main>
+      <main className="flex-grow z-10 relative">{children}</main>
       <Footer />
       <Toaster position="top-right" />
     </div>

@@ -13,6 +13,7 @@ const teamMembers = [
     email: 'dm.mymyszka@gmail.com',
     phone: '+48 517 957 875',
     photo: '/images/kamil-krukowski.png',
+    bio: 'Dawid to doświadczony producent wideo z ponad 5-letnim doświadczeniem w branży. Specjalizuje się w produkcji wysokiej jakości materiałów marketingowych i korporacyjnych. Jego kreatywne podejście i dbałość o detale sprawiają, że każdy projekt jest wyjątkowy i profesjonalny.'
   },
   {
     id: 2,
@@ -22,6 +23,7 @@ const teamMembers = [
     email: 'kamil.krukowski00@gmail.com',
     phone: '+48 881 046 689',
     photo: '/images/kamil-krukowski.png',
+    bio: 'Kamil to utalentowany montażysta wideo, który przekształca surowy materiał w fascynujące historie. Posiada szeroką wiedzę na temat najnowszych technik edycji i efektów specjalnych. Jego praca wyróżnia się dynamicznym stylem i precyzją, co przyczynia się do sukcesu każdego projektu.'
   },
   {
     id: 3,
@@ -31,6 +33,7 @@ const teamMembers = [
     email: 'wskopek.all@gmail.com',
     phone: '+48 537 168 645',
     photo: '/images/kamil-krukowski.png',
+    bio: 'Wiktoria to specjalistka ds. marketingu z doskonałym wyczuciem trendów i potrzeb klientów. Odpowiada za strategie marketingowe i komunikację z klientami. Jej analityczne podejście i kreatywność pozwalają na tworzenie skutecznych kampanii, które osiągają zamierzone cele.'
   },
 ];
 
@@ -39,7 +42,7 @@ const TeamSection = () => {
     hidden: {},
     visible: {
       transition: {
-        staggerChildren: 0.2,
+        staggerChildren: 0.3,
       },
     },
   };
@@ -65,45 +68,51 @@ const TeamSection = () => {
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12"
+          className="space-y-20 mt-12"
         >
-          {teamMembers.map((member) => (
+          {teamMembers.map((member, index) => (
             <motion.div
               key={member.id}
               variants={itemVariants}
-              className="relative rounded-lg overflow-hidden group"
+              className={`flex flex-col ${index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'} gap-10 items-center`}
             >
-              <div className="aspect-[3/4] bg-darkCard relative overflow-hidden">
-                <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent z-10"></div>
-                <div className="absolute inset-0 bg-orange/20 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
-                <img
-                  src={member.photo}
-                  alt={`${member.name} ${member.surname}`}
-                  className="w-full object-cover object-center z-0 absolute inset-0"
-                />
-                <div className="absolute bottom-0 left-0 right-0 p-6 z-20">
-                  <h3 className="text-orange text-2xl md:text-3xl font-bold mb-1">
-                    {member.name}
-                    <br />
-                    {member.surname}
-                  </h3>
-                  <p className="text-gray-300 mb-4">{member.role}</p>
-                  <div className="flex flex-col space-y-2 text-sm">
-                    <a
-                      href={`mailto:${member.email}`}
-                      className="flex items-center text-gray-300 hover:text-white transition-colors"
-                    >
-                      <Mail size={16} className="text-orange mr-2" />
-                      {member.email}
-                    </a>
-                    <a
-                      href={`tel:${member.phone.replace(/\s/g, '')}`}
-                      className="flex items-center text-gray-300 hover:text-white transition-colors"
-                    >
-                      <Phone size={16} className="text-orange mr-2" />
-                      {member.phone}
-                    </a>
-                  </div>
+              <div className="lg:w-1/2">
+                <div className="aspect-square rounded-lg overflow-hidden relative group">
+                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent z-10"></div>
+                  <div className="absolute inset-0 bg-orange/20 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
+                  <img
+                    src={member.photo}
+                    alt={`${member.name} ${member.surname}`}
+                    className="w-full h-full object-cover"
+                  />
+                </div>
+              </div>
+              
+              <div className="lg:w-1/2">
+                <h3 className="text-orange text-3xl md:text-4xl font-bold mb-2">
+                  {member.name} {member.surname}
+                </h3>
+                <p className="text-gray-300 text-xl mb-6">{member.role}</p>
+                
+                <p className="text-gray-300 mb-6 text-lg">
+                  {member.bio}
+                </p>
+                
+                <div className="flex flex-col space-y-3 mb-6">
+                  <a
+                    href={`mailto:${member.email}`}
+                    className="flex items-center text-gray-300 hover:text-white transition-colors"
+                  >
+                    <Mail size={18} className="text-orange mr-3" />
+                    {member.email}
+                  </a>
+                  <a
+                    href={`tel:${member.phone.replace(/\s/g, '')}`}
+                    className="flex items-center text-gray-300 hover:text-white transition-colors"
+                  >
+                    <Phone size={18} className="text-orange mr-3" />
+                    {member.phone}
+                  </a>
                 </div>
               </div>
             </motion.div>
@@ -111,7 +120,7 @@ const TeamSection = () => {
         </motion.div>
         
         {/* Learn More Button */}
-        <div className="mt-12 text-center">
+        <div className="mt-16 text-center">
           <motion.div
             initial={{ opacity: 0, y: 10 }}
             whileInView={{ opacity: 1, y: 0 }}
@@ -123,7 +132,7 @@ const TeamSection = () => {
               className="bg-orange hover:bg-orange/80 text-white font-medium px-8 py-6"
               asChild
             >
-              <Link to="/about">POZNAJ NAS LEPIEJ</Link>
+              <Link to="/contact">SKONTAKTUJ SIĘ Z NAMI</Link>
             </Button>
           </motion.div>
         </div>
