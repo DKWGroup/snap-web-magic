@@ -75,7 +75,52 @@
   }
 
   body {
-    @apply bg-darkBg text-foreground font-sans;
+    @apply bg-darkBg text-foreground font-sans relative;
+  }
+
+  /* Modern background styles */
+  body::before {
+    content: '';
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: 
+      radial-gradient(circle at 20% 35%, rgba(255, 122, 0, 0.15) 0%, transparent 25%),
+      radial-gradient(circle at 75% 15%, rgba(255, 122, 0, 0.1) 0%, transparent 20%),
+      radial-gradient(circle at 85% 60%, rgba(255, 122, 0, 0.12) 0%, transparent 30%),
+      radial-gradient(circle at 40% 80%, rgba(255, 122, 0, 0.08) 0%, transparent 15%);
+    z-index: 0;
+    pointer-events: none;
+    filter: blur(8px);
+  }
+
+  /* Animated floating particles */
+  .bg-particle {
+    @apply absolute bg-orange/20 rounded-full filter blur-xl;
+    animation: float 20s infinite ease-in-out;
+  }
+
+  @keyframes float {
+    0%, 100% {
+      transform: translate(0, 0);
+    }
+    25% {
+      transform: translate(5%, -5%);
+    }
+    50% {
+      transform: translate(0, 10%);
+    }
+    75% {
+      transform: translate(-5%, -5%);
+    }
+  }
+
+  /* Ensure content appears above background */
+  main, header, footer {
+    position: relative;
+    z-index: 1;
   }
 
   .container {

@@ -3,6 +3,7 @@ import { ReactNode } from 'react';
 import Navbar from './Navbar';
 import Footer from './Footer';
 import { Toaster } from '@/components/ui/sonner';
+import BackgroundEffect from './BackgroundEffect';
 
 interface LayoutProps {
   children: ReactNode;
@@ -11,6 +12,7 @@ interface LayoutProps {
 const Layout = ({ children }: LayoutProps) => {
   return (
     <div className="min-h-screen flex flex-col">
+      <BackgroundEffect />
       <Navbar />
       <main className="flex-grow">{children}</main>
       <Footer />
