@@ -16,6 +16,12 @@ import CaseStudies from "./pages/CaseStudies";
 import CaseStudyDetail from "./pages/CaseStudyDetail";
 import Admin from "./pages/Admin";
 import AdminLogin from "./pages/AdminLogin";
+import VideoProduction from "./pages/services/VideoProduction";
+import Podcasts from "./pages/services/Podcasts";
+import LiveStreaming from "./pages/services/LiveStreaming";
+import MarketingContent from "./pages/services/MarketingContent";
+import SocialMedia from "./pages/services/SocialMedia";
+import GraphicDesign from "./pages/services/GraphicDesign";
 
 const queryClient = new QueryClient();
 
@@ -31,6 +37,12 @@ const App = () => (
           <Route path="/" element={<Layout><Index /></Layout>} />
           <Route path="/about" element={<Layout><About /></Layout>} />
           <Route path="/services" element={<Layout><Services /></Layout>} />
+          <Route path="/services/video-production" element={<Layout><VideoProduction /></Layout>} />
+          <Route path="/services/podcasts" element={<Layout><Podcasts /></Layout>} />
+          <Route path="/services/live-streaming" element={<Layout><LiveStreaming /></Layout>} />
+          <Route path="/services/marketing-content" element={<Layout><MarketingContent /></Layout>} />
+          <Route path="/services/social-media" element={<Layout><SocialMedia /></Layout>} />
+          <Route path="/services/graphic-design" element={<Layout><GraphicDesign /></Layout>} />
           <Route path="/projects" element={<Layout><Projects /></Layout>} />
           <Route path="/blog" element={<Layout><Blog /></Layout>} />
           <Route path="/contact" element={<Layout><Contact /></Layout>} />

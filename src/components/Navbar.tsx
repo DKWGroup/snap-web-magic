@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
@@ -98,9 +99,9 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile Menu - with modern slide-in animation */}
+      {/* Mobile Menu - Full screen on all devices */}
       <div
-        className={`md:hidden fixed top-[60px] right-0 h-screen w-3/4 bg-darkBg/98 backdrop-blur-md shadow-xl transition-all duration-300 ease-in-out transform ${
+        className={`md:hidden fixed top-[60px] right-0 h-screen w-full bg-darkBg/98 backdrop-blur-md shadow-xl transition-all duration-300 ease-in-out transform ${
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
         }`}
       >

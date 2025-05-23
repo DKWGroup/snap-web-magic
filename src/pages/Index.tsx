@@ -15,7 +15,7 @@ const Index = () => {
       <Hero />
 
       {/* About Section */}
-      <section className="py-20 bg-darkBg">
+      <section className="py-20">
         <div className="container">
           <div className="flex flex-col lg:flex-row items-center gap-12">
             <motion.div
@@ -59,7 +59,7 @@ const Index = () => {
       <TeamSectionSimple />
       
       {/* Projects Preview Section */}
-      <section className="py-20 bg-darkBg">
+      <section className="py-20">
         <div className="container">
           <h2 className="section-title">
             Sprawdź wyniki naszych <span className="text-orange">klientów!</span>
@@ -134,7 +134,7 @@ const Index = () => {
       <CTA />
 
       {/* Contact Section */}
-      <section className="py-20 bg-darkBg">
+      <section className="py-20">
         <div className="container">
           <div className="flex flex-col lg:flex-row gap-12">
             <motion.div
