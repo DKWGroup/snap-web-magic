@@ -1,9 +1,14 @@
-
 import { motion } from 'framer-motion';
 import { Globe, Code, Search, Smartphone, ArrowRight, CheckCircle, Users, Layout, Zap } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import CTA from '@/components/CTA';
 import { Button } from '@/components/ui/button';
+import { 
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger
+} from '@/components/ui/accordion';
 
 const WebDevelopment = () => {
   const processSteps = [
@@ -71,6 +76,34 @@ const WebDevelopment = () => {
     'Wyższe konwersje dzięki zoptymalizowanemu UX',
     'Responsywność na wszystkich urządzeniach',
     'Szybkie ładowanie wpływające na pozycjonowanie'
+  ];
+
+  const faqs = [
+    {
+      id: 'faq-1',
+      question: 'Ile kosztuje stworzenie strony internetowej?',
+      answer: 'Cena strony internetowej zależy od złożoności projektu. Podstawowe strony wizytówkowe zaczynają się od 3000 zł, strony korporacyjne od 8000 zł, a sklepy internetowe od 15000 zł. Cena obejmuje projekt graficzny, kodowanie, optymalizację SEO i podstawowe szkolenie z obsługi.'
+    },
+    {
+      id: 'faq-2',
+      question: 'Jak długo trwa proces tworzenia strony?',
+      answer: 'Typowy proces tworzenia strony trwa od 4 do 12 tygodni, w zależności od złożoności. Proste strony wizytówkowe - 4-6 tygodni, strony korporacyjne - 6-8 tygodni, sklepy internetowe - 8-12 tygodni. Proces obejmuje analizę, projekt UX/UI, kodowanie, testy i wdrożenie.'
+    },
+    {
+      id: 'faq-3',
+      question: 'Czy strona będzie responsywna na urządzeniach mobilnych?',
+      answer: 'Tak! Wszystkie nasze strony są w pełni responsywne i dostosowane do urządzeń mobilnych. Projektujemy z podejściem mobile-first, dbając o doskonałe doświadczenie użytkownika na smartfonach, tabletach i komputerach. Testujemy kompatybilność z wszystkimi popularnymi przeglądarkami.'
+    },
+    {
+      id: 'faq-4',
+      question: 'Co obejmuje optymalizacja SEO?',
+      answer: 'Nasze usługi SEO obejmują: optymalizację techniczną (szybkość ładowania, struktura URL), optymalizację treści (słowa kluczowe, meta tagi), lokalny SEO, optymalizację obrazów, implementację Schema.org, integrację z Google Analytics i Search Console oraz miesięczne raporty z pozycjonowania.'
+    },
+    {
+      id: 'faq-5',
+      question: 'Czy zapewniacie wsparcie techniczne po wdrożeniu?',
+      answer: 'Tak! Oferujemy różne pakiety wsparcia technicznego: od podstawowego (aktualizacje bezpieczeństwa, backup) po kompleksowy (rozwój funkcjonalności, analityka, pozycjonowanie). Pierwsze 3 miesiące wsparcia są wliczone w cenę projektu. Zapewniamy również szkolenia z obsługi strony.'
+    }
   ];
 
   return (
@@ -292,6 +325,45 @@ const WebDevelopment = () => {
               <Link to="/contact">Skontaktuj się z nami</Link>
             </Button>
           </motion.div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20">
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+              Najczęściej zadawane <span className="text-orange">pytania</span>
+            </h2>
+            <p className="text-gray-300 max-w-2xl mx-auto">
+              Odpowiedzi na najważniejsze pytania dotyczące tworzenia stron internetowych.
+            </p>
+          </motion.div>
+
+          <div className="max-w-3xl mx-auto">
+            <Accordion type="single" collapsible className="space-y-4">
+              {faqs.map((faq) => (
+                <AccordionItem 
+                  key={faq.id} 
+                  value={faq.id}
+                  className="bg-darkCard rounded-lg overflow-hidden border-none"
+                >
+                  <AccordionTrigger className="px-6 py-4 text-white hover:no-underline">
+                    <span className="text-left font-medium">{faq.question}</span>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-4 text-gray-300">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
         </div>
       </section>
 

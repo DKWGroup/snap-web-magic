@@ -3,6 +3,12 @@ import { Camera, PlayCircle, FileVideo, Edit, Zap, Users, ArrowRight, CheckCircl
 import { Link } from 'react-router-dom';
 import CTA from '@/components/CTA';
 import { Button } from '@/components/ui/button';
+import { 
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger
+} from '@/components/ui/accordion';
 
 const VideoProduction = () => {
   const processSteps = [
@@ -62,6 +68,34 @@ const VideoProduction = () => {
     'Wyższe konwersje i wzrost sprzedaży dzięki wartościowym treściom',
     'Efektywna komunikacja wartości i korzyści produktów/usług',
     'Budowanie długotrwałych relacji z odbiorcami'
+  ];
+
+  const faqs = [
+    {
+      id: 'faq-1',
+      question: 'Ile kosztuje produkcja filmu reklamowego?',
+      answer: 'Cena produkcji filmu reklamowego zależy od złożoności projektu, długości filmu, liczby dni zdjęciowych i wymaganych efektów specjalnych. Podstawowe filmy promocyjne zaczynają się od kilku tysięcy złotych, podczas gdy bardziej zaawansowane produkcje mogą kosztować dziesiątki tysięcy. Skontaktuj się z nami, aby otrzymać spersonalizowaną wycenę.'
+    },
+    {
+      id: 'faq-2',
+      question: 'Jak długo trwa proces produkcji filmu?',
+      answer: 'Typowy proces produkcji filmu trwa od 2 do 6 tygodni, w zależności od złożoności projektu. Obejmuje to czas na przygotowanie scenariusza (1 tydzień), zdjęcia (1-3 dni), oraz post-produkcję (1-3 tygodnie). Proste filmy mogą być gotowe w ciągu tygodnia, podczas gdy bardziej złożone projekty wymagają więcej czasu.'
+    },
+    {
+      id: 'faq-3',
+      question: 'Czy zapewniacie sprzęt do nagrań?',
+      answer: 'Tak, dysponujemy profesjonalnym sprzętem do nagrań, w tym kamerami 4K, dronami, systemami oświetleniowymi i sprzętem audio. Nasz sprzęt jest regularnie aktualizowany, aby zapewnić najwyższą jakość nagrań zgodną z najnowszymi standardami branżowymi.'
+    },
+    {
+      id: 'faq-4',
+      question: 'Czy możemy uczestniczyć w procesie montażu?',
+      answer: 'Oczywiście! Zachęcamy do współpracy na etapie post-produkcji. Przesyłamy wersje robocze do akceptacji i uwag, dzięki czemu finalny materiał w pełni odpowiada Waszym oczekiwaniom. Oferujemy do 3 rund poprawek w ramach standardowej usługi.'
+    },
+    {
+      id: 'faq-5',
+      question: 'W jakich formatach dostarczacie gotowe filmy?',
+      answer: 'Dostarczamy filmy w różnych formatach dostosowanych do Waszych potrzeb: MP4 w jakości 4K, FullHD i HD dla różnych platform, wersje kwadratowe i pionowe dla social media, oraz formaty zoptymalizowane pod konkretne platformy jak YouTube, Facebook czy Instagram.'
+    }
   ];
 
   return (
@@ -284,6 +318,45 @@ const VideoProduction = () => {
               <Link to="/contact">Skontaktuj się z nami</Link>
             </Button>
           </motion.div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20">
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+              Najczęściej zadawane <span className="text-orange">pytania</span>
+            </h2>
+            <p className="text-gray-300 max-w-2xl mx-auto">
+              Odpowiedzi na najważniejsze pytania dotyczące produkcji filmowej.
+            </p>
+          </motion.div>
+
+          <div className="max-w-3xl mx-auto">
+            <Accordion type="single" collapsible className="space-y-4">
+              {faqs.map((faq) => (
+                <AccordionItem 
+                  key={faq.id} 
+                  value={faq.id}
+                  className="bg-darkCard rounded-lg overflow-hidden border-none"
+                >
+                  <AccordionTrigger className="px-6 py-4 text-white hover:no-underline">
+                    <span className="text-left font-medium">{faq.question}</span>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-4 text-gray-300">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
         </div>
       </section>
 

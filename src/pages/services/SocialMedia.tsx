@@ -1,7 +1,12 @@
-
 import { motion } from 'framer-motion';
 import { MessageSquare, TrendingUp, Users, Calendar, BarChart, Heart } from 'lucide-react';
 import CTA from '@/components/CTA';
+import { 
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger
+} from '@/components/ui/accordion';
 
 const SocialMedia = () => {
   const services = [
@@ -34,6 +39,34 @@ const SocialMedia = () => {
     { name: 'TikTok', description: 'Viralowe treści dla młodszej publiczności' },
     { name: 'YouTube', description: 'Długoformatowe treści wideo i vlogi' },
     { name: 'Twitter/X', description: 'Komunikacja w czasie rzeczywistym' }
+  ];
+
+  const faqs = [
+    {
+      id: 'faq-1',
+      question: 'Jakie platformy social media obsługujecie?',
+      answer: 'Obsługujemy wszystkie główne platformy: Facebook, Instagram, LinkedIn, TikTok, YouTube, Twitter/X, Pinterest i Snapchat. Dostosowujemy strategię i treści do specyfiki każdej platformy oraz Twojej grupy docelowej. Możemy także zarządzać nowymi platformami społecznościowymi w miarę ich rozwoju.'
+    },
+    {
+      id: 'faq-2',
+      question: 'Ile postów publikujecie miesięcznie?',
+      answer: 'Liczba postów zależy od wybranego pakietu i platformy. Pakiet podstawowy: 2-3 posty/tydzień na platformę, pakiet standardowy: 4-5 postów/tydzień, pakiet premium: codzienne publikacje + stories. Zawsze dostosowujemy częstotliwość do algorytmów platform i zaangażowania odbiorców.'
+    },
+    {
+      id: 'faq-3',
+      question: 'Czy odpowiadacie na komentarze i wiadomości prywatne?',
+      answer: 'Tak! Community management to kluczowy element naszych usług. Odpowiadamy na komentarze w ciągu 2-4 godzin w dni robocze, moderujemy dyskusje, zarządzamy wiadomościami prywatnymi i budujemy relacje z obserwującymi. Dla każdego klienta przygotowujemy wytyczne komunikacyjne.'
+    },
+    {
+      id: 'faq-4',
+      question: 'Jak często otrzymuję raporty z działań w social media?',
+      answer: 'Przygotowujemy miesięczne raporty zawierające: analizę zasięgów i zaangażowania, wzrost liczby obserwujących, najlepiej działające treści, analizę konkurencji i rekomendacje na kolejny miesiąc. Dodatkowo prowadzą cotygodniowe monitoring i na bieżąco informujemy o istotnych wydarzeniach.'
+    },
+    {
+      id: 'faq-5',
+      question: 'Czy tworzycie treści wideo dla social media?',
+      answer: 'Oczywiście! Tworzymy różnorodne treści wideo: krótkometrażowe filmy promocyjne, reels na Instagram i TikTok, animacje, stories, live streams i materiały edukacyjne. Dysponujemy profesjonalnym sprzętem i zespołem realizatorów, którzy specializują się w content na social media.'
+    }
   ];
 
   return (
@@ -197,6 +230,45 @@ const SocialMedia = () => {
                 </div>
               </div>
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20">
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+              Najczęściej zadawane <span className="text-orange">pytania</span>
+            </h2>
+            <p className="text-gray-300 max-w-2xl mx-auto">
+              Odpowiedzi na najważniejsze pytania dotyczące obsługi social media.
+            </p>
+          </motion.div>
+
+          <div className="max-w-3xl mx-auto">
+            <Accordion type="single" collapsible className="space-y-4">
+              {faqs.map((faq) => (
+                <AccordionItem 
+                  key={faq.id} 
+                  value={faq.id}
+                  className="bg-darkCard rounded-lg overflow-hidden border-none"
+                >
+                  <AccordionTrigger className="px-6 py-4 text-white hover:no-underline">
+                    <span className="text-left font-medium">{faq.question}</span>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-4 text-gray-300">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </div>
       </section>

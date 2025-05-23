@@ -1,7 +1,12 @@
-
 import { motion } from 'framer-motion';
 import { Video, Target, TrendingUp, Users, PenTool, BarChart } from 'lucide-react';
 import CTA from '@/components/CTA';
+import { 
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger
+} from '@/components/ui/accordion';
 
 const MarketingContent = () => {
   const contentTypes = [
@@ -34,6 +39,34 @@ const MarketingContent = () => {
     'Wzrost konwersji i sprzedaży',
     'Budowanie społeczności wokół marki',
     'Profesjonalny wizerunek firmy'
+  ];
+
+  const faqs = [
+    {
+      id: 'faq-1',
+      question: 'Jakie rodzaje treści marketingowych tworzycie?',
+      answer: 'Tworzymy kompleksowe treści marketingowe: filmy promocyjne i reklamowe, posty na social media, artykuły blogowe, infografiki, e-booki, newslettery, treści na strony internetowe, materiały do kampanii PPC oraz treści do automatyzacji marketingowej. Wszystko dostosowane do Twojej branży i grupy docelowej.'
+    },
+    {
+      id: 'faq-2',
+      question: 'Jak ustalacie strategię treści dla mojej marki?',
+      answer: 'Proces zaczyna się od dogłębnej analizy Twojej marki, konkurencji i grupy docelowej. Prowadzimy wywiady, analizujemy dane, badamy trendy w branży i definiujemy cele biznesowe. Na tej podstawie tworzymy strategię treści, kalendarz publikacji i wytyczne komunikacyjne dostosowane do Twoich potrzeb.'
+    },
+    {
+      id: 'faq-3',
+      question: 'Ile kosztuje comiesięczna obsługa content marketingu?',
+      answer: 'Ceny pakietów miesięcznych zależą od zakresu usług. Podstawowy pakiet (8 postów + blog) od 2500 zł/mies, pakiet standardowy (15 postów + blog + materiały wideo) od 4500 zł/mies, pakiet premium (pełna obsługa + kampanie) od 8000 zł/mies. Oferujemy również jednorazowe projekty.'
+    },
+    {
+      id: 'faq-4',
+      question: 'Jak mierzicie efektywność tworzonych treści?',
+      answer: 'Monitorujemy kluczowe wskaźniki: zasięg, zaangażowanie, ruch na stronie, konwersje, wzrost liczby obserwujących, czas spędzony na stronie i pozycje w wyszukiwarkach. Przygotowujemy miesięczne raporty z analizą wyników i rekomendacjami optymalizacyjnymi. Używamy narzędzi takich jak Google Analytics, Facebook Insights czy Sprout Social.'
+    },
+    {
+      id: 'faq-5',
+      question: 'Czy możecie przejąć treści już istniejące i je zoptymalizować?',
+      answer: 'Oczywiście! Prowadzimy audyt istniejących treści, analizujemy ich efektywność i przygotowujemy plan optymalizacji. Możemy zaktualizować treści pod kątem SEO, dostosować do nowych trendów, przeprojektować grafiki czy przeformatować materiały na inne kanały komunikacji.'
+    }
   ];
 
   return (
@@ -238,6 +271,45 @@ const MarketingContent = () => {
               <h3 className="text-white font-bold mb-2">Optymalizacja</h3>
               <p className="text-gray-300 text-sm">Analizujemy wyniki i optymalizujemy działania</p>
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20">
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+              Najczęściej zadawane <span className="text-orange">pytania</span>
+            </h2>
+            <p className="text-gray-300 max-w-2xl mx-auto">
+              Odpowiedzi na najważniejsze pytania dotyczące tworzenia treści marketingowych.
+            </p>
+          </motion.div>
+
+          <div className="max-w-3xl mx-auto">
+            <Accordion type="single" collapsible className="space-y-4">
+              {faqs.map((faq) => (
+                <AccordionItem 
+                  key={faq.id} 
+                  value={faq.id}
+                  className="bg-darkCard rounded-lg overflow-hidden border-none"
+                >
+                  <AccordionTrigger className="px-6 py-4 text-white hover:no-underline">
+                    <span className="text-left font-medium">{faq.question}</span>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-4 text-gray-300">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </div>
       </section>

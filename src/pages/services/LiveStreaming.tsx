@@ -1,7 +1,12 @@
-
 import { motion } from 'framer-motion';
 import { MonitorPlay, Wifi, Camera, Users, Settings, Zap } from 'lucide-react';
 import CTA from '@/components/CTA';
+import { 
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger
+} from '@/components/ui/accordion';
 
 const LiveStreaming = () => {
   const capabilities = [
@@ -36,6 +41,34 @@ const LiveStreaming = () => {
     'Redundantne połączenia internetowe',
     'System monitorowania',
     'Mobilne studio w walizce'
+  ];
+
+  const faqs = [
+    {
+      id: 'faq-1',
+      question: 'Jakie są koszty realizacji transmisji na żywo?',
+      answer: 'Cena transmisji zależy od czasu trwania, liczby kamer, złożoności realizacji i lokalizacji. Podstawowe transmisje jednokamerowe zaczynają się od 2000 zł, podczas że wielokamerowe produkcje z mobilnym studiem mogą kosztować od 5000-15000 zł. Cena obejmuje obsługę techniczną i sprzęt.'
+    },
+    {
+      id: 'faq-2',
+      question: 'Jak daleko możecie dojechać z mobilnym studiem?',
+      answer: 'Obsługujemy wydarzenia w całej Polsce. Mobilne studio jest transportowane busem wyposażonym w cały niezbędny sprzęt. Dla wydarzeń poza granicami kraju również możemy zorganizować realizację - skontaktuj się z nami w celu ustalenia szczegółów logistycznych.'
+    },
+    {
+      id: 'faq-3',
+      question: 'Czy gwarantujecie stabilność transmisji?',
+      answer: 'Tak! Używamy redundantnych połączeń internetowych (główne + backup) oraz profesjonalnych enkoderów streamingowych. Monitorujemy jakość transmisji w czasie rzeczywistym i mamy procedury na wypadek problemów technicznych. Oferujemy 99,5% uptime dla naszych transmisji.'
+    },
+    {
+      id: 'faq-4',
+      question: 'Na jakie platformy możecie prowadzić transmisje?',
+      answer: 'Transmitujemy na wszystkie popularne platformy: YouTube Live, Facebook Live, LinkedIn Live, Twitch, Vimeo, oraz platformy korporacyjne jak Microsoft Teams, Zoom czy dedykowane portale eventowe. Możemy prowadzić jednoczesną transmisję na kilka platform (multistreaming).'
+    },
+    {
+      id: 'faq-5',
+      question: 'Czy oferujecie nagranie wydarzenia oprócz transmisji?',
+      answer: 'Oczywiście! Standardowo nagrywamy każdą transmisję w pełnej jakości jako backup. Możemy również przygotować materiał do późniejszej publikacji, z montażem highlights, dodaniem grafik czy podziałem na segmenty. Nagranie dostarczamy w ciągu 2-3 dni roboczych.'
+    }
   ];
 
   return (
@@ -218,6 +251,45 @@ const LiveStreaming = () => {
                 Relacje na żywo z eventów, premier produktów i spotkań firmowych.
               </p>
             </motion.div>
+          </div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20">
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+              Najczęściej zadawane <span className="text-orange">pytania</span>
+            </h2>
+            <p className="text-gray-300 max-w-2xl mx-auto">
+              Odpowiedzi na najważniejsze pytania dotyczące realizacji na żywo.
+            </p>
+          </motion.div>
+
+          <div className="max-w-3xl mx-auto">
+            <Accordion type="single" collapsible className="space-y-4">
+              {faqs.map((faq) => (
+                <AccordionItem 
+                  key={faq.id} 
+                  value={faq.id}
+                  className="bg-darkCard rounded-lg overflow-hidden border-none"
+                >
+                  <AccordionTrigger className="px-6 py-4 text-white hover:no-underline">
+                    <span className="text-left font-medium">{faq.question}</span>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-4 text-gray-300">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
           </div>
         </div>
       </section>

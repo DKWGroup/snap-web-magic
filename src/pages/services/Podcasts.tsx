@@ -3,6 +3,12 @@ import { Mic, Radio, Upload, Headphones, Settings, Users, ArrowRight, CheckCircl
 import { Link } from 'react-router-dom';
 import CTA from '@/components/CTA';
 import { Button } from '@/components/ui/button';
+import { 
+  Accordion,
+  AccordionContent,
+  AccordionItem,
+  AccordionTrigger
+} from '@/components/ui/accordion';
 
 const Podcasts = () => {
   const services = [
@@ -64,6 +70,34 @@ const Podcasts = () => {
     'Większe zaangażowanie słuchaczy dzięki długiej formie treści',
     'Możliwość repurposingu treści na różne formaty mediów',
     'Budowanie społeczności wokół marki'
+  ];
+
+  const faqs = [
+    {
+      id: 'faq-1',
+      question: 'Ile kosztuje nagranie podcastu w studiu?',
+      answer: 'Cena nagrania podcastu zależy od długości sesji i dodatkowych usług. Podstawowa sesja nagraniowa (do 2 godzin) kosztuje od 500 zł. W cenę wliczony jest montaż podstawowy, mastering i przygotowanie plików do publikacji. Pakiety dla regularnych nagrań oferują atrakcyjniejsze ceny.'
+    },
+    {
+      id: 'faq-2',
+      question: 'Jak długo trwa proces produkcji odcinka podcastu?',
+      answer: 'Standardowy proces obejmuje nagranie (1-3 godziny), montaż i post-produkcję (2-3 dni robocze). Jeśli potrzebujecie dodatkowych elementów jak intro, outro czy grafiki, proces może potrwać do tygodnia. Oferujemy również ekspresową realizację w 24 godziny za dodatkową opłatą.'
+    },
+    {
+      id: 'faq-3',
+      question: 'Czy pomagacie w dystrybucji podcastu?',
+      answer: 'Tak! Pomagamy w publikacji podcastu na głównych platformach takich jak Spotify, Apple Podcasts, Google Podcasts i YouTube. Zajmujemy się również tworzeniem grafik odcinków, opisów i promocją w mediach społecznościowych w ramach pakietów obsługi.'
+    },
+    {
+      id: 'faq-4',
+      question: 'Czy można nagrywać podcast zdalnie?',
+      answer: 'Oczywiście! Oferujemy możliwość nagrywania wywiadów z gośćmi zdalnie przy użyciu profesjonalnych platform. Zapewniamy wysoką jakość audio i możliwość nagrywania wideo. Możemy również połączyć nagranie zdalne z obecnością gospodarza w studiu.'
+    },
+    {
+      id: 'faq-5',
+      question: 'Jakie usługi dodatkowe oferujecie dla podcastów?',
+      answer: 'Oprócz nagrania i montażu oferujemy: tworzenie intro i outro, kompozycję muzyki tematycznej, transkrypcję odcinków, tworzenie grafik promocyjnych, zarządzanie kanałami w social media, analitykę słuchalności oraz konsultacje strategiczne dotyczące rozwoju podcastu.'
+    }
   ];
 
   return (
@@ -289,6 +323,45 @@ const Podcasts = () => {
               <Link to="/contact">Skontaktuj się z nami</Link>
             </Button>
           </motion.div>
+        </div>
+      </section>
+
+      {/* FAQ Section */}
+      <section className="py-20">
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+              Najczęściej zadawane <span className="text-orange">pytania</span>
+            </h2>
+            <p className="text-gray-300 max-w-2xl mx-auto">
+              Odpowiedzi na najważniejsze pytania dotyczące produkcji podcastów.
+            </p>
+          </motion.div>
+
+          <div className="max-w-3xl mx-auto">
+            <Accordion type="single" collapsible className="space-y-4">
+              {faqs.map((faq) => (
+                <AccordionItem 
+                  key={faq.id} 
+                  value={faq.id}
+                  className="bg-darkCard rounded-lg overflow-hidden border-none"
+                >
+                  <AccordionTrigger className="px-6 py-4 text-white hover:no-underline">
+                    <span className="text-left font-medium">{faq.question}</span>
+                  </AccordionTrigger>
+                  <AccordionContent className="px-6 pb-4 text-gray-300">
+                    {faq.answer}
+                  </AccordionContent>
+                </AccordionItem>
+              ))}
+            </Accordion>
+          </div>
         </div>
       </section>
 
