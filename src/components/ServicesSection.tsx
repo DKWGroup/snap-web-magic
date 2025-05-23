@@ -1,6 +1,7 @@
+
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Film, Radio, MonitorPlay, Video, Globe } from 'lucide-react';
+import { ArrowRight, Film, Radio, MonitorPlay, Globe, Palette, Video, BarChart3 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const services = [
@@ -36,6 +37,22 @@ const services = [
     icon: <Globe className="w-8 h-8" />,
     link: '/services/web-development',
   },
+  {
+    id: 5,
+    title: 'Treści marketingowe',
+    description:
+      'Tworzymy angażujące treści marketingowe, które docierają do Twoich klientów i budują świadomość marki.',
+    icon: <BarChart3 className="w-8 h-8" />,
+    link: '/services/marketing-content',
+  },
+  {
+    id: 6,
+    title: 'Social Media',
+    description:
+      'Kompleksowa obsługa social media, która zwiększa zasięgi i buduje zaangażowaną społeczność wokół Twojej marki.',
+    icon: <Video className="w-8 h-8" />,
+    link: '/services/social-media',
+  },
 ];
 
 const ServicesSection = () => {
@@ -62,16 +79,21 @@ const ServicesSection = () => {
   return (
     <section className="py-20 bg-darkBg">
       <div className="container">
-        <h2 className="section-title">
-          Poznaj nasze <span className="text-orange">usługi</span>
-        </h2>
+        <div className="flex justify-between items-center mb-10">
+          <h2 className="text-3xl md:text-4xl font-bold text-white">
+            Nasze <span className="text-orange">usługi</span>
+          </h2>
+          <Link to="/services" className="text-orange hover:text-orange-400 transition-colors flex items-center gap-2">
+            Zobacz wszystkie <ArrowRight size={16} />
+          </Link>
+        </div>
 
         <motion.div
           variants={containerVariants}
           initial="hidden"
           whileInView="visible"
           viewport={{ once: true }}
-          className="grid grid-cols-1 md:grid-cols-2 gap-6 mt-12"
+          className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6"
         >
           {services.map((service) => (
             <motion.div
@@ -96,7 +118,7 @@ const ServicesSection = () => {
           ))}
         </motion.div>
 
-        <div className="mt-12 flex justify-center">
+        <div className="mt-10 text-center">
           <Link to="/services">
             <Button size="lg" className="bg-orange hover:bg-orange-dark text-white">
               ZOBACZ WSZYSTKIE USŁUGI

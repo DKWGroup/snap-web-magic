@@ -1,6 +1,7 @@
 
 import { motion } from 'framer-motion';
-import { Mail, Phone } from 'lucide-react';
+import { Mail, Phone, ArrowRight } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import Hero from '@/components/Hero';
 import TeamSectionSimple from '@/components/TeamSectionSimple';
 import ServicesSection from '@/components/ServicesSection';
@@ -8,6 +9,11 @@ import CTA from '@/components/CTA';
 import ContactForm from '@/components/ContactForm';
 import FAQSection from '@/components/FAQSection';
 import ClientsCarousel from '@/components/ClientsCarousel';
+import { Button } from '@/components/ui/button';
+import { Card, CardContent } from '@/components/ui/card';
+import ProjectsPreviewSection from '@/components/ProjectsPreviewSection';
+import CaseStudiesPreviewSection from '@/components/CaseStudiesPreviewSection';
+import BlogPreviewSection from '@/components/BlogPreviewSection';
 
 const Index = () => {
   return (
@@ -56,77 +62,14 @@ const Index = () => {
 
       <ServicesSection />
       
+      <ProjectsPreviewSection />
+      
+      <CaseStudiesPreviewSection />
+      
+      <BlogPreviewSection />
+      
       <TeamSectionSimple />
       
-      {/* Projects Preview Section */}
-      <section className="py-20">
-        <div className="container">
-          <h2 className="section-title">
-            Sprawdź wyniki naszych <span className="text-orange">klientów!</span>
-          </h2>
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-12">
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6 }}
-              className="bg-darkCard rounded-lg overflow-hidden"
-            >
-              <div className="p-6">
-                <div className="text-xs font-semibold text-orange mb-2 uppercase">Case Study</div>
-                <h3 className="text-xl font-bold text-white mb-3">
-                  Obsługa Kanału YouTube dla Eksperta Lotniczego
-                </h3>
-                <p className="text-gray-300 mb-6 text-sm">
-                  Stworzyliśmy kanał "Kokpit Kamila", który zgromadził 3 mln wyświetleń, budując silną markę ekspercką Kamila Majdy w branży lotniczej.
-                </p>
-                
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-darkBg/50 p-4 rounded-lg">
-                    <div className="text-orange text-2xl font-bold">3 000 000+</div>
-                    <div className="text-gray-400 text-sm">wyświetleń</div>
-                  </div>
-                  <div className="bg-darkBg/50 p-4 rounded-lg">
-                    <div className="text-orange text-2xl font-bold">1 300 000</div>
-                    <div className="text-gray-400 text-sm">wyświetleń</div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-            
-            <motion.div
-              initial={{ opacity: 0, y: 20 }}
-              whileInView={{ opacity: 1, y: 0 }}
-              viewport={{ once: true }}
-              transition={{ duration: 0.6, delay: 0.2 }}
-              className="bg-darkCard rounded-lg overflow-hidden"
-            >
-              <div className="p-6">
-                <div className="text-xs font-semibold text-orange mb-2 uppercase">Case Study</div>
-                <h3 className="text-xl font-bold text-white mb-3">
-                  Kampania Reklamowa dla Investment Partners
-                </h3>
-                <p className="text-gray-300 mb-6 text-sm">
-                  Stworzyliśmy spot reklamowy dla "Metamorfozy Finansowej", osiągając 30,000+ wyświetleń i setki rejestracji, zwiększając zasięg Investment Partners.
-                </p>
-                
-                <div className="grid grid-cols-2 gap-4">
-                  <div className="bg-darkBg/50 p-4 rounded-lg">
-                    <div className="text-orange text-2xl font-bold">Setki</div>
-                    <div className="text-gray-400 text-sm">rejestracji</div>
-                  </div>
-                  <div className="bg-darkBg/50 p-4 rounded-lg">
-                    <div className="text-orange text-2xl font-bold">30 000+</div>
-                    <div className="text-gray-400 text-sm">wyświetleń</div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          </div>
-        </div>
-      </section>
-
-      {/* Clients Carousel Section */}
       <ClientsCarousel />
 
       <FAQSection />
