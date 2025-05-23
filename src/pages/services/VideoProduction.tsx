@@ -1,7 +1,9 @@
 
 import { motion } from 'framer-motion';
-import { Camera, PlayCircle, FileVideo, Edit, Zap, Users } from 'lucide-react';
+import { Camera, PlayCircle, FileVideo, Edit, Zap, Users, ArrowRight, CheckCircle } from 'lucide-react';
+import { Link } from 'react-router-dom';
 import CTA from '@/components/CTA';
+import { Button } from '@/components/ui/button';
 
 const VideoProduction = () => {
   const processSteps = [
@@ -36,6 +38,41 @@ const VideoProduction = () => {
     'Animacje 3D i motion graphics'
   ];
 
+  const portfolioItems = [
+    {
+      id: 1,
+      title: 'Spot Reklamowy dla Investment Partners',
+      client: 'Investment Partners',
+      description: 'Film reklamowy promujący usługi finansowe, który wygenerował 30,000+ wyświetleń i setki rejestracji na szkolenia.',
+      image: '/images/project-2.jpg',
+      caseStudyId: '2'
+    },
+    {
+      id: 2,
+      title: 'Obsługa Kanału Kokpit Kamila',
+      client: 'Kokpit Kamila',
+      description: 'Seria profesjonalnych nagrań edukacyjnych o tematyce lotniczej, które zgromadziły ponad 3 miliony wyświetleń.',
+      image: '/images/project-1.jpg',
+      caseStudyId: '1'
+    },
+    {
+      id: 3,
+      title: 'Film Korporacyjny dla TechSolutions',
+      client: 'TechSolutions',
+      description: 'Prezentacja firmy i jej usług z wykorzystaniem dynamicznych ujęć, wywiadów z pracownikami i animacji 3D.',
+      image: '/images/portfolio-3.jpg',
+      caseStudyId: '3'
+    }
+  ];
+
+  const benefits = [
+    'Zwiększenie świadomości marki i zaangażowania odbiorców',
+    'Profesjonalny wizerunek firmy budujący zaufanie klientów',
+    'Wyższe konwersje i wzrost sprzedaży dzięki wartościowym treściom',
+    'Efektywna komunikacja wartości i korzyści produktów/usług',
+    'Budowanie długotrwałych relacji z odbiorcami'
+  ];
+
   return (
     <main className="bg-darkBg min-h-screen">
       {/* Hero Section */}
@@ -54,6 +91,9 @@ const VideoProduction = () => {
               Tworzymy profesjonalne materiały wideo od koncepcji po gotowy produkt. 
               Każde nagranie jest dopracowane pod kątem jakości i detalu.
             </p>
+            <Button asChild size="lg" className="bg-orange hover:bg-orange-dark">
+              <Link to="/contact">Zamów bezpłatną konsultację</Link>
+            </Button>
           </motion.div>
         </div>
       </section>
@@ -91,6 +131,63 @@ const VideoProduction = () => {
                 <p className="text-gray-300 text-sm">{step.description}</p>
               </motion.div>
             ))}
+          </div>
+        </div>
+      </section>
+
+      {/* Portfolio Section */}
+      <section className="py-20 bg-darkBg/70">
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+              Nasze <span className="text-orange">portfolio</span>
+            </h2>
+            <p className="text-gray-300 max-w-2xl mx-auto">
+              Zobacz przykłady naszych produkcji i przekonaj się o jakości naszych usług.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+            {portfolioItems.map((item, index) => (
+              <motion.div
+                key={item.id}
+                initial={{ opacity: 0, y: 30 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.6, delay: index * 0.2 }}
+                className="bg-darkCard rounded-lg overflow-hidden flex flex-col h-full"
+              >
+                <div className="aspect-video overflow-hidden">
+                  <img 
+                    src={item.image} 
+                    alt={item.title} 
+                    className="w-full h-full object-cover transition-transform duration-300 hover:scale-105"
+                  />
+                </div>
+                <div className="p-6 flex flex-col flex-grow">
+                  <h3 className="text-white font-bold text-xl mb-2">{item.title}</h3>
+                  <p className="text-orange text-sm mb-3">{item.client}</p>
+                  <p className="text-gray-300 text-sm mb-6 flex-grow">{item.description}</p>
+                  <Button asChild variant="outline" className="w-full">
+                    <Link to={`/case-studies/${item.caseStudyId}`}>
+                      Zobacz case study <ArrowRight className="ml-2 h-4 w-4" />
+                    </Link>
+                  </Button>
+                </div>
+              </motion.div>
+            ))}
+          </div>
+
+          <div className="text-center mt-12">
+            <Button asChild variant="secondary">
+              <Link to="/projects">Zobacz więcej projektów</Link>
+            </Button>
           </div>
         </div>
       </section>
@@ -148,6 +245,54 @@ const VideoProduction = () => {
               </div>
             </motion.div>
           </div>
+        </div>
+      </section>
+
+      {/* Benefits Section */}
+      <section className="py-20 bg-darkCard">
+        <div className="container">
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8 }}
+            className="text-center mb-12"
+          >
+            <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
+              Korzyści dla <span className="text-orange">Twojego biznesu</span>
+            </h2>
+            <p className="text-gray-300 max-w-2xl mx-auto">
+              Profesjonalne materiały wideo mają realny wpływ na wyniki Twojej firmy.
+            </p>
+          </motion.div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 md:gap-4">
+            {benefits.map((benefit, index) => (
+              <motion.div
+                key={index}
+                initial={{ opacity: 0, y: 20 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true }}
+                transition={{ duration: 0.5, delay: index * 0.1 }}
+                className="flex items-start p-4"
+              >
+                <CheckCircle className="text-orange w-5 h-5 mr-3 mt-1 flex-shrink-0" />
+                <p className="text-white">{benefit}</p>
+              </motion.div>
+            ))}
+          </div>
+
+          <motion.div
+            initial={{ opacity: 0, y: 20 }}
+            whileInView={{ opacity: 1, y: 0 }}
+            viewport={{ once: true }}
+            transition={{ duration: 0.8, delay: 0.5 }}
+            className="mt-12 text-center"
+          >
+            <Button asChild size="lg" className="bg-orange hover:bg-orange-dark">
+              <Link to="/contact">Skontaktuj się z nami</Link>
+            </Button>
+          </motion.div>
         </div>
       </section>
 

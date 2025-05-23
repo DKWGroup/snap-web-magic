@@ -1,6 +1,7 @@
-
 import { motion } from 'framer-motion';
+import { Link } from 'react-router-dom';
 import CTA from '@/components/CTA';
+import { Button } from '@/components/ui/button';
 
 const projects = [
   {
@@ -10,6 +11,7 @@ const projects = [
     category: 'YouTube Management',
     description: 'Stworzyliśmy kanał "Kokpit Kamila", który zgromadził 3 mln wyświetleń, budując silną markę ekspercką Kamila Majdy w branży lotniczej.',
     image: '/images/project-1.jpg',
+    caseStudyId: '1',
     stats: [
       { value: '3 000 000+', label: 'wyświetleń na YouTube' },
       { value: '30 000+', label: 'subskrybentów' }
@@ -22,6 +24,7 @@ const projects = [
     category: 'Video Marketing',
     description: 'Stworzyliśmy spot reklamowy dla "Metamorfozy Finansowej", osiągając 30,000+ wyświetleń i setki rejestracji, zwiększając zasięg Investment Partners.',
     image: '/images/project-2.jpg',
+    caseStudyId: '2',
     stats: [
       { value: 'Setki', label: 'rejestracji' },
       { value: '30 000+', label: 'wyświetleń' }
@@ -34,6 +37,7 @@ const projects = [
     category: 'Content Creation',
     description: 'Kompleksowa obsługa kanału – od nagrań po publikację, budowanie zaangażowanej społeczności i tworzenie wartościowych treści.',
     image: '/images/project-3.jpg',
+    caseStudyId: '3',
     stats: [
       { value: '5 lat', label: 'współpracy' },
       { value: '+400k', label: 'subskrypcji' }
@@ -119,7 +123,7 @@ const Projects = () => {
                   </h2>
                   <p className="text-gray-300 mb-6">{project.description}</p>
                   
-                  <div className="grid grid-cols-2 gap-4">
+                  <div className="grid grid-cols-2 gap-4 mb-6">
                     {project.stats.map((stat, i) => (
                       <div key={i} className="bg-darkCard p-4 rounded-lg">
                         <div className="text-orange text-2xl font-bold">
@@ -129,6 +133,12 @@ const Projects = () => {
                       </div>
                     ))}
                   </div>
+
+                  <Button asChild className="w-full sm:w-auto">
+                    <Link to={`/case-studies/${project.caseStudyId}`}>
+                      Zobacz całe case study
+                    </Link>
+                  </Button>
                 </div>
               </motion.div>
             ))}
