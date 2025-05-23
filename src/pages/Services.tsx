@@ -1,6 +1,5 @@
-
 import { motion } from 'framer-motion';
-import { ArrowRight, Film, Radio, MonitorPlay, Video, MessageSquare, PenTool, BadgeCheck } from 'lucide-react';
+import { ArrowRight, Film, Radio, MonitorPlay, Video, MessageSquare, PenTool, BadgeCheck, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import CTA from '@/components/CTA';
 
@@ -52,6 +51,14 @@ const services = [
       'Projektowanie logo, identyfikacji wizualnej, materiałów marketingowych, grafik do mediów społecznościowych i stron internetowych.',
     icon: <PenTool className="w-8 h-8" />,
     link: '/services/graphic-design',
+  },
+  {
+    id: 7,
+    title: 'Web Development',
+    description:
+      'Tworzenie stron internetowych, aplikacji i serwisów. Oferujemy od koncepcji do publikacji.',
+    icon: <Globe className="w-8 h-8" />,
+    link: '/services/web-development',
   }
 ];
 

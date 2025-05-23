@@ -1,4 +1,3 @@
-
 import { motion } from 'framer-motion';
 import { Camera, PlayCircle, FileVideo, Edit, Zap, Users, ArrowRight, CheckCircle } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -54,14 +53,6 @@ const VideoProduction = () => {
       description: 'Seria profesjonalnych nagrań edukacyjnych o tematyce lotniczej, które zgromadziły ponad 3 miliony wyświetleń.',
       image: '/images/project-1.jpg',
       caseStudyId: '1'
-    },
-    {
-      id: 3,
-      title: 'Film Korporacyjny dla TechSolutions',
-      client: 'TechSolutions',
-      description: 'Prezentacja firmy i jej usług z wykorzystaniem dynamicznych ujęć, wywiadów z pracownikami i animacji 3D.',
-      image: '/images/portfolio-3.jpg',
-      caseStudyId: '3'
     }
   ];
 
@@ -153,7 +144,7 @@ const VideoProduction = () => {
             </p>
           </motion.div>
 
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             {portfolioItems.map((item, index) => (
               <motion.div
                 key={item.id}

@@ -1,7 +1,6 @@
-
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Film, Radio, MonitorPlay, Video } from 'lucide-react';
+import { ArrowRight, Film, Radio, MonitorPlay, Video, Globe } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const services = [
@@ -31,11 +30,11 @@ const services = [
   },
   {
     id: 4,
-    title: 'Tworzenie treści marketingowych',
+    title: 'Strony internetowe i SEO',
     description:
-      'Pomagamy markom wyróżnić się w sieci, tworząc angażujące materiały wideo, poradniki oraz wszelkie treści tekstowe i graficzne dla grup docelowych.',
-    icon: <Video className="w-8 h-8" />,
-    link: '/services/marketing-content',
+      'Projektowanie i tworzenie responsywnych stron internetowych oraz optymalizacja pod kątem wyszukiwarek, aby zwiększyć widoczność Twojej marki online.',
+    icon: <Globe className="w-8 h-8" />,
+    link: '/services/web-development',
   },
 ];
 

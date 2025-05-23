@@ -22,6 +22,7 @@ import LiveStreaming from "./pages/services/LiveStreaming";
 import MarketingContent from "./pages/services/MarketingContent";
 import SocialMedia from "./pages/services/SocialMedia";
 import GraphicDesign from "./pages/services/GraphicDesign";
+import WebDevelopment from "./pages/services/WebDevelopment";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +44,7 @@ const App = () => (
           <Route path="/services/marketing-content" element={<Layout><MarketingContent /></Layout>} />
           <Route path="/services/social-media" element={<Layout><SocialMedia /></Layout>} />
           <Route path="/services/graphic-design" element={<Layout><GraphicDesign /></Layout>} />
+          <Route path="/services/web-development" element={<Layout><WebDevelopment /></Layout>} />
           <Route path="/projects" element={<Layout><Projects /></Layout>} />
           <Route path="/blog" element={<Layout><Blog /></Layout>} />
           <Route path="/contact" element={<Layout><Contact /></Layout>} />
