@@ -14,10 +14,27 @@ import { Card, CardContent } from '@/components/ui/card';
 import ProjectsPreviewSection from '@/components/ProjectsPreviewSection';
 import CaseStudiesPreviewSection from '@/components/CaseStudiesPreviewSection';
 import BlogPreviewSection from '@/components/BlogPreviewSection';
+import { Helmet } from 'react-helmet';
 
 const Index = () => {
   return (
-    <main className="bg-darkBg min-h-screen">
+    <>
+      <Helmet>
+        <title>DKW Group – Wideo, Social Media i Marketing Internetowy</title>
+        <meta 
+          name="description" 
+          content="Profesjonalne filmy reklamowe, podcasty, live streaming oraz kompleksowa obsługa social media. Zwiększ widoczność swojej marki z DKW Group."
+        />
+        {/* Dodatkowe meta tagi dla lepszego SEO */}
+        <meta name="keywords" content="produkcja wideo, social media, marketing internetowy, filmy reklamowe, podcasty, live streaming, strategia marketingowa" />
+        <link rel="canonical" href="https://dkwgroup.net" />
+        <meta property="og:title" content="DKW Group – Wideo, Social Media i Marketing Internetowy" />
+        <meta property="og:description" content="Profesjonalne filmy reklamowe, podcasty, live streaming oraz kompleksowa obsługa social media." />
+        <meta property="og:url" content="https://dkwgroup.net" />
+        <meta property="og:type" content="website" />
+      </Helmet>
+
+      <main className="bg-darkBg min-h-screen">
       <Hero />
 
       {/* About Section */}
@@ -34,11 +51,8 @@ const Index = () => {
               <h2 className="text-3xl md:text-4xl font-bold text-white mb-6">
                 Wesprzemy Cię <span className="text-orange">w promocji!</span>
               </h2>
-              <p className="text-gray-300 mb-6">
-                DKW Group to zespół specjalistów, którzy wiedzą, jak tworzyć treści wideo i marketingowe, które angażują odbiorców i budują rozpoznawalność Twojej marki.
-              </p>
               <p className="text-gray-300">
-                Nasze podejście opiera się na zrozumieniu Twoich potrzeb i celów biznesowych. Dzięki temu możemy stworzyć treści, które nie tylko wyglądają profesjonalnie, ale także efektywnie wspierają Twoją strategię marketingową.
+              Nasz zespół ekspertów wie, jak tworzyć treści marketingowe, które realnie wspierają sprzedaż i budują lojalność klientów. Oferujemy indywidualne podejście, dopasowane strategie marketingowe oraz pełną obsługę Twoich kanałów social media. Dzięki naszym usługom Twoja marka zyska profesjonalny wizerunek i dotrze do nowych odbiorców.
               </p>
             </motion.div>
             <motion.div
@@ -126,6 +140,8 @@ const Index = () => {
         </div>
       </section>
     </main>
+  </>
+    
   );
 };
 

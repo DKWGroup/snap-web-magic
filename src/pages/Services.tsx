@@ -6,9 +6,9 @@ import CTA from '@/components/CTA';
 const services = [
   {
     id: 1,
-    title: 'Produkcja filmowa',
+    title: 'Produkcja filmowa i wideo',
     description:
-      'Tworzymy materiały wideo od koncepcji (brief), 3D oraz po profesjonalne nagrania. Każde nagranie jest dopracowane pod kątem jakości i detalu.',
+      'Tworzymy filmy reklamowe, materiały promocyjne, dynamiczne ujęcia z dronów. Każdy projekt realizujemy kompleksowo – od koncepcji, przez nagrania, po montaż i publikację.',
     icon: <Film className="w-8 h-8" />,
     link: '/services/video-production',
   },
@@ -16,7 +16,7 @@ const services = [
     id: 2,
     title: 'Podcasty',
     description:
-      'Pełna wsparcie w tworzeniu podcastów – od nagrania w naszym profesjonalnym studiu, przez montaż, po publikację na mediach społecznościowych.',
+      'Oferujemy pełne wsparcie w produkcji podcastów – od nagrania w profesjonalnym studiu, przez montaż, po dystrybucję w social media i na platformach streamingowych.',
     icon: <Radio className="w-8 h-8" />,
     link: '/services/podcasts',
   },
@@ -24,7 +24,7 @@ const services = [
     id: 3,
     title: 'Realizacja na żywo',
     description:
-      'Obsługujemy live streamy z konferencji, wydarzeń czy szkoleń. Dostarczamy mobilne studio realizacyjne gotowe do pracy w terenie i zdalnie.',
+      'Realizujemy transmisje na żywo z konferencji, wydarzeń i szkoleń. Zapewniamy mobilne studio oraz obsługę techniczną na najwyższym poziomie.',
     icon: <MonitorPlay className="w-8 h-8" />,
     link: '/services/live-streaming',
   },
@@ -32,7 +32,7 @@ const services = [
     id: 4,
     title: 'Tworzenie treści marketingowych',
     description:
-      'Pomagamy markom wyróżnić się w sieci, tworząc angażujące materiały wideo, poradniki oraz wszelkie treści tekstowe i graficzne dla grup docelowych.',
+      'Tworzymy skuteczne treści marketingowe, które docierają do Twoich klientów i budują świadomość marki w internecie.',
     icon: <Video className="w-8 h-8" />,
     link: '/services/marketing-content',
   },
@@ -40,7 +40,7 @@ const services = [
     id: 5,
     title: 'Social Media',
     description:
-      'Kompleksowa obsługa kanałów społecznościowych, od strategii komunikacji, przez tworzenie treści, po analizę efektywności i optymalizację działań.',
+      'Prowadzimy kompleksową obsługę kanałów social media – od strategii, przez tworzenie angażujących treści, po moderację i kampanie reklamowe. Zwiększamy zasięgi, budujemy zaangażowaną społeczność i wspieramy sprzedaż.',
     icon: <MessageSquare className="w-8 h-8" />,
     link: '/services/social-media',
   },
@@ -54,9 +54,9 @@ const services = [
   },
   {
     id: 7,
-    title: 'Web Development',
+    title: 'Strony internetowe i SEO',
     description:
-      'Tworzenie stron internetowych, aplikacji i serwisów. Oferujemy od koncepcji do publikacji.',
+      'Projektujemy nowoczesne strony internetowe oraz prowadzimy audyty SEO i pozycjonowanie stron, aby Twoja marka była jeszcze lepiej widoczna w Google.',
     icon: <Globe className="w-8 h-8" />,
     link: '/services/web-development',
   }

@@ -54,10 +54,10 @@ const Hero = () => {
           className="max-w-3xl"
         >
           <h1 className="text-4xl md:text-5xl lg:text-7xl font-bold text-white mb-6 leading-tight">
-            Zróbmy razem coś <span className="text-orange">wyjątkowego</span>
+          Wideo, <span className="text-orange">Social Media</span> i Marketing Internetowy
           </h1>
           <p className="text-lg md:text-xl text-gray-200 mb-8 max-w-2xl">
-            Chcesz rozwinąć swoją markę lub projekt? Skontaktuj się z nami! Nasze doświadczenie i pasja do tworzenia wyjątkowych treści wideo pomogą Ci dotrzeć do nowych odbiorców i wyróżnić się na tle konkurencji.
+          Chcesz, aby Twoja marka była widoczna w internecie i angażowała odbiorców? DKW Group to agencja kreatywna specjalizująca się w produkcji filmów reklamowych, podcastów, transmisji live oraz kompleksowym marketingu w social media.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
             <Link to="/contact">

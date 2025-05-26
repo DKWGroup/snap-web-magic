@@ -82,15 +82,17 @@ const Navbar = () => {
   return (
     <header
       className={`fixed top-0 left-0 w-full z-50 transition-all duration-300 ${
-        isScrolled ? 'bg-darkBg/50 backdrop-blur-md py-3 shadow-lg' : 'py-5'
+        isScrolled ? 'bg-darkBg/50 py-3' : 'py-5'
+      } ${
+        isMobileMenuOpen ? 'bg-darkBg' : 'backdrop-blur-md'
       }`}
     >
       <div className="container flex items-center justify-between h-16">
         <Logo />
 
         {/* Desktop Navigation - Modern styled with NavigationMenu */}
-        <div className="hidden md:flex items-center space-x-4">
-          <NavigationMenu className="hidden md:flex">
+        <div className="hidden xl:flex items-center space-x-4">
+          <NavigationMenu className="hidden xl:flex">
             <NavigationMenuList>
               {navLinks.map((link) => (
                 <NavigationMenuItem key={link.name}>
@@ -124,7 +126,7 @@ const Navbar = () => {
 
         {/* Mobile Menu Button */}
         <button
-          className="md:hidden text-white rounded-full p-2 hover:bg-darkCard transition-colors"
+          className="xl:hidden text-white rounded-full p-2 hover:bg-darkCard transition-colors"
           onClick={toggleMobileMenu}
           aria-label="Toggle Menu"
         >
@@ -134,10 +136,12 @@ const Navbar = () => {
 
       {/* Mobile Menu - Full screen on all devices with backdrop blur */}
       <div
-        className={`md:hidden fixed top-[60px] right-0 h-screen w-full bg-darkBg/98 backdrop-blur-md shadow-xl transition-all duration-300 ease-in-out transform ${
-          isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
-        }`}
-      >
+  className={`xl:hidden fixed right-0 h-screen w-full shadow-xl backdrop-blur-md transition-all duration-300 ease-in-out transform ${
+    isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
+  } ${
+    isScrolled ? 'top-[88px]' : 'top-[104px]'
+  } `}
+>
         <div className="flex flex-col space-y-4 p-6 pt-8">
           {navLinks.map((link) => (
             <Link

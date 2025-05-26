@@ -15,17 +15,17 @@ const FAQSection = () => {
     {
       id: 'faq-1',
       question: 'Jakie usługi oferuje DKW Group?',
-      answer: 'DKW Group oferuje profesjonalne usługi produkcji wideo, marketingu internetowego oraz tworzenia angażujących treści dla marek. Nasze usługi obejmują produkcję filmów reklamowych, obsługę kanałów social media, tworzenie strategii marketingowych i wiele innych.'
+      answer: 'Specjalizujemy się w produkcji filmów reklamowych, podcastów, transmisjach live oraz kompleksowej obsłudze social media. Oferujemy także projektowanie stron internetowych, audyty SEO i strategie marketingowe.'
     },
     {
       id: 'faq-2',
       question: 'Jak przebiega proces współpracy z DKW Group?',
-      answer: 'Proces współpracy zaczyna się od konsultacji, podczas której poznajemy Twoje potrzeby i cele biznesowe. Następnie przygotowujemy indywidualną ofertę, opracowujemy strategię działania i po jej zaakceptowaniu przechodzimy do realizacji projektu. Na każdym etapie informujemy o postępach i pozostajemy w stałym kontakcie.'
+      answer: 'Rozpoczynamy od konsultacji i analizy Twoich potrzeb. Następnie przygotowujemy indywidualną strategię marketingową, realizujemy produkcję treści wideo i prowadzimy Twoje kanały social media. Na każdym etapie informujemy o postępach i dbamy o efekty.'
     },
     {
       id: 'faq-3',
       question: 'Ile kosztują usługi DKW Group?',
-      answer: 'Ceny naszych usług są ustalane indywidualnie w zależności od zakresu projektu, czasu realizacji i wymaganych zasobów. Zapraszamy do kontaktu, aby omówić szczegóły Twojego projektu i przygotować spersonalizowaną wycenę.'
+      answer: 'Ceny ustalamy indywidualnie, w zależności od zakresu projektu i wybranych usług. Skontaktuj się z nami, aby otrzymać spersonalizowaną wycenę.'
     },
     {
       id: 'faq-4',
@@ -35,7 +35,7 @@ const FAQSection = () => {
     {
       id: 'faq-5',
       question: 'Czy DKW Group obsługuje klientów z całej Polski?',
-      answer: 'Tak, obsługujemy klientów z całej Polski, a także realizujemy projekty międzynarodowe. Niezależnie od lokalizacji, zapewniamy profesjonalną obsługę i wysoką jakość usług.'
+      answer: 'Tak, realizujemy projekty dla klientów z całej Polski i zagranicy. Pracujemy zarówno stacjonarnie, jak i zdalnie.'
     }
   ];
 
