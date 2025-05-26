@@ -21,12 +21,12 @@ const Navbar = () => {
 
   const navLinks = [
     { name: 'WITAMY', path: '/' },
-    { name: 'O NAS', path: '/about' },
-    { name: 'USŁUGI', path: '/services' },
-    { name: 'PROJEKTY', path: '/projects' },
+    { name: 'O NAS', path: '/o-nas' },
+    { name: 'USŁUGI', path: '/uslugi' },
+    { name: 'PROJEKTY', path: '/projekty' },
     { name: 'CASE STUDIES', path: '/case-studies' },
     { name: 'BLOG', path: '/blog' },
-    { name: 'KONTAKT', path: '/contact' },
+    { name: 'KONTAKT', path: '/kontakt' },
   ];
 
   useEffect(() => {
@@ -44,6 +44,11 @@ const Navbar = () => {
       window.removeEventListener('scroll', handleScroll);
     };
   }, []);
+
+  // Scroll to top when route changes
+  useEffect(() => {
+    window.scrollTo(0, 0);
+  }, [location.pathname]);
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
@@ -82,7 +87,7 @@ const Navbar = () => {
           </NavigationMenu>
 
           {/* CTA Button */}
-          <Link to="/contact">
+          <Link to="/kontakt">
             <Button className="bg-orange hover:bg-orange-dark text-white rounded-md font-bold transition-all duration-300 shadow-lg hover:shadow-orange/20">
               SKONTAKTUJ SIĘ!
             </Button>
@@ -99,7 +104,7 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile Menu - Full screen on all devices */}
+      {/* Mobile Menu - Full screen on all devices with backdrop blur */}
       <div
         className={`md:hidden fixed top-[60px] right-0 h-screen w-full bg-darkBg/98 backdrop-blur-md shadow-xl transition-all duration-300 ease-in-out transform ${
           isMobileMenuOpen ? 'translate-x-0' : 'translate-x-full'
@@ -122,7 +127,7 @@ const Navbar = () => {
           ))}
           <div className="pt-6">
             <Link
-              to="/contact"
+              to="/kontakt"
               className="w-full btn-primary text-center block py-3 rounded-md bg-orange text-white font-bold"
               onClick={() => setIsMobileMenuOpen(false)}
             >

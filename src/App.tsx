@@ -36,18 +36,18 @@ const App = () => (
           <Route path="/admin" element={<Admin />} />
           <Route path="/admin/login" element={<AdminLogin />} />
           <Route path="/" element={<Layout><Index /></Layout>} />
-          <Route path="/about" element={<Layout><About /></Layout>} />
-          <Route path="/services" element={<Layout><Services /></Layout>} />
-          <Route path="/services/video-production" element={<Layout><VideoProduction /></Layout>} />
-          <Route path="/services/podcasts" element={<Layout><Podcasts /></Layout>} />
-          <Route path="/services/live-streaming" element={<Layout><LiveStreaming /></Layout>} />
-          <Route path="/services/marketing-content" element={<Layout><MarketingContent /></Layout>} />
-          <Route path="/services/social-media" element={<Layout><SocialMedia /></Layout>} />
-          <Route path="/services/graphic-design" element={<Layout><GraphicDesign /></Layout>} />
-          <Route path="/services/web-development" element={<Layout><WebDevelopment /></Layout>} />
-          <Route path="/projects" element={<Layout><Projects /></Layout>} />
+          <Route path="/o-nas" element={<Layout><About /></Layout>} />
+          <Route path="/uslugi" element={<Layout><Services /></Layout>} />
+          <Route path="/uslugi/produkcja-wideo" element={<Layout><VideoProduction /></Layout>} />
+          <Route path="/uslugi/podcasty" element={<Layout><Podcasts /></Layout>} />
+          <Route path="/uslugi/live-streaming" element={<Layout><LiveStreaming /></Layout>} />
+          <Route path="/uslugi/marketing-content" element={<Layout><MarketingContent /></Layout>} />
+          <Route path="/uslugi/social-media" element={<Layout><SocialMedia /></Layout>} />
+          <Route path="/uslugi/grafika" element={<Layout><GraphicDesign /></Layout>} />
+          <Route path="/uslugi/strony-internetowe" element={<Layout><WebDevelopment /></Layout>} />
+          <Route path="/projekty" element={<Layout><Projects /></Layout>} />
           <Route path="/blog" element={<Layout><Blog /></Layout>} />
-          <Route path="/contact" element={<Layout><Contact /></Layout>} />
+          <Route path="/kontakt" element={<Layout><Contact /></Layout>} />
           <Route path="/case-studies" element={<Layout><CaseStudies /></Layout>} />
           <Route path="/case-studies/:caseId" element={<Layout><CaseStudyDetail /></Layout>} />
           {/* ADD ALL CUSTOM ROUTES ABOVE THE CATCH-ALL "*" ROUTE */}

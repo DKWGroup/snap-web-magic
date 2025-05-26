@@ -8,11 +8,12 @@ const Footer = () => {
   
   const menuItems = [
     { name: 'Główna', path: '/' },
-    { name: 'O nas', path: '/about' },
-    { name: 'Usługi', path: '/services' },
-    { name: 'Projekty', path: '/projects' },
+    { name: 'O nas', path: '/o-nas' },
+    { name: 'Usługi', path: '/uslugi' },
+    { name: 'Projekty', path: '/projekty' },
+    { name: 'Case Studies', path: '/case-studies' },
     { name: 'Blog', path: '/blog' },
-    { name: 'Kontakt', path: '/contact' },
+    { name: 'Kontakt', path: '/kontakt' },
   ];
 
   return (
