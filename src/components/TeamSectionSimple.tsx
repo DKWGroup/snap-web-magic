@@ -2,6 +2,7 @@
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const teamMembers = [
   {
@@ -28,6 +29,8 @@ const teamMembers = [
 ];
 
 const TeamSectionSimple = () => {
+  const { language, t } = useLanguage();
+  
   const containerVariants = {
     hidden: {},
     visible: {
@@ -48,10 +51,20 @@ const TeamSectionSimple = () => {
     },
   };
 
+  const getSectionTitle = () => {
+    return language === 'en' 
+      ? 'Meet our team' 
+      : 'Poznaj nasz zespół';
+  };
+
+  const getAboutPath = () => {
+    return language === 'en' ? '/en/about' : '/o-nas';
+  };
+
   return (
     <section className="py-20 bg-darkBg">
       <div className="container">
-        <h2 className="section-title">Poznaj nasz <span className="text-orange">zespół</span></h2>
+        <h2 className="section-title">{getSectionTitle()} <span className="text-orange">{language === 'en' ? '' : ''}</span></h2>
         
         <motion.div
           variants={containerVariants}
@@ -96,7 +109,7 @@ const TeamSectionSimple = () => {
               className="bg-orange hover:bg-orange/80 text-white font-medium px-8 py-6"
               asChild
             >
-              <Link to="/o-nas">POZNAJ NAS LEPIEJ</Link>
+              <Link to={getAboutPath()}>{t('common.learnMore')}</Link>
             </Button>
           </motion.div>
         </div>

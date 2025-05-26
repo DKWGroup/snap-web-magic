@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import { Menu, X } from 'lucide-react';
 import Logo from './Logo';
+import LanguageSwitcher from './LanguageSwitcher';
 import { Button } from '@/components/ui/button';
 import {
   NavigationMenu,
@@ -13,21 +14,41 @@ import {
   NavigationMenuTrigger,
 } from "@/components/ui/navigation-menu";
 import { cn } from "@/lib/utils";
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Navbar = () => {
   const [isScrolled, setIsScrolled] = useState(false);
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
   const location = useLocation();
+  const { language, t } = useLanguage();
 
-  const navLinks = [
-    { name: 'WITAMY', path: '/' },
-    { name: 'O NAS', path: '/o-nas' },
-    { name: 'USŁUGI', path: '/uslugi' },
-    { name: 'PROJEKTY', path: '/projekty' },
-    { name: 'CASE STUDIES', path: '/case-studies' },
-    { name: 'BLOG', path: '/blog' },
-    { name: 'KONTAKT', path: '/kontakt' },
-  ];
+  const getNavLinks = () => {
+    const basePrefix = language === 'en' ? '/en' : '';
+    
+    if (language === 'en') {
+      return [
+        { name: t('nav.home'), path: '/en' },
+        { name: t('nav.about'), path: '/en/about' },
+        { name: t('nav.services'), path: '/en/services' },
+        { name: t('nav.projects'), path: '/en/projects' },
+        { name: t('nav.caseStudies'), path: '/en/case-studies' },
+        { name: t('nav.blog'), path: '/en/blog' },
+        { name: t('nav.contact'), path: '/en/contact' },
+      ];
+    } else {
+      return [
+        { name: t('nav.home'), path: '/' },
+        { name: t('nav.about'), path: '/o-nas' },
+        { name: t('nav.services'), path: '/uslugi' },
+        { name: t('nav.projects'), path: '/projekty' },
+        { name: t('nav.caseStudies'), path: '/case-studies' },
+        { name: t('nav.blog'), path: '/blog' },
+        { name: t('nav.contact'), path: '/kontakt' },
+      ];
+    }
+  };
+
+  const navLinks = getNavLinks();
 
   useEffect(() => {
     const handleScroll = () => {
@@ -52,6 +73,10 @@ const Navbar = () => {
 
   const toggleMobileMenu = () => {
     setIsMobileMenuOpen(!isMobileMenuOpen);
+  };
+
+  const getContactPath = () => {
+    return language === 'en' ? '/en/contact' : '/kontakt';
   };
 
   return (
@@ -86,10 +111,13 @@ const Navbar = () => {
             </NavigationMenuList>
           </NavigationMenu>
 
+          {/* Language Switcher */}
+          <LanguageSwitcher />
+
           {/* CTA Button */}
-          <Link to="/kontakt">
+          <Link to={getContactPath()}>
             <Button className="bg-orange hover:bg-orange-dark text-white rounded-md font-bold transition-all duration-300 shadow-lg hover:shadow-orange/20">
-              SKONTAKTUJ SIĘ!
+              {t('nav.cta')}
             </Button>
           </Link>
         </div>
@@ -125,13 +153,19 @@ const Navbar = () => {
               {link.name}
             </Link>
           ))}
+          
+          {/* Language Switcher in Mobile Menu */}
+          <div className="px-4 py-3">
+            <LanguageSwitcher />
+          </div>
+          
           <div className="pt-6">
             <Link
-              to="/kontakt"
+              to={getContactPath()}
               className="w-full btn-primary text-center block py-3 rounded-md bg-orange text-white font-bold"
               onClick={() => setIsMobileMenuOpen(false)}
             >
-              SKONTAKTUJ SIĘ!
+              {t('nav.cta')}
             </Link>
           </div>
         </div>

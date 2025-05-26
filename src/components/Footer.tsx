@@ -2,19 +2,37 @@
 import { Link } from 'react-router-dom';
 import Logo from './Logo';
 import { Mail, Phone } from 'lucide-react';
+import { useLanguage } from '@/contexts/LanguageContext';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
+  const { language, t } = useLanguage();
   
-  const menuItems = [
-    { name: 'Główna', path: '/' },
-    { name: 'O nas', path: '/o-nas' },
-    { name: 'Usługi', path: '/uslugi' },
-    { name: 'Projekty', path: '/projekty' },
-    { name: 'Case Studies', path: '/case-studies' },
-    { name: 'Blog', path: '/blog' },
-    { name: 'Kontakt', path: '/kontakt' },
-  ];
+  const getMenuItems = () => {
+    if (language === 'en') {
+      return [
+        { name: t('nav.home'), path: '/en' },
+        { name: t('nav.about'), path: '/en/about' },
+        { name: t('nav.services'), path: '/en/services' },
+        { name: t('nav.projects'), path: '/en/projects' },
+        { name: t('nav.caseStudies'), path: '/en/case-studies' },
+        { name: t('nav.blog'), path: '/en/blog' },
+        { name: t('nav.contact'), path: '/en/contact' },
+      ];
+    } else {
+      return [
+        { name: t('nav.home'), path: '/' },
+        { name: t('nav.about'), path: '/o-nas' },
+        { name: t('nav.services'), path: '/uslugi' },
+        { name: t('nav.projects'), path: '/projekty' },
+        { name: t('nav.caseStudies'), path: '/case-studies' },
+        { name: t('nav.blog'), path: '/blog' },
+        { name: t('nav.contact'), path: '/kontakt' },
+      ];
+    }
+  };
+
+  const menuItems = getMenuItems();
 
   return (
     <footer className="bg-darkBg text-white pt-12 pb-4">
@@ -56,7 +74,7 @@ const Footer = () => {
           </div>
           
           <div>
-            <h3 className="font-bold text-xl mb-4">Menu</h3>
+            <h3 className="font-bold text-xl mb-4">{t('footer.menu')}</h3>
             <nav className="grid grid-cols-1 gap-2">
               {menuItems.map((item) => (
                 <Link
@@ -71,9 +89,9 @@ const Footer = () => {
           </div>
           
           <div>
-            <h3 className="font-bold text-xl mb-4">O nas</h3>
+            <h3 className="font-bold text-xl mb-4">{t('footer.about')}</h3>
             <p className="text-gray-300 mb-4">
-              DKW Group to zespół profesjonalistów specjalizujących się w produkcji wideo, marketingu internetowym i tworzeniu angażujących treści, które pomagają markom wyróżnić się na rynku.
+              {t('footer.description')}
             </p>
           </div>
         </div>
@@ -81,7 +99,7 @@ const Footer = () => {
         <div className="border-t border-gray-800 pt-6">
           <div className="flex flex-col md:flex-row justify-between items-center">
             <p className="text-gray-400 text-sm">
-              &copy; {currentYear} DKW Group. Wszystkie prawa zastrzeżone.
+              &copy; {currentYear} DKW Group. {t('footer.rights')}
             </p>
           </div>
         </div>
