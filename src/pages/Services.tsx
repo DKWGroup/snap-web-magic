@@ -1,3 +1,4 @@
+
 import { motion } from 'framer-motion';
 import { ArrowRight, Film, Radio, MonitorPlay, Video, MessageSquare, PenTool, BadgeCheck, Globe } from 'lucide-react';
 import { Link } from 'react-router-dom';
@@ -10,7 +11,7 @@ const services = [
     description:
       'Tworzymy filmy reklamowe, materiały promocyjne, dynamiczne ujęcia z dronów. Każdy projekt realizujemy kompleksowo – od koncepcji, przez nagrania, po montaż i publikację.',
     icon: <Film className="w-8 h-8" />,
-    link: '/services/video-production',
+    link: '/uslugi/produkcja-wideo',
   },
   {
     id: 2,
@@ -18,7 +19,7 @@ const services = [
     description:
       'Oferujemy pełne wsparcie w produkcji podcastów – od nagrania w profesjonalnym studiu, przez montaż, po dystrybucję w social media i na platformach streamingowych.',
     icon: <Radio className="w-8 h-8" />,
-    link: '/services/podcasts',
+    link: '/uslugi/podcasty',
   },
   {
     id: 3,
@@ -26,7 +27,7 @@ const services = [
     description:
       'Realizujemy transmisje na żywo z konferencji, wydarzeń i szkoleń. Zapewniamy mobilne studio oraz obsługę techniczną na najwyższym poziomie.',
     icon: <MonitorPlay className="w-8 h-8" />,
-    link: '/services/live-streaming',
+    link: '/uslugi/live-streaming',
   },
   {
     id: 4,
@@ -34,7 +35,7 @@ const services = [
     description:
       'Tworzymy skuteczne treści marketingowe, które docierają do Twoich klientów i budują świadomość marki w internecie.',
     icon: <Video className="w-8 h-8" />,
-    link: '/services/marketing-content',
+    link: '/uslugi/marketing-content',
   },
   {
     id: 5,
@@ -42,7 +43,7 @@ const services = [
     description:
       'Prowadzimy kompleksową obsługę kanałów social media – od strategii, przez tworzenie angażujących treści, po moderację i kampanie reklamowe. Zwiększamy zasięgi, budujemy zaangażowaną społeczność i wspieramy sprzedaż.',
     icon: <MessageSquare className="w-8 h-8" />,
-    link: '/services/social-media',
+    link: '/uslugi/social-media',
   },
   {
     id: 6,
@@ -50,7 +51,7 @@ const services = [
     description:
       'Projektujemy nowoczesne strony internetowe oraz prowadzimy audyty SEO i pozycjonowanie stron, aby Twoja marka była jeszcze lepiej widoczna w Google.',
     icon: <Globe className="w-8 h-8" />,
-    link: '/services/web-development',
+    link: '/uslugi/strony-internetowe',
   }
 ];
 

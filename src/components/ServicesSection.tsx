@@ -11,7 +11,7 @@ const services = [
     description:
       'Tworzymy materiały wideo od koncepcji (brief), 3D oraz po profesjonalne nagrania. Każde nagranie jest dopracowane pod kątem jakości i detalu.',
     icon: <Film className="w-8 h-8" />,
-    link: '/services/video-production',
+    link: '/uslugi/produkcja-wideo',
   },
   {
     id: 2,
@@ -19,7 +19,7 @@ const services = [
     description:
       'Pełna wsparcie w tworzeniu podcastów – od nagrania w naszym profesjonalnym studiu, przez montaż, po publikację na mediach społecznościowych.',
     icon: <Radio className="w-8 h-8" />,
-    link: '/services/podcasts',
+    link: '/uslugi/podcasty',
   },
   {
     id: 3,
@@ -27,7 +27,7 @@ const services = [
     description:
       'Obsługujemy live streamy z konferencji, wydarzeń czy szkoleń. Dostarczamy mobilne studio realizacyjne gotowe do pracy w terenie i zdalnie.',
     icon: <MonitorPlay className="w-8 h-8" />,
-    link: '/services/live-streaming',
+    link: '/uslugi/live-streaming',
   },
   {
     id: 4,
@@ -35,7 +35,7 @@ const services = [
     description:
       'Projektowanie i tworzenie responsywnych stron internetowych oraz optymalizacja pod kątem wyszukiwarek, aby zwiększyć widoczność Twojej marki online.',
     icon: <Globe className="w-8 h-8" />,
-    link: '/services/web-development',
+    link: '/uslugi/strony-internetowe',
   },
   {
     id: 5,
@@ -43,7 +43,7 @@ const services = [
     description:
       'Tworzymy angażujące treści marketingowe, które docierają do Twoich klientów i budują świadomość marki.',
     icon: <BarChart3 className="w-8 h-8" />,
-    link: '/services/marketing-content',
+    link: '/uslugi/marketing-content',
   },
   {
     id: 6,
@@ -51,7 +51,7 @@ const services = [
     description:
       'Kompleksowa obsługa social media, która zwiększa zasięgi i buduje zaangażowaną społeczność wokół Twojej marki.',
     icon: <Video className="w-8 h-8" />,
-    link: '/services/social-media',
+    link: '/uslugi/social-media',
   },
 ];
 
