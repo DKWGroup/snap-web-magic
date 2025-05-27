@@ -1,7 +1,7 @@
 
 import { Link } from 'react-router-dom';
 import { motion } from 'framer-motion';
-import { ArrowRight, Film, Radio, MonitorPlay, Globe, Palette, Video, BarChart3 } from 'lucide-react';
+import { ArrowRight, Film, Radio, MonitorPlay, Globe, Palette, Video, BarChart3, Plane } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 
 const services = [
@@ -15,6 +15,14 @@ const services = [
   },
   {
     id: 2,
+    title: 'Nagrania dronem',
+    description:
+      'Spektakularne ujęcia z powietrza przy użyciu dronów DJI i FPV. Tworzymy dynamiczne nagrania krajobrazów, nieruchomości i wydarzeń z unikalnej perspektywy.',
+    icon: <Plane className="w-8 h-8" />,
+    link: '/uslugi/nagrania-dronem',
+  },
+  {
+    id: 3,
     title: 'Podcasty',
     description:
       'Pełna wsparcie w tworzeniu podcastów – od nagrania w naszym profesjonalnym studiu, przez montaż, po publikację na mediach społecznościowych.',
@@ -22,7 +30,7 @@ const services = [
     link: '/uslugi/podcasty',
   },
   {
-    id: 3,
+    id: 4,
     title: 'Realizacja na żywo',
     description:
       'Obsługujemy live streamy z konferencji, wydarzeń czy szkoleń. Dostarczamy mobilne studio realizacyjne gotowe do pracy w terenie i zdalnie.',
@@ -30,7 +38,7 @@ const services = [
     link: '/uslugi/live-streaming',
   },
   {
-    id: 4,
+    id: 5,
     title: 'Strony internetowe i SEO',
     description:
       'Projektowanie i tworzenie responsywnych stron internetowych oraz optymalizacja pod kątem wyszukiwarek, aby zwiększyć widoczność Twojej marki online.',
@@ -38,7 +46,7 @@ const services = [
     link: '/uslugi/strony-internetowe',
   },
   {
-    id: 5,
+    id: 6,
     title: 'Treści marketingowe',
     description:
       'Tworzymy angażujące treści marketingowe, które docierają do Twoich klientów i budują świadomość marki.',
@@ -46,7 +54,7 @@ const services = [
     link: '/uslugi/marketing-content',
   },
   {
-    id: 6,
+    id: 7,
     title: 'Social Media',
     description:
       'Kompleksowa obsługa social media, która zwiększa zasięgi i buduje zaangażowaną społeczność wokół Twojej marki.',

@@ -1,6 +1,7 @@
 
+
 import { motion } from 'framer-motion';
-import { ArrowRight, Film, Radio, MonitorPlay, Video, MessageSquare, PenTool, BadgeCheck, Globe } from 'lucide-react';
+import { ArrowRight, Film, Radio, MonitorPlay, Video, MessageSquare, PenTool, BadgeCheck, Globe, Plane } from 'lucide-react';
 import { Link } from 'react-router-dom';
 import CTA from '@/components/CTA';
 
@@ -15,6 +16,14 @@ const services = [
   },
   {
     id: 2,
+    title: 'Nagrania dronem DJI i FPV',
+    description:
+      'Spektakularne ujęcia z powietrza przy użyciu profesjonalnych dronów DJI oraz dynamicznych dronów FPV. Tworzymy unikalne perspektywy dla nieruchomości, wydarzeń i kampanii marketingowych.',
+    icon: <Plane className="w-8 h-8" />,
+    link: '/uslugi/nagrania-dronem',
+  },
+  {
+    id: 3,
     title: 'Podcasty',
     description:
       'Oferujemy pełne wsparcie w produkcji podcastów – od nagrania w profesjonalnym studiu, przez montaż, po dystrybucję w social media i na platformach streamingowych.',
@@ -22,7 +31,7 @@ const services = [
     link: '/uslugi/podcasty',
   },
   {
-    id: 3,
+    id: 4,
     title: 'Realizacja na żywo',
     description:
       'Realizujemy transmisje na żywo z konferencji, wydarzeń i szkoleń. Zapewniamy mobilne studio oraz obsługę techniczną na najwyższym poziomie.',
@@ -30,7 +39,7 @@ const services = [
     link: '/uslugi/live-streaming',
   },
   {
-    id: 4,
+    id: 5,
     title: 'Tworzenie treści marketingowych',
     description:
       'Tworzymy skuteczne treści marketingowe, które docierają do Twoich klientów i budują świadomość marki w internecie.',
@@ -38,7 +47,7 @@ const services = [
     link: '/uslugi/marketing-content',
   },
   {
-    id: 5,
+    id: 6,
     title: 'Social Media',
     description:
       'Prowadzimy kompleksową obsługę kanałów social media – od strategii, przez tworzenie angażujących treści, po moderację i kampanie reklamowe. Zwiększamy zasięgi, budujemy zaangażowaną społeczność i wspieramy sprzedaż.',
@@ -46,7 +55,7 @@ const services = [
     link: '/uslugi/social-media',
   },
   {
-    id: 6,
+    id: 7,
     title: 'Strony internetowe i SEO',
     description:
       'Projektujemy nowoczesne strony internetowe oraz prowadzimy audyty SEO i pozycjonowanie stron, aby Twoja marka była jeszcze lepiej widoczna w Google.',

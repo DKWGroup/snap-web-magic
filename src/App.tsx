@@ -24,6 +24,7 @@ import MarketingContent from "./pages/services/MarketingContent";
 import SocialMedia from "./pages/services/SocialMedia";
 import GraphicDesign from "./pages/services/GraphicDesign";
 import WebDevelopment from "./pages/services/WebDevelopment";
+import DroneServices from "./pages/services/DroneServices";
 
 const queryClient = new QueryClient();
 
@@ -43,6 +44,7 @@ const App = () => (
             <Route path="/o-nas" element={<Layout><About /></Layout>} />
             <Route path="/uslugi" element={<Layout><Services /></Layout>} />
             <Route path="/uslugi/produkcja-wideo" element={<Layout><VideoProduction /></Layout>} />
+            <Route path="/uslugi/nagrania-dronem" element={<Layout><DroneServices /></Layout>} />
             <Route path="/uslugi/podcasty" element={<Layout><Podcasts /></Layout>} />
             <Route path="/uslugi/live-streaming" element={<Layout><LiveStreaming /></Layout>} />
             <Route path="/uslugi/marketing-content" element={<Layout><MarketingContent /></Layout>} />
@@ -60,6 +62,7 @@ const App = () => (
             <Route path="/en/about" element={<Layout><About /></Layout>} />
             <Route path="/en/services" element={<Layout><Services /></Layout>} />
             <Route path="/en/services/video-production" element={<Layout><VideoProduction /></Layout>} />
+            <Route path="/en/services/drone-services" element={<Layout><DroneServices /></Layout>} />
             <Route path="/en/services/podcasts" element={<Layout><Podcasts /></Layout>} />
             <Route path="/en/services/live-streaming" element={<Layout><LiveStreaming /></Layout>} />
             <Route path="/en/services/marketing-content" element={<Layout><MarketingContent /></Layout>} />
