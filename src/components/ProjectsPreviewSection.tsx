@@ -10,7 +10,7 @@ const projects = [
     title: 'Obsługa Kanału YouTube dla Eksperta Lotniczego',
     client: 'Kokpit Kamila',
     description: 'Stworzyliśmy kanał "Kokpit Kamila", który zgromadził 3 mln wyświetleń, budując silną markę ekspercką Kamila Majdy w branży lotniczej.',
-    image: '/images/project-1.jpg',
+    image: '/images/portfolio/mkheli/kamil-matyja.avif',
     caseStudyId: '1',
   },
   {
@@ -18,7 +18,7 @@ const projects = [
     title: 'Kampania Reklamowa dla Investment Partners',
     client: 'Investment Partners',
     description: 'Stworzyliśmy spot reklamowy dla "Metamorfozy Finansowej", osiągając 30,000+ wyświetleń i setki rejestracji, zwiększając zasięg Investment Partners.',
-    image: '/images/project-2.jpg',
+    image: '/images/portfolio/metamorfoza-finansowa/mBK4aCTKV6GDku02gdKomW5Krns.jpg.webp',
     caseStudyId: '2',
   }
 ];

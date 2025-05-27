@@ -9,21 +9,21 @@ const teamMembers = [
     id: 1,
     name: 'Dawid',
     surname: 'Myszka',
-    role: 'Video Producer',
+    role: 'Producent wideo',
     photo: '/images/kamil-krukowski.png',
   },
   {
     id: 2,
     name: 'Kamil',
     surname: 'Krukowski',
-    role: 'Video Editor',
+    role: 'Operator drona / Strony WWW / SEO',
     photo: '/images/kamil-krukowski.png',
   },
   {
     id: 3,
     name: 'Wiktoria',
     surname: 'Skopek',
-    role: 'Marketing Specialist',
+    role: 'Specjalistka od marketingu / AI ADS',
     photo: '/images/kamil-krukowski.png',
   },
 ];
@@ -84,7 +84,7 @@ const TeamSectionSimple = () => {
                 <img
                   src={member.photo}
                   alt={`${member.name} ${member.surname}`}
-                  className="w-full h-full object-cover"
+                  className="w-full h-full object-cover object-top"
                 />
               </div>
               

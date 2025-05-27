@@ -46,14 +46,6 @@ const services = [
   },
   {
     id: 6,
-    title: 'Projektowanie graficzne',
-    description:
-      'Projektowanie logo, identyfikacji wizualnej, materiałów marketingowych, grafik do mediów społecznościowych i stron internetowych.',
-    icon: <PenTool className="w-8 h-8" />,
-    link: '/services/graphic-design',
-  },
-  {
-    id: 7,
     title: 'Strony internetowe i SEO',
     description:
       'Projektujemy nowoczesne strony internetowe oraz prowadzimy audyty SEO i pozycjonowanie stron, aby Twoja marka była jeszcze lepiej widoczna w Google.',

@@ -9,7 +9,7 @@ const teamMembers = [
     id: 1,
     name: 'Dawid',
     surname: 'Myszka',
-    role: 'Video Producer',
+    role: 'Producent wideo',
     email: 'dm.mymyszka@gmail.com',
     phone: '+48 517 957 875',
     photo: '/images/kamil-krukowski.png',
@@ -19,17 +19,17 @@ const teamMembers = [
     id: 2,
     name: 'Kamil',
     surname: 'Krukowski',
-    role: 'Video Editor',
+    role: 'Operator drona / Strony WWW / SEO',
     email: 'kamil.krukowski00@gmail.com',
     phone: '+48 881 046 689',
     photo: '/images/kamil-krukowski.png',
-    bio: 'Kamil to utalentowany montażysta wideo, który przekształca surowy materiał w fascynujące historie. Posiada szeroką wiedzę na temat najnowszych technik edycji i efektów specjalnych. Jego praca wyróżnia się dynamicznym stylem i precyzją, co przyczynia się do sukcesu każdego projektu.'
+    bio: 'Kamil to doświadczony operator drona, który realizuje profesjonalne ujęcia z powietrza na potrzeby filmów reklamowych i transmisji live. Specjalizuje się również w tworzeniu stron internetowych oraz pozycjonowaniu stron w Google, przeprowadzając skuteczne audyty SEO i optymalizacje. Dzięki połączeniu umiejętności operatorskich i wiedzy z zakresu SEO, kompleksowo wspiera klientów w budowaniu silnej marki online.'
   },
   {
     id: 3,
     name: 'Wiktoria',
     surname: 'Skopek',
-    role: 'Marketing Specialist',
+    role: 'Specjalistka od marketingu / AI ADS',
     email: 'wskopek.all@gmail.com',
     phone: '+48 537 168 645',
     photo: '/images/kamil-krukowski.png',
@@ -78,12 +78,12 @@ const TeamSection = () => {
             >
               <div className="lg:w-1/2">
                 <div className="aspect-square rounded-lg overflow-hidden relative group">
-                  <div className="absolute inset-0 bg-gradient-to-t from-black/90 via-black/50 to-transparent z-10"></div>
+                  <div className="absolute inset-0 bg-gradient-to-t from-orange/40 via-orange/10 to-transparent z-10"></div>
                   <div className="absolute inset-0 bg-orange/20 z-0 opacity-0 group-hover:opacity-100 transition-opacity duration-300"></div>
                   <img
                     src={member.photo}
                     alt={`${member.name} ${member.surname}`}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover object-top"
                   />
                 </div>
               </div>
@@ -132,7 +132,7 @@ const TeamSection = () => {
               className="bg-orange hover:bg-orange/80 text-white font-medium px-8 py-6"
               asChild
             >
-              <Link to="/contact">SKONTAKTUJ SIĘ Z NAMI</Link>
+              <Link to="/kontakt">SKONTAKTUJ SIĘ Z NAMI</Link>
             </Button>
           </motion.div>
         </div>

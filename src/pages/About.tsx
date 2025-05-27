@@ -27,10 +27,10 @@ const About = () => {
             initial={{ opacity: 0, y: 20 }}
             animate={{ opacity: 1, y: 0 }}
             transition={{ duration: 0.8, delay: 0.2 }}
-            className="aspect-[21/9] rounded-lg overflow-hidden mt-8"
+            className="aspect-[16/9] rounded-lg overflow-hidden mt-8"
           >
             <img
-              src="/images/team-photo.jpg"
+              src="/images/team/83zS6ZMNclQzv0e3WVCR9L7uBQ.webp"
               alt="DKW Group Team"
               className="w-full h-full object-cover"
             />
@@ -72,7 +72,7 @@ const About = () => {
             >
               <div className="aspect-square rounded-lg overflow-hidden">
                 <img
-                  src="/images/our-story.jpg"
+                  src="/images/team/gb5f94PwAgYLLdVXOJAvcRs2ucM.jpg.webp"
                   alt="DKW Group Story"
                   className="w-full h-full object-cover"
                 />

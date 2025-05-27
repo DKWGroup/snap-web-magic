@@ -10,12 +10,13 @@ import {
 
 // Client logos array
 const clients = [
-  { id: 1, name: 'Client 1', logo: '/images/client-1.svg' },
-  { id: 2, name: 'Client 2', logo: '/images/client-2.svg' },
-  { id: 3, name: 'Client 3', logo: '/images/client-3.svg' },
-  { id: 4, name: 'Client 4', logo: '/images/client-4.svg' },
-  { id: 5, name: 'Client 5', logo: '/images/client-5.svg' },
-  { id: 6, name: 'Client 6', logo: '/images/client-6.svg' },
+  { id: 1, name: 'akademia Lutowania', logo: '/images/clients/akademia-lutowania.webp' },
+  { id: 2, name: 'Contenty', logo: '/images/clients/contenty.webp' },
+  { id: 3, name: 'Grzegorz Kusz - Agent Specjalny', logo: '/images/clients/gk.webp' },
+  { id: 4, name: 'GlowUP', logo: '/images/clients/glowup.webp' },
+  { id: 5, name: 'Investment Partners', logo: '/images/clients/inp.svg' },
+  { id: 6, name: 'WellDone', logo: '/images/clients/welldone.webp' },
+  { id: 7, name: 'Kamil Matyja - MKHelicopters', logo: '/images/clients/mkhelicopters.webp' },
 ];
 
 const ClientsCarousel = () => {
@@ -47,15 +48,15 @@ const ClientsCarousel = () => {
                     <div className="p-4 bg-darkCard rounded-lg h-28 flex items-center justify-center">
                       <div className="h-16 w-full flex items-center justify-center">
                         {/* Use placeholder for development */}
-                        <div className="w-full h-12 rounded flex items-center justify-center text-orange border border-orange/30">
+                        {/* <div className="w-full h-12 rounded flex items-center justify-center text-orange border border-orange/30">
                           {client.name}
-                        </div>
+                        </div> */}
                         {/* Uncomment when you have actual logos */}
-                        {/* <img 
+                        <img 
                           src={client.logo} 
                           alt={`${client.name} logo`} 
                           className="max-h-16 max-w-full object-contain filter grayscale hover:grayscale-0 transition-all duration-300"
-                        /> */}
+                        />
                       </div>
                     </div>
                   </CarouselItem>

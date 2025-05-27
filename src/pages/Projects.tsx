@@ -9,12 +9,12 @@ const projects = [
     title: 'Obsługa Kanału YouTube dla Eksperta Lotniczego',
     client: 'Kokpit Kamila',
     category: 'YouTube Management',
-    description: 'Stworzyliśmy kanał "Kokpit Kamila", który zgromadził 3 mln wyświetleń, budując silną markę ekspercką Kamila Majdy w branży lotniczej.',
-    image: '/images/project-1.jpg',
+    description: 'Stworzyliśmy kanał "Kokpit Kamila", który zgromadził 5 mln wyświetleń, budując silną markę ekspercką w branży lotniczej.',
+    image: '/images/portfolio/mkheli/kamil-matyja.avif',
     caseStudyId: '1',
     stats: [
-      { value: '3 000 000+', label: 'wyświetleń na YouTube' },
-      { value: '30 000+', label: 'subskrybentów' }
+      { value: '5 000 000+', label: 'wyświetleń na YouTube' },
+      { value: '2750+', label: 'subskrybentów' }
     ]
   },
   {
@@ -23,7 +23,7 @@ const projects = [
     client: 'Investment Partners',
     category: 'Video Marketing',
     description: 'Stworzyliśmy spot reklamowy dla "Metamorfozy Finansowej", osiągając 30,000+ wyświetleń i setki rejestracji, zwiększając zasięg Investment Partners.',
-    image: '/images/project-2.jpg',
+    image: '/images/portfolio/metamorfoza-finansowa/mBK4aCTKV6GDku02gdKomW5Krns.jpg.webp',
     caseStudyId: '2',
     stats: [
       { value: 'Setki', label: 'rejestracji' },
@@ -36,11 +36,11 @@ const projects = [
     client: 'Grzegorz Kusz',
     category: 'Content Creation',
     description: 'Kompleksowa obsługa kanału – od nagrań po publikację, budowanie zaangażowanej społeczności i tworzenie wartościowych treści.',
-    image: '/images/project-3.jpg',
+    image: '/images/portfolio/gk/gk-kanal.webp',
     caseStudyId: '3',
     stats: [
       { value: '5 lat', label: 'współpracy' },
-      { value: '+400k', label: 'subskrypcji' }
+      { value: '+450k', label: 'subskrypcji' }
     ]
   }
 ];

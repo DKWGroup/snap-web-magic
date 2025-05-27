@@ -62,9 +62,9 @@ const Index = () => {
               transition={{ duration: 0.8, delay: 0.2 }}
               className="lg:w-1/2"
             >
-              <div className="aspect-video rounded-lg overflow-hidden">
+              <div className="aspect-square rounded-lg overflow-hidden">
                 <img
-                  src="/images/about-us.jpg"
+                  src="/images/team/ymao5tMOY0kmEzmuQXnguEJTcDY.jpg_1.webp"
                   alt="DKW Group Team"
                   className="w-full h-full object-cover"
                 />

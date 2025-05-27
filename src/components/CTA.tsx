@@ -21,7 +21,7 @@ const CTA = () => {
             <p className="text-gray-300 mb-8 max-w-2xl">
               Nie czekaj — napisz do nas już teraz i dowiedz się, jak możemy wspólnie zrealizować Twoje cele! Czekamy na Twój kontakt!
             </p>
-            <Link to="/contact">
+            <Link to="/kontakt">
               <Button size="lg" className="bg-orange hover:bg-orange-dark text-white">
                 SKONTAKTUJ SIĘ Z NAMI
               </Button>
