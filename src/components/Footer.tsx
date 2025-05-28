@@ -6,33 +6,17 @@ import { useLanguage } from '@/contexts/LanguageContext';
 
 const Footer = () => {
   const currentYear = new Date().getFullYear();
-  const { language, t } = useLanguage();
+  const { t } = useLanguage();
   
-  const getMenuItems = () => {
-    if (language === 'en') {
-      return [
-        { name: t('nav.home'), path: '/en' },
-        { name: t('nav.about'), path: '/en/about' },
-        { name: t('nav.services'), path: '/en/services' },
-        { name: t('nav.projects'), path: '/en/projects' },
-        { name: t('nav.caseStudies'), path: '/en/case-studies' },
-        { name: t('nav.blog'), path: '/en/blog' },
-        { name: t('nav.contact'), path: '/en/contact' },
-      ];
-    } else {
-      return [
-        { name: t('nav.home'), path: '/' },
-        { name: t('nav.about'), path: '/o-nas' },
-        { name: t('nav.services'), path: '/uslugi' },
-        { name: t('nav.projects'), path: '/projekty' },
-        { name: t('nav.caseStudies'), path: '/case-studies' },
-        { name: t('nav.blog'), path: '/blog' },
-        { name: t('nav.contact'), path: '/kontakt' },
-      ];
-    }
-  };
-
-  const menuItems = getMenuItems();
+  const menuItems = [
+    { name: t('nav.home'), path: '/' },
+    { name: t('nav.about'), path: '/o-nas' },
+    { name: t('nav.services'), path: '/uslugi' },
+    { name: t('nav.projects'), path: '/projekty' },
+    { name: t('nav.caseStudies'), path: '/case-studies' },
+    { name: t('nav.blog'), path: '/blog' },
+    { name: t('nav.contact'), path: '/kontakt' },
+  ];
 
   return (
     <footer className="bg-darkBg text-white pt-12 pb-4">

@@ -29,7 +29,7 @@ const teamMembers = [
 ];
 
 const TeamSectionSimple = () => {
-  const { language, t } = useLanguage();
+  const { t } = useLanguage();
   
   const containerVariants = {
     hidden: {},
@@ -52,19 +52,17 @@ const TeamSectionSimple = () => {
   };
 
   const getSectionTitle = () => {
-    return language === 'en' 
-      ? 'Meet our team' 
-      : 'Poznaj nasz zespół';
+    return 'Poznaj nasz zespół';
   };
 
   const getAboutPath = () => {
-    return language === 'en' ? '/en/about' : '/o-nas';
+    return '/o-nas';
   };
 
   return (
     <section className="py-20 bg-darkBg">
       <div className="container">
-        <h2 className="section-title">{getSectionTitle()} <span className="text-orange">{language === 'en' ? '' : ''}</span></h2>
+        <h2 className="section-title">{getSectionTitle()}</h2>
         
         <motion.div
           variants={containerVariants}
