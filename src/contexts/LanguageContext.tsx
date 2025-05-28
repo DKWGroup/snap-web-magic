@@ -1,8 +1,7 @@
 
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import React, { createContext, useContext, ReactNode } from 'react';
 
-export type Language = 'pl' | 'en';
+export type Language = 'pl';
 
 interface LanguageContextType {
   language: Language;
@@ -25,42 +24,12 @@ interface LanguageProviderProps {
 }
 
 export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) => {
-  const location = useLocation();
-  const navigate = useNavigate();
-  
-  // Determine language from URL
-  const isEnglish = location.pathname.startsWith('/en');
-  const [language, setLanguageState] = useState<Language>(isEnglish ? 'en' : 'pl');
+  const language: Language = 'pl';
 
   const setLanguage = (lang: Language) => {
-    const currentPath = location.pathname;
-    let newPath: string;
-
-    if (lang === 'en') {
-      // Switch to English
-      if (currentPath.startsWith('/en')) {
-        newPath = currentPath;
-      } else {
-        newPath = `/en${currentPath}`;
-      }
-    } else {
-      // Switch to Polish
-      if (currentPath.startsWith('/en')) {
-        newPath = currentPath.substring(3) || '/';
-      } else {
-        newPath = currentPath;
-      }
-    }
-
-    setLanguageState(lang);
-    navigate(newPath);
+    // Funkcja nieaktywna - język zawsze ustawiony na polski
+    console.log('Language switching disabled - always Polish');
   };
-
-  // Update language when URL changes
-  useEffect(() => {
-    const isEnglish = location.pathname.startsWith('/en');
-    setLanguageState(isEnglish ? 'en' : 'pl');
-  }, [location.pathname]);
 
   const t = (key: string): string => {
     return translations[language][key] || key;
@@ -73,7 +42,7 @@ export const LanguageProvider: React.FC<LanguageProviderProps> = ({ children }) 
   );
 };
 
-// Translations object
+// Translations object - tylko polski
 const translations = {
   pl: {
     // Navigation
@@ -96,27 +65,5 @@ const translations = {
     'common.learnMore': 'POZNAJ NAS LEPIEJ',
     'common.startWorking': 'Zacznijmy działać!',
     'common.contact': 'Kontakt',
-  },
-  en: {
-    // Navigation
-    'nav.home': 'HOME',
-    'nav.about': 'ABOUT',
-    'nav.services': 'SERVICES',
-    'nav.projects': 'PROJECTS',
-    'nav.caseStudies': 'CASE STUDIES',
-    'nav.blog': 'BLOG',
-    'nav.contact': 'CONTACT',
-    'nav.cta': 'GET IN TOUCH!',
-    
-    // Footer
-    'footer.menu': 'Menu',
-    'footer.about': 'About us',
-    'footer.description': 'DKW Group is a team of professionals specializing in video production, digital marketing and creating engaging content that helps brands stand out in the market.',
-    'footer.rights': 'All rights reserved.',
-    
-    // Common
-    'common.learnMore': 'LEARN MORE ABOUT US',
-    'common.startWorking': "Let's start working!",
-    'common.contact': 'Contact',
   }
 };
