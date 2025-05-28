@@ -30,7 +30,7 @@ const CaseStudiesPreviewSection = () => {
         setIsLoading(true);
         const { data, error } = await supabase
           .from('case_studies')
-          .select('id, title, summary, client, industry, image_url, slug')
+          .select('id, title, summary, client, industry, image_url, slug, youtube_url, gallery_images')
           .order('published_at', { ascending: false })
           .limit(3);
 
