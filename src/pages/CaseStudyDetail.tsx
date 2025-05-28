@@ -22,7 +22,7 @@ interface CaseStudy {
 }
 
 const CaseStudyDetail = () => {
-  const { caseId } = useParams<{ caseId: string }>();
+  const { slug } = useParams<{ slug: string }>();
   const navigate = useNavigate();
   const [caseStudy, setCaseStudy] = useState<CaseStudy | null>(null);
   const [isLoading, setIsLoading] = useState(true);
@@ -30,17 +30,17 @@ const CaseStudyDetail = () => {
 
   useEffect(() => {
     const fetchCaseStudy = async () => {
-      if (!caseId) return;
+      if (!slug) return;
 
       try {
         setIsLoading(true);
-        console.log('Fetching case study with slug/id:', caseId);
+        console.log('Fetching case study with slug:', slug);
         
         // Try to fetch by slug first
         let { data, error } = await supabase
           .from('case_studies')
           .select('*')
-          .eq('slug', caseId)
+          .eq('slug', slug)
           .maybeSingle();
 
         console.log('First query result (by slug):', { data, error });
@@ -51,7 +51,7 @@ const CaseStudyDetail = () => {
           const result = await supabase
             .from('case_studies')
             .select('*')
-            .eq('id', caseId)
+            .eq('id', slug)
             .maybeSingle();
           
           data = result.data;
@@ -65,7 +65,7 @@ const CaseStudyDetail = () => {
         }
 
         if (!data) {
-          console.log('No case study found for:', caseId);
+          console.log('No case study found for:', slug);
           // Let's also try to fetch all case studies to see what's available
           const { data: allCaseStudies } = await supabase
             .from('case_studies')
@@ -88,7 +88,7 @@ const CaseStudyDetail = () => {
     };
 
     fetchCaseStudy();
-  }, [caseId, navigate]);
+  }, [slug, navigate]);
 
   // Function to extract sections from content
   const extractSections = (content: string) => {
