@@ -15,7 +15,8 @@ const projects = [
     stats: [
       { value: '5 000 000+', label: 'wyświetleń na YouTube' },
       { value: '2750+', label: 'subskrybentów' }
-    ]
+    ],
+    slug: 'obsługa-kanału-youtube-dla-eksperta-lotniczego'
   },
   {
     id: 2,
@@ -28,7 +29,8 @@ const projects = [
     stats: [
       { value: 'Setki', label: 'rejestracji' },
       { value: '30 000+', label: 'wyświetleń' }
-    ]
+    ],
+    slug: 'kampania-reklamowa-dla-investment-partners'
   },
   {
     id: 3,
@@ -41,7 +43,8 @@ const projects = [
     stats: [
       { value: '5 lat', label: 'współpracy' },
       { value: '+450k', label: 'subskrypcji' }
-    ]
+    ],
+    slug: 'obsługa-kanału-grzegorz-kusz-agent-specjalny'
   }
 ];
 
@@ -135,7 +138,7 @@ const Projects = () => {
                   </div>
 
                   <Button asChild className="w-full sm:w-auto">
-                    <Link to={`/case-studies/${project.caseStudyId}`}>
+                    <Link to={`/case-studies/${project.slug}`}>
                       Zobacz całe case study
                     </Link>
                   </Button>
@@ -147,7 +150,7 @@ const Projects = () => {
       </section>
       
       {/* Media Gallery */}
-      <section className="py-20 bg-darkBg">
+      {/* <section className="py-20 bg-darkBg">
         <div className="container">
           <motion.div
             initial={{ opacity: 0, y: 20 }}
@@ -180,7 +183,7 @@ const Projects = () => {
             ))}
           </div>
         </div>
-      </section>
+      </section> */}
 
       <CTA />
     </main>
