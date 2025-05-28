@@ -1,3 +1,4 @@
+
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
@@ -19,6 +20,14 @@ interface CaseStudy {
   slug: string;
   youtube_url: string | null;
   gallery_images: string[] | null;
+}
+
+interface CaseStudyContent {
+  project_summary: string;
+  process: string;
+  results: string;
+  conclusions: string;
+  final_summary: string;
 }
 
 const CaseStudyDetail = () => {
@@ -66,12 +75,6 @@ const CaseStudyDetail = () => {
 
         if (!data) {
           console.log('No case study found for:', slug);
-          // Let's also try to fetch all case studies to see what's available
-          const { data: allCaseStudies } = await supabase
-            .from('case_studies')
-            .select('slug, title');
-          console.log('Available case studies:', allCaseStudies);
-          
           navigate('/case-studies');
           toast.error('Case study nie zostało znalezione');
           return;
@@ -90,67 +93,32 @@ const CaseStudyDetail = () => {
     fetchCaseStudy();
   }, [slug, navigate]);
 
-  // Function to extract sections from content
-  const extractSections = (content: string) => {
-    const sections = {
-      introduction: '',
-      problem: '',
+  // Function to parse content and return structured sections
+  const parseContent = (content: string): CaseStudyContent => {
+    try {
+      const parsedContent = JSON.parse(content);
+      if (typeof parsedContent === 'object' && parsedContent !== null) {
+        return {
+          project_summary: parsedContent.project_summary || '',
+          process: parsedContent.process || '',
+          results: parsedContent.results || '',
+          conclusions: parsedContent.conclusions || '',
+          final_summary: parsedContent.final_summary || ''
+        };
+      }
+    } catch {
+      // If parsing fails, treat as legacy string content
+      console.log('Legacy content format detected, using project_summary');
+    }
+    
+    // Fallback for legacy content
+    return {
+      project_summary: content,
       process: '',
       results: '',
-      testimonial: '',
-      summary: '',
-      cta: ''
+      conclusions: '',
+      final_summary: ''
     };
-
-    const lines = content.split('\n');
-    let currentSection = '';
-    let currentContent = '';
-
-    for (const line of lines) {
-      if (line.toLowerCase().includes('wprowadzenie') || line.toLowerCase().includes('cel projektu')) {
-        if (currentSection) sections[currentSection as keyof typeof sections] = currentContent.trim();
-        currentSection = 'introduction';
-        currentContent = '';
-      } else if (line.toLowerCase().includes('problem') || line.toLowerCase().includes('wyzwanie')) {
-        if (currentSection) sections[currentSection as keyof typeof sections] = currentContent.trim();
-        currentSection = 'problem';
-        currentContent = '';
-      } else if (line.toLowerCase().includes('proces') || line.toLowerCase().includes('realizacja')) {
-        if (currentSection) sections[currentSection as keyof typeof sections] = currentContent.trim();
-        currentSection = 'process';
-        currentContent = '';
-      } else if (line.toLowerCase().includes('wyniki') || line.toLowerCase().includes('rezultat')) {
-        if (currentSection) sections[currentSection as keyof typeof sections] = currentContent.trim();
-        currentSection = 'results';
-        currentContent = '';
-      } else if (line.toLowerCase().includes('opinia') || line.toLowerCase().includes('testimonial')) {
-        if (currentSection) sections[currentSection as keyof typeof sections] = currentContent.trim();
-        currentSection = 'testimonial';
-        currentContent = '';
-      } else if (line.toLowerCase().includes('podsumowanie') || line.toLowerCase().includes('wnioski')) {
-        if (currentSection) sections[currentSection as keyof typeof sections] = currentContent.trim();
-        currentSection = 'summary';
-        currentContent = '';
-      } else if (line.toLowerCase().includes('cta') || line.toLowerCase().includes('kontakt')) {
-        if (currentSection) sections[currentSection as keyof typeof sections] = currentContent.trim();
-        currentSection = 'cta';
-        currentContent = '';
-      } else if (currentSection) {
-        currentContent += line + '\n';
-      }
-    }
-
-    // Add the last section
-    if (currentSection) {
-      sections[currentSection as keyof typeof sections] = currentContent.trim();
-    }
-
-    // If no structured sections found, put all content in introduction
-    if (!sections.introduction && !sections.problem && !sections.process) {
-      sections.introduction = content;
-    }
-
-    return sections;
   };
 
   // Function to convert markdown-like text to HTML-like formatting
@@ -258,7 +226,7 @@ const CaseStudyDetail = () => {
     );
   }
 
-  const sections = extractSections(caseStudy.content);
+  const sections = parseContent(caseStudy.content);
 
   return (
     <div className="container py-12 max-w-4xl">
@@ -299,8 +267,8 @@ const CaseStudyDetail = () => {
         </CardContent>
       </Card>
 
-      {/* Introduction Section */}
-      {sections.introduction && (
+      {/* Project Summary Section */}
+      {sections.project_summary && (
         <Card className="mb-10">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -310,24 +278,7 @@ const CaseStudyDetail = () => {
           </CardHeader>
           <CardContent>
             <div className="prose prose-lg max-w-none">
-              {formatContent(sections.introduction)}
-            </div>
-          </CardContent>
-        </Card>
-      )}
-
-      {/* Problem Section */}
-      {sections.problem && (
-        <Card className="mb-10">
-          <CardHeader>
-            <CardTitle className="flex items-center gap-2">
-              <AlertTriangle className="h-5 w-5 text-orange-600" />
-              Opis problemu
-            </CardTitle>
-          </CardHeader>
-          <CardContent>
-            <div className="prose prose-lg max-w-none">
-              {formatContent(sections.problem)}
+              {formatContent(sections.project_summary)}
             </div>
           </CardContent>
         </Card>
@@ -457,27 +408,27 @@ const CaseStudyDetail = () => {
         </Card>
       )}
 
-      {/* Testimonial Section */}
-      {sections.testimonial && (
+      {/* Conclusions Section */}
+      {sections.conclusions && (
         <Card className="mb-10">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
               <Quote className="h-5 w-5 text-indigo-600" />
-              Opinia klienta
+              Wnioski
             </CardTitle>
           </CardHeader>
           <CardContent>
             <div className="bg-muted/50 p-6 rounded-lg">
               <div className="prose prose-lg max-w-none">
-                {formatContent(sections.testimonial)}
+                {formatContent(sections.conclusions)}
               </div>
             </div>
           </CardContent>
         </Card>
       )}
 
-      {/* Summary Section */}
-      {sections.summary && (
+      {/* Final Summary Section */}
+      {sections.final_summary && (
         <Card className="mb-10">
           <CardHeader>
             <CardTitle className="flex items-center gap-2">
@@ -487,35 +438,25 @@ const CaseStudyDetail = () => {
           </CardHeader>
           <CardContent>
             <div className="prose prose-lg max-w-none">
-              {formatContent(sections.summary)}
+              {formatContent(sections.final_summary)}
             </div>
           </CardContent>
         </Card>
       )}
 
       {/* CTA Section */}
-      {sections.cta ? (
-        <Card className="bg-primary/10 border-primary/20">
-          <CardContent className="pt-6">
-            <div className="prose prose-lg max-w-none">
-              {formatContent(sections.cta)}
-            </div>
-          </CardContent>
-        </Card>
-      ) : (
-        <Card className="bg-primary/10 border-primary/20">
-          <CardContent className="pt-6 text-center">
-            <h3 className="text-2xl font-bold mb-4">Potrzebujesz podobnego rozwiązania?</h3>
-            <p className="text-lg mb-6 text-muted-foreground">
-              Skontaktuj się z nami, aby omówić Twój projekt i poznać nasze możliwości.
-            </p>
-            <Button size="lg" onClick={() => navigate('/contact')}>
-              Skontaktuj się z nami
-              <ArrowRight className="ml-2 h-4 w-4" />
-            </Button>
-          </CardContent>
-        </Card>
-      )}
+      <Card className="bg-primary/10 border-primary/20">
+        <CardContent className="pt-6 text-center">
+          <h3 className="text-2xl font-bold mb-4">Potrzebujesz podobnego rozwiązania?</h3>
+          <p className="text-lg mb-6 text-muted-foreground">
+            Skontaktuj się z nami, aby omówić Twój projekt i poznać nasze możliwości.
+          </p>
+          <Button size="lg" onClick={() => navigate('/contact')}>
+            Skontaktuj się z nami
+            <ArrowRight className="ml-2 h-4 w-4" />
+          </Button>
+        </CardContent>
+      </Card>
     </div>
   );
 };
