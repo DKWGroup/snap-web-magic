@@ -108,26 +108,36 @@ const Navbar = () => {
         </button>
       </div>
 
-      {/* Mobile Menu - Improved visibility and styling */}
+      {/* Mobile Menu - Improved animations */}
       <div
-        className={`xl:hidden fixed inset-0 bg-darkBg/98 backdrop-blur-lg transition-all duration-300 ease-in-out transform z-40 ${
+        className={`xl:hidden fixed inset-0 bg-darkBg/98 backdrop-blur-lg transition-all duration-500 ease-in-out z-40 ${
           isMobileMenuOpen ? 'translate-x-0 opacity-100' : 'translate-x-full opacity-0'
         } ${
           isScrolled ? 'top-[88px]' : 'top-[104px]'
         }`}
       >
         <div className="flex flex-col h-full">
-          <div className="flex-1 overflow-y-auto">
+          {/* Menu Items Container with unified animation */}
+          <div className={`flex-1 overflow-y-auto transition-all duration-700 delay-200 ${
+            isMobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+          }`}>
             <div className="flex flex-col space-y-2 p-6 pt-8">
-              {navLinks.map((link) => (
+              {navLinks.map((link, index) => (
                 <Link
                   key={link.name}
                   to={link.path}
-                  className={`px-6 py-4 text-lg font-medium border-l-4 transition-all rounded-r-lg ${
+                  className={`px-6 py-4 text-lg font-medium border-l-4 transition-all duration-300 rounded-r-lg transform ${
+                    isMobileMenuOpen 
+                      ? 'translate-x-0 opacity-100' 
+                      : 'translate-x-4 opacity-0'
+                  } ${
                     location.pathname === link.path
                       ? 'text-orange border-orange bg-orange/10'
                       : 'text-white border-transparent hover:border-orange/50 hover:text-orange/80 hover:bg-orange/5'
                   }`}
+                  style={{ 
+                    transitionDelay: isMobileMenuOpen ? `${300 + (index * 50)}ms` : '0ms' 
+                  }}
                   onClick={() => setIsMobileMenuOpen(false)}
                 >
                   {link.name}
@@ -136,7 +146,10 @@ const Navbar = () => {
             </div>
           </div>
           
-          <div className="p-6 border-t border-gray-800">
+          {/* CTA Button with unified animation */}
+          <div className={`p-6 border-t border-gray-800 transition-all duration-700 delay-200 ${
+            isMobileMenuOpen ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'
+          }`}>
             <Link
               to="/kontakt"
               className="w-full btn-primary text-center block py-4 rounded-lg bg-orange text-white font-bold text-lg hover:bg-orange-dark transition-colors"
