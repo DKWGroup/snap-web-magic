@@ -91,7 +91,7 @@ const ServicesSection = () => {
           <h2 className="text-3xl md:text-4xl font-bold text-white">
             Nasze <span className="text-orange">usługi</span>
           </h2>
-          <Link to="/services" className="text-orange hover:text-orange-400 transition-colors flex items-center gap-2">
+          <Link to="/uslugi" className="text-orange hover:text-orange-400 transition-colors flex items-center gap-2">
             Zobacz wszystkie <ArrowRight size={16} />
           </Link>
         </div>
@@ -127,7 +127,7 @@ const ServicesSection = () => {
         </motion.div>
 
         <div className="mt-10 text-center">
-          <Link to="/services">
+          <Link to="/uslugi">
             <Button size="lg" className="bg-orange hover:bg-orange-dark text-white">
               ZOBACZ WSZYSTKIE USŁUGI
             </Button>
