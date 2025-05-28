@@ -50,7 +50,14 @@ const BlogPost = () => {
           throw error;
         }
 
-        setPost(data);
+        if (data) {
+          // Convert the data to match our BlogPost interface
+          const postData: BlogPost = {
+            ...data,
+            content_blocks: data.content_blocks ? data.content_blocks as ContentBlock[] : undefined
+          };
+          setPost(postData);
+        }
       } catch (error) {
         console.error('Error fetching blog post:', error);
         toast.error('Wystąpił błąd podczas wczytywania postu');

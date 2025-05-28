@@ -174,7 +174,7 @@ const BlogPostForm = ({ post, onClose }: BlogPostFormProps) => {
         title,
         slug: slug.trim(),
         content: markdownContent,
-        content_blocks: contentBlocks.length > 0 ? contentBlocks : null,
+        content_blocks: contentBlocks.length > 0 ? contentBlocks as any : null,
         image_url: mainImageUrl || null,
         author,
         sources: filteredSources.length > 0 ? filteredSources : null
