@@ -19,25 +19,38 @@ const Admin = () => {
         const { data: { session } } = await supabase.auth.getSession();
         
         if (!session) {
+          console.log('No session found, redirecting to login');
           navigate('/admin/login');
           return;
         }
 
-        const { data: adminUser } = await supabase
+        console.log('Session found, checking admin status for user:', session.user.id);
+
+        const { data: adminUser, error } = await supabase
           .from('admin_users')
           .select('*')
           .eq('id', session.user.id)
-          .single();
+          .maybeSingle();
+
+        if (error) {
+          console.error('Error checking admin status:', error);
+          toast.error('Wystąpił błąd podczas weryfikacji uprawnień');
+          return;
+        }
+
+        console.log('Admin user data:', adminUser);
 
         if (!adminUser) {
+          console.log('User not found in admin_users table');
           toast.error('Brak uprawnień administratora');
           navigate('/');
           return;
         }
 
+        console.log('Admin verification successful');
         setIsAdmin(true);
       } catch (error) {
-        console.error('Error checking admin status:', error);
+        console.error('Error in checkAdminStatus:', error);
         toast.error('Wystąpił błąd podczas weryfikacji uprawnień');
       } finally {
         setIsLoading(false);

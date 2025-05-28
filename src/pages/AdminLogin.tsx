@@ -18,29 +18,45 @@ const AdminLogin = () => {
     setIsLoading(true);
 
     try {
+      console.log('Attempting login for:', email);
+      
       const { data, error } = await supabase.auth.signInWithPassword({
         email,
         password
       });
 
       if (error) {
+        console.error('Login error:', error);
         toast.error('Nieprawidłowy email lub hasło');
         return;
       }
 
       if (data.session) {
+        console.log('Login successful, checking admin status for user:', data.session.user.id);
+        
         const { data: adminUser, error: adminError } = await supabase
           .from('admin_users')
           .select('*')
           .eq('id', data.session.user.id)
-          .single();
+          .maybeSingle();
 
-        if (adminError || !adminUser) {
+        console.log('Admin check result:', { adminUser, adminError });
+
+        if (adminError) {
+          console.error('Error checking admin status:', adminError);
+          toast.error('Wystąpił błąd podczas weryfikacji uprawnień');
+          await supabase.auth.signOut();
+          return;
+        }
+
+        if (!adminUser) {
+          console.log('User not found in admin_users table');
           toast.error('Brak uprawnień administratora');
           await supabase.auth.signOut();
           return;
         }
 
+        console.log('Admin verification successful, redirecting to admin panel');
         toast.success('Zalogowano pomyślnie');
         navigate('/admin');
       }
