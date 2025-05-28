@@ -15,6 +15,9 @@ interface CaseStudy {
   client: string;
   industry: string;
   image_url: string | null;
+  slug: string;
+  youtube_url: string | null;
+  gallery_images: string[] | null;
 }
 
 const CaseStudiesPreviewSection = () => {

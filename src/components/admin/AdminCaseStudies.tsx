@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
@@ -18,6 +17,9 @@ interface CaseStudy {
   industry: string;
   published_at: string;
   created_at: string;
+  slug: string;
+  youtube_url: string | null;
+  gallery_images: string[] | null;
 }
 
 const AdminCaseStudies = () => {
