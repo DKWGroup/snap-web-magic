@@ -1,8 +1,8 @@
 
 import { ReactNode } from 'react';
+import { useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
 import Footer from './Footer';
-import { Toaster } from '@/components/ui/sonner';
 import BackgroundEffect from './BackgroundEffect';
 
 interface LayoutProps {
@@ -10,13 +10,17 @@ interface LayoutProps {
 }
 
 const Layout = ({ children }: LayoutProps) => {
+  const location = useLocation();
+  const isAdminPage = location.pathname.startsWith('/admin');
+
   return (
-    <div className="min-h-screen flex flex-col">
+    <div className="min-h-screen bg-darkBg text-white">
       <BackgroundEffect />
-      <Navbar />
-      <main className="flex-grow z-10 relative">{children}</main>
-      <Footer />
-      <Toaster position="top-right" />
+      {!isAdminPage && <Navbar />}
+      <main className={!isAdminPage ? "pt-20" : ""}>
+        {children}
+      </main>
+      {!isAdminPage && <Footer />}
     </div>
   );
 };

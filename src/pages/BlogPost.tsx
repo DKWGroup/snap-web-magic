@@ -10,11 +10,19 @@ import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
 
+interface ContentBlock {
+  id: string;
+  type: 'text' | 'image';
+  content: string;
+  caption?: string;
+}
+
 interface BlogPost {
   id: string;
   title: string;
   slug: string;
   content: string;
+  content_blocks?: ContentBlock[];
   image_url: string | null;
   author: string;
   published_at: string;
@@ -53,6 +61,39 @@ const BlogPost = () => {
 
     fetchPost();
   }, [slug]);
+
+  const renderMarkdownContent = (content: string) => (
+    <ReactMarkdown
+      components={{
+        h1: ({ children }) => <h1 className="text-3xl font-bold mt-8 mb-4">{children}</h1>,
+        h2: ({ children }) => <h2 className="text-2xl font-bold mt-6 mb-3">{children}</h2>,
+        h3: ({ children }) => <h3 className="text-xl font-bold mt-5 mb-2">{children}</h3>,
+        p: ({ children }) => <p className="mb-4 leading-relaxed">{children}</p>,
+        ul: ({ children }) => <ul className="list-disc list-inside mb-4 space-y-1">{children}</ul>,
+        ol: ({ children }) => <ol className="list-decimal list-inside mb-4 space-y-1">{children}</ol>,
+        blockquote: ({ children }) => (
+          <blockquote className="border-l-4 border-primary pl-4 italic my-4 text-muted-foreground">
+            {children}
+          </blockquote>
+        ),
+        code: ({ children }) => (
+          <code className="bg-muted px-1 py-0.5 rounded text-sm font-mono">{children}</code>
+        ),
+        pre: ({ children }) => (
+          <pre className="bg-muted p-4 rounded-lg overflow-x-auto my-4">{children}</pre>
+        ),
+        a: ({ href, children }) => (
+          <a href={href} className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
+            {children}
+          </a>
+        ),
+        strong: ({ children }) => <strong className="font-bold">{children}</strong>,
+        em: ({ children }) => <em className="italic">{children}</em>,
+      }}
+    >
+      {content}
+    </ReactMarkdown>
+  );
 
   if (isLoading) {
     return (
@@ -115,37 +156,37 @@ const BlogPost = () => {
         )}
 
         <div className="prose prose-slate max-w-none">
-          <ReactMarkdown
-            components={{
-              h1: ({ children }) => <h1 className="text-3xl font-bold mt-8 mb-4">{children}</h1>,
-              h2: ({ children }) => <h2 className="text-2xl font-bold mt-6 mb-3">{children}</h2>,
-              h3: ({ children }) => <h3 className="text-xl font-bold mt-5 mb-2">{children}</h3>,
-              p: ({ children }) => <p className="mb-4 leading-relaxed">{children}</p>,
-              ul: ({ children }) => <ul className="list-disc list-inside mb-4 space-y-1">{children}</ul>,
-              ol: ({ children }) => <ol className="list-decimal list-inside mb-4 space-y-1">{children}</ol>,
-              blockquote: ({ children }) => (
-                <blockquote className="border-l-4 border-primary pl-4 italic my-4 text-muted-foreground">
-                  {children}
-                </blockquote>
-              ),
-              code: ({ children }) => (
-                <code className="bg-muted px-1 py-0.5 rounded text-sm font-mono">{children}</code>
-              ),
-              pre: ({ children }) => (
-                <pre className="bg-muted p-4 rounded-lg overflow-x-auto my-4">{children}</pre>
-              ),
-              a: ({ href, children }) => (
-                <a href={href} className="text-primary hover:underline" target="_blank" rel="noopener noreferrer">
-                  {children}
-                </a>
-              ),
-              strong: ({ children }) => <strong className="font-bold">{children}</strong>,
-              em: ({ children }) => <em className="italic">{children}</em>,
-            }}
-          >
-            {post.content}
-          </ReactMarkdown>
+          {renderMarkdownContent(post.content)}
         </div>
+
+        {post.content_blocks && post.content_blocks.length > 0 && (
+          <div className="space-y-8">
+            {post.content_blocks.map((block) => (
+              <div key={block.id} className="space-y-4">
+                {block.type === 'text' ? (
+                  <div className="prose prose-slate max-w-none">
+                    {renderMarkdownContent(block.content)}
+                  </div>
+                ) : (
+                  block.content && (
+                    <figure className="space-y-3">
+                      <img 
+                        src={block.content} 
+                        alt={block.caption || ""} 
+                        className="rounded-lg max-w-full mx-auto"
+                      />
+                      {block.caption && (
+                        <figcaption className="text-sm text-muted-foreground text-center">
+                          {block.caption}
+                        </figcaption>
+                      )}
+                    </figure>
+                  )
+                )}
+              </div>
+            ))}
+          </div>
+        )}
 
         {post.sources && post.sources.length > 0 && (
           <Card>

@@ -3,10 +3,10 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
-import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
 import { PlusCircle, X } from 'lucide-react';
+import MarkdownEditor from './MarkdownEditor';
 
 interface BlogPost {
   id: string;
@@ -21,10 +21,10 @@ interface BlogPost {
 }
 
 interface ContentBlock {
+  id: string;
   type: 'text' | 'image';
   content: string;
   caption?: string;
-  source?: string;
 }
 
 interface BlogPostFormProps {
@@ -38,6 +38,7 @@ const BlogPostForm = ({ post, onClose }: BlogPostFormProps) => {
   const [author, setAuthor] = useState('');
   const [mainImageUrl, setMainImageUrl] = useState('');
   const [markdownContent, setMarkdownContent] = useState('');
+  const [contentBlocks, setContentBlocks] = useState<ContentBlock[]>([]);
   const [sources, setSources] = useState<string[]>(['']);
   const [isUploading, setIsUploading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
@@ -49,6 +50,7 @@ const BlogPostForm = ({ post, onClose }: BlogPostFormProps) => {
       setAuthor(post.author);
       setMainImageUrl(post.image_url || '');
       setMarkdownContent(post.content || '');
+      setContentBlocks(post.content_blocks || []);
       setSources(post.sources && post.sources.length > 0 ? post.sources : ['']);
     }
   }, [post]);
@@ -172,7 +174,7 @@ const BlogPostForm = ({ post, onClose }: BlogPostFormProps) => {
         title,
         slug: slug.trim(),
         content: markdownContent,
-        content_blocks: null,
+        content_blocks: contentBlocks.length > 0 ? contentBlocks : null,
         image_url: mainImageUrl || null,
         author,
         sources: filteredSources.length > 0 ? filteredSources : null
@@ -281,22 +283,12 @@ const BlogPostForm = ({ post, onClose }: BlogPostFormProps) => {
         )}
       </div>
 
-      <div className="space-y-2">
-        <label htmlFor="content" className="block text-sm font-medium">
-          Treść (Markdown)
-        </label>
-        <Textarea
-          id="content"
-          className="h-60 font-mono"
-          value={markdownContent}
-          onChange={(e) => setMarkdownContent(e.target.value)}
-          placeholder="Napisz treść używając formatowania Markdown:&#10;&#10;# Nagłówek 1&#10;## Nagłówek 2&#10;### Nagłówek 3&#10;&#10;**Pogrubiony tekst**&#10;*Kursywa*&#10;&#10;- Lista punktowa&#10;- Drugi punkt&#10;&#10;1. Lista numerowana&#10;2. Drugi punkt&#10;&#10;> Cytat&#10;&#10;`kod inline`&#10;&#10;```&#10;blok kodu&#10;```&#10;&#10;[Link](https://example.com)"
-          required
-        />
-        <p className="text-xs text-muted-foreground">
-          Użyj formatowania Markdown: **pogrubiony**, *kursywa*, # nagłówki, [linki](url), itp.
-        </p>
-      </div>
+      <MarkdownEditor
+        value={markdownContent}
+        onChange={setMarkdownContent}
+        contentBlocks={contentBlocks}
+        onContentBlocksChange={setContentBlocks}
+      />
 
       <div className="space-y-4">
         <div className="flex justify-between items-center">
