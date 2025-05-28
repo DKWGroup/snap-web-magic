@@ -1,11 +1,11 @@
-
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
-import { X } from 'lucide-react';
+import { X, Image as ImageIcon } from 'lucide-react';
+import { optimizeImage, optimizeImageForGallery } from '@/utils/imageOptimization';
 
 interface CaseStudy {
   id: string;
@@ -73,7 +73,17 @@ const CaseStudyForm = ({ caseStudy, onClose }: CaseStudyFormProps) => {
     try {
       setIsUploading(true);
       const file = e.target.files[0];
-      const fileExt = file.name.split('.').pop();
+      
+      // Optimize image before upload
+      toast.info('Optymalizowanie obrazu...');
+      const optimizedFile = await optimizeImage(file, {
+        maxWidth: 1920,
+        maxHeight: 1080,
+        quality: 0.85,
+        format: 'webp'
+      });
+      
+      const fileExt = 'webp'; // Always use webp after optimization
       const fileName = `${uuidv4()}.${fileExt}`;
       const filePath = `case-studies/${fileName}`;
 
@@ -90,7 +100,7 @@ const CaseStudyForm = ({ caseStudy, onClose }: CaseStudyFormProps) => {
       const { error } = await supabase
         .storage
         .from('media')
-        .upload(filePath, file);
+        .upload(filePath, optimizedFile);
 
       if (error) {
         throw error;
@@ -102,7 +112,7 @@ const CaseStudyForm = ({ caseStudy, onClose }: CaseStudyFormProps) => {
         .getPublicUrl(filePath);
 
       setImageUrl(data.publicUrl);
-      toast.success('Zdjęcie zostało przesłane');
+      toast.success('Zdjęcie zostało zoptymalizowane i przesłane');
     } catch (error: any) {
       console.error('Error uploading image:', error);
       toast.error(`Błąd podczas przesyłania zdjęcia: ${error.message}`);
@@ -119,15 +129,21 @@ const CaseStudyForm = ({ caseStudy, onClose }: CaseStudyFormProps) => {
     try {
       setIsUploading(true);
       const files = Array.from(e.target.files);
+      
+      toast.info(`Optymalizowanie ${files.length} obrazów...`);
+      
       const uploadPromises = files.map(async (file) => {
-        const fileExt = file.name.split('.').pop();
+        // Optimize each image for gallery
+        const optimizedFile = await optimizeImageForGallery(file);
+        
+        const fileExt = 'webp'; // Always use webp after optimization
         const fileName = `${uuidv4()}.${fileExt}`;
         const filePath = `case-studies/gallery/${fileName}`;
 
         const { error } = await supabase
           .storage
           .from('media')
-          .upload(filePath, file);
+          .upload(filePath, optimizedFile);
 
         if (error) {
           throw error;
@@ -143,7 +159,7 @@ const CaseStudyForm = ({ caseStudy, onClose }: CaseStudyFormProps) => {
 
       const uploadedUrls = await Promise.all(uploadPromises);
       setGalleryImages([...galleryImages, ...uploadedUrls]);
-      toast.success('Zdjęcia zostały przesłane do galerii');
+      toast.success('Zdjęcia zostały zoptymalizowane i przesłane do galerii');
     } catch (error: any) {
       console.error('Error uploading gallery images:', error);
       toast.error(`Błąd podczas przesyłania zdjęć: ${error.message}`);
@@ -309,8 +325,17 @@ const CaseStudyForm = ({ caseStudy, onClose }: CaseStudyFormProps) => {
             onChange={handleImageUpload}
             disabled={isUploading}
           />
-          {isUploading && <div className="animate-spin h-5 w-5 border-b-2 rounded-full border-primary"></div>}
+          {isUploading && (
+            <div className="flex items-center gap-2">
+              <div className="animate-spin h-5 w-5 border-b-2 rounded-full border-primary"></div>
+              <span className="text-sm text-muted-foreground">Optymalizowanie...</span>
+            </div>
+          )}
         </div>
+        <p className="text-xs text-muted-foreground flex items-center gap-1">
+          <ImageIcon className="h-3 w-3" />
+          Obrazy są automatycznie optymalizowane (WebP, maksymalnie 1920x1080px)
+        </p>
         {imageUrl && (
           <div className="mt-2">
             <p className="text-sm text-muted-foreground mb-2">Podgląd głównego zdjęcia:</p>
@@ -336,8 +361,17 @@ const CaseStudyForm = ({ caseStudy, onClose }: CaseStudyFormProps) => {
             onChange={handleGalleryUpload}
             disabled={isUploading}
           />
-          {isUploading && <div className="animate-spin h-5 w-5 border-b-2 rounded-full border-primary"></div>}
+          {isUploading && (
+            <div className="flex items-center gap-2">
+              <div className="animate-spin h-5 w-5 border-b-2 rounded-full border-primary"></div>
+              <span className="text-sm text-muted-foreground">Optymalizowanie...</span>
+            </div>
+          )}
         </div>
+        <p className="text-xs text-muted-foreground flex items-center gap-1">
+          <ImageIcon className="h-3 w-3" />
+          Obrazy galerii są automatycznie optymalizowane (WebP, maksymalnie 1200x800px)
+        </p>
         {galleryImages.length > 0 && (
           <div className="mt-4">
             <p className="text-sm text-muted-foreground mb-2">Galeria zdjęć:</p>
