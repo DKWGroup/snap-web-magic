@@ -13,6 +13,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 interface BlogPost {
   id: string;
   title: string;
+  slug: string;
   content: string;
   image_url: string | null;
   author: string;
@@ -21,21 +22,21 @@ interface BlogPost {
 }
 
 const BlogPost = () => {
-  const { id } = useParams<{ id: string }>();
+  const { slug } = useParams<{ slug: string }>();
   const [post, setPost] = useState<BlogPost | null>(null);
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchPost = async () => {
-      if (!id) return;
+      if (!slug) return;
       
       try {
         setIsLoading(true);
         const { data, error } = await supabase
           .from('blog_posts')
           .select('*')
-          .eq('id', id)
-          .single();
+          .eq('slug', slug)
+          .maybeSingle();
 
         if (error) {
           throw error;
@@ -51,7 +52,7 @@ const BlogPost = () => {
     };
 
     fetchPost();
-  }, [id]);
+  }, [slug]);
 
   if (isLoading) {
     return (

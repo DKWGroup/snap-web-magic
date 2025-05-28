@@ -3,13 +3,15 @@ import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
-import { PlusCircle, X, MoveUp, MoveDown, Image as ImageIcon } from 'lucide-react';
+import { PlusCircle, X } from 'lucide-react';
 
 interface BlogPost {
   id: string;
   title: string;
+  slug?: string;
   content: string;
   content_blocks?: ContentBlock[];
   image_url: string | null;
@@ -32,6 +34,7 @@ interface BlogPostFormProps {
 
 const BlogPostForm = ({ post, onClose }: BlogPostFormProps) => {
   const [title, setTitle] = useState('');
+  const [slug, setSlug] = useState('');
   const [author, setAuthor] = useState('');
   const [mainImageUrl, setMainImageUrl] = useState('');
   const [markdownContent, setMarkdownContent] = useState('');
@@ -42,12 +45,36 @@ const BlogPostForm = ({ post, onClose }: BlogPostFormProps) => {
   useEffect(() => {
     if (post) {
       setTitle(post.title);
+      setSlug(post.slug || '');
       setAuthor(post.author);
       setMainImageUrl(post.image_url || '');
       setMarkdownContent(post.content || '');
       setSources(post.sources && post.sources.length > 0 ? post.sources : ['']);
     }
   }, [post]);
+
+  const generateSlug = (title: string) => {
+    return title
+      .toLowerCase()
+      .replace(/[^a-z0-9ąćęłńóśźż\s-]/g, '')
+      .replace(/[ąćęłńóśźż]/g, (char) => {
+        const map: { [key: string]: string } = {
+          'ą': 'a', 'ć': 'c', 'ę': 'e', 'ł': 'l', 'ń': 'n',
+          'ó': 'o', 'ś': 's', 'ź': 'z', 'ż': 'z'
+        };
+        return map[char] || char;
+      })
+      .replace(/\s+/g, '-')
+      .replace(/-+/g, '-')
+      .trim();
+  };
+
+  const handleTitleChange = (value: string) => {
+    setTitle(value);
+    if (!post && !slug) {
+      setSlug(generateSlug(value));
+    }
+  };
 
   const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) {
@@ -119,13 +146,33 @@ const BlogPostForm = ({ post, onClose }: BlogPostFormProps) => {
     setIsSaving(true);
 
     try {
+      if (!slug.trim()) {
+        toast.error('Slug jest wymagany');
+        return;
+      }
+
+      // Sprawdź czy slug już istnieje (tylko dla nowych postów lub gdy slug się zmienił)
+      if (!post || post.slug !== slug) {
+        const { data: existingPost } = await supabase
+          .from('blog_posts')
+          .select('id')
+          .eq('slug', slug)
+          .maybeSingle();
+
+        if (existingPost) {
+          toast.error('Post z tym slug już istnieje');
+          return;
+        }
+      }
+
       // Filtruj puste źródła
       const filteredSources = sources.filter(source => source.trim() !== '');
 
       const blogPostData = {
         title,
+        slug: slug.trim(),
         content: markdownContent,
-        content_blocks: null, // Używamy tylko content dla Markdown
+        content_blocks: null,
         image_url: mainImageUrl || null,
         author,
         sources: filteredSources.length > 0 ? filteredSources : null
@@ -167,9 +214,25 @@ const BlogPostForm = ({ post, onClose }: BlogPostFormProps) => {
         <Input
           id="title"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) => handleTitleChange(e.target.value)}
           required
         />
+      </div>
+
+      <div className="space-y-2">
+        <label htmlFor="slug" className="block text-sm font-medium">
+          Slug URL
+        </label>
+        <Input
+          id="slug"
+          value={slug}
+          onChange={(e) => setSlug(e.target.value)}
+          placeholder="slug-url-posta"
+          required
+        />
+        <p className="text-xs text-muted-foreground">
+          URL będzie wyglądał tak: /blog/{slug || 'slug-url-posta'}
+        </p>
       </div>
 
       <div className="space-y-2">
@@ -222,9 +285,9 @@ const BlogPostForm = ({ post, onClose }: BlogPostFormProps) => {
         <label htmlFor="content" className="block text-sm font-medium">
           Treść (Markdown)
         </label>
-        <textarea
+        <Textarea
           id="content"
-          className="flex h-60 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 font-mono"
+          className="h-60 font-mono"
           value={markdownContent}
           onChange={(e) => setMarkdownContent(e.target.value)}
           placeholder="Napisz treść używając formatowania Markdown:&#10;&#10;# Nagłówek 1&#10;## Nagłówek 2&#10;### Nagłówek 3&#10;&#10;**Pogrubiony tekst**&#10;*Kursywa*&#10;&#10;- Lista punktowa&#10;- Drugi punkt&#10;&#10;1. Lista numerowana&#10;2. Drugi punkt&#10;&#10;> Cytat&#10;&#10;`kod inline`&#10;&#10;```&#10;blok kodu&#10;```&#10;&#10;[Link](https://example.com)"

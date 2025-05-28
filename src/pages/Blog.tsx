@@ -10,6 +10,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 interface BlogPost {
   id: string;
   title: string;
+  slug: string;
   content: string;
   image_url: string | null;
   author: string;
@@ -115,7 +116,7 @@ const Blog = () => {
               </CardContent>
               <CardFooter>
                 <Link 
-                  to={`/blog/${post.id}`} 
+                  to={`/blog/${post.slug || post.id}`} 
                   className="text-primary font-medium hover:underline"
                 >
                   Czytaj więcej →

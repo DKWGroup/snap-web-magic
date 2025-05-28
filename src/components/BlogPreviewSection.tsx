@@ -12,6 +12,7 @@ import { Skeleton } from '@/components/ui/skeleton';
 interface BlogPost {
   id: string;
   title: string;
+  slug: string;
   content: string;
   image_url: string | null;
   author: string;
@@ -28,7 +29,7 @@ const BlogPreviewSection = () => {
         setIsLoading(true);
         const { data, error } = await supabase
           .from('blog_posts')
-          .select('id, title, content, image_url, author, published_at')
+          .select('id, title, slug, content, image_url, author, published_at')
           .order('published_at', { ascending: false })
           .limit(3);
 
@@ -129,7 +130,7 @@ const BlogPreviewSection = () => {
               </CardContent>
               <CardFooter>
                 <Link 
-                  to={`/blog/${post.id}`}
+                  to={`/blog/${post.slug || post.id}`}
                   className="text-orange hover:text-orange-400 transition-colors flex items-center gap-2"
                 >
                   Czytaj więcej <ArrowRight size={16} />
