@@ -60,12 +60,12 @@ const Hero = () => {
           Chcesz, aby Twoja marka była widoczna w internecie i angażowała odbiorców? DKW Group to agencja kreatywna specjalizująca się w produkcji filmów reklamowych, podcastów, transmisji live oraz kompleksowym marketingu w social media.
           </p>
           <div className="flex flex-col sm:flex-row gap-4">
-            <Link to="/contact">
+            <Link to="/kontakt">
               <Button size="lg" className="bg-orange hover:bg-orange-dark text-white flex items-center gap-2 px-6 py-6">
                 SKONTAKTUJ SIĘ <ArrowRight size={18} />
               </Button>
             </Link>
-            <Link to="/projects">
+            <Link to="/projekty">
               <Button size="lg" variant="outline" className="border-white text-white hover:bg-white/10 px-6 py-6">
                 ZOBACZ NASZE PROJEKTY
               </Button>

@@ -87,7 +87,7 @@ const Contact = () => {
                   <div>
                     <h3 className="text-white font-semibold mb-2">Lokalizacja</h3>
                     <p className="text-gray-300">
-                      Warszawa, Polska
+                      Katowice, Polska
                     </p>
                   </div>
                 </div>
@@ -133,7 +133,7 @@ const Contact = () => {
         <div className="container">
           <div className="aspect-[21/9] w-full rounded-lg overflow-hidden">
             <iframe
-              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d156388.35409416488!2d20.896110272866346!3d52.233066153852785!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x471ecc669a869f01%3A0x72f0be2a88ead3fc!2sWarszawa!5e0!3m2!1spl!2spl!4v1644683964537!5m2!1spl!2spl"
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d2562.073073964839!2d19.01722231571613!3d50.2592229794496!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x4716ce3e2e2e2e2e%3A0x123456789abcdef!2sZygmunta%20Krasi%C5%84skiego%2029%2C%2040-019%20Katowice!5e0!3m2!1spl!2spl!4v1717000000000!5m2!1spl!2spl"
               width="100%"
               height="100%"
               style={{ border: 0 }}
