@@ -6,6 +6,7 @@ import { toast } from 'sonner';
 import { format } from 'date-fns';
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Helmet } from 'react-helmet';
 
 interface BlogPost {
   id: string;
@@ -58,75 +59,84 @@ const Blog = () => {
   };
 
   return (
-    <div className="container py-12 max-w-6xl">
-      <div className="text-center mb-12">
-        <h1 className="text-4xl font-bold mb-4">Blog</h1>
-        <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-          Najnowsze wpisy, artykuły i porady dotyczące marketingu i strategii biznesowych.
-        </p>
-      </div>
+    <>
+      <Helmet>
+        <title>Blog – DKW Group | Poradniki wideo, social media i marketing</title>
+        <meta 
+          name="description" 
+          content="Blog DKW Group: praktyczne poradniki z zakresu produkcji wideo, marketingu w social media i strategii internetowych. Rozwijaj swoją wiedzę z ekspertami!"
+        />
+      </Helmet>
+      <div className="container py-12 max-w-6xl">
+        <div className="text-center mb-12">
+          <h1 className="text-4xl font-bold mb-4">Blog</h1>
+          <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+            Najnowsze wpisy, artykuły i porady dotyczące marketingu i strategii biznesowych.
+          </p>
+        </div>
 
-      {isLoading ? (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {[...Array(6)].map((_, index) => (
-            <Card key={index} className="overflow-hidden flex flex-col">
-              <div className="aspect-video">
-                <Skeleton className="h-full w-full" />
-              </div>
-              <CardHeader>
-                <Skeleton className="h-6 w-full max-w-[240px]" />
-                <Skeleton className="h-4 w-[180px]" />
-              </CardHeader>
-              <CardContent className="grow">
-                <Skeleton className="h-4 w-full mb-2" />
-                <Skeleton className="h-4 w-full mb-2" />
-                <Skeleton className="h-4 w-3/4" />
-              </CardContent>
-            </Card>
-          ))}
-        </div>
-      ) : blogPosts.length === 0 ? (
-        <div className="text-center py-12">
-          <h3 className="text-xl font-medium mb-2">Brak wpisów na blogu</h3>
-          <p className="text-muted-foreground">Nowe wpisy pojawią się wkrótce.</p>
-        </div>
-      ) : (
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-          {blogPosts.map((post) => (
-            <Card key={post.id} className="overflow-hidden flex flex-col hover:shadow-lg transition-shadow">
-              {post.image_url && (
-                <div className="aspect-video overflow-hidden">
-                  <img
-                    src={post.image_url}
-                    alt={post.title}
-                    className="w-full h-full object-cover transition-transform hover:scale-105"
-                  />
+        {isLoading ? (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {[...Array(6)].map((_, index) => (
+              <Card key={index} className="overflow-hidden flex flex-col">
+                <div className="aspect-video">
+                  <Skeleton className="h-full w-full" />
                 </div>
-              )}
-              <CardHeader>
-                <CardTitle className="line-clamp-2">{post.title}</CardTitle>
-                <CardDescription>
-                  {format(new Date(post.published_at), 'dd.MM.yyyy')} • {post.author}
-                </CardDescription>
-              </CardHeader>
-              <CardContent className="grow">
-                <p className="text-muted-foreground line-clamp-3">
-                  {renderContent(post.content)}
-                </p>
-              </CardContent>
-              <CardFooter>
-                <Link 
-                  to={`/blog/${post.slug || post.id}`} 
-                  className="text-primary font-medium hover:underline"
-                >
-                  Czytaj więcej →
-                </Link>
-              </CardFooter>
-            </Card>
-          ))}
-        </div>
-      )}
-    </div>
+                <CardHeader>
+                  <Skeleton className="h-6 w-full max-w-[240px]" />
+                  <Skeleton className="h-4 w-[180px]" />
+                </CardHeader>
+                <CardContent className="grow">
+                  <Skeleton className="h-4 w-full mb-2" />
+                  <Skeleton className="h-4 w-full mb-2" />
+                  <Skeleton className="h-4 w-3/4" />
+                </CardContent>
+              </Card>
+            ))}
+          </div>
+        ) : blogPosts.length === 0 ? (
+          <div className="text-center py-12">
+            <h3 className="text-xl font-medium mb-2">Brak wpisów na blogu</h3>
+            <p className="text-muted-foreground">Nowe wpisy pojawią się wkrótce.</p>
+          </div>
+        ) : (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+            {blogPosts.map((post) => (
+              <Card key={post.id} className="overflow-hidden flex flex-col hover:shadow-lg transition-shadow">
+                {post.image_url && (
+                  <div className="aspect-video overflow-hidden">
+                    <img
+                      src={post.image_url}
+                      alt={post.title}
+                      className="w-full h-full object-cover transition-transform hover:scale-105"
+                    />
+                  </div>
+                )}
+                <CardHeader>
+                  <CardTitle className="line-clamp-2">{post.title}</CardTitle>
+                  <CardDescription>
+                    {format(new Date(post.published_at), 'dd.MM.yyyy')} • {post.author}
+                  </CardDescription>
+                </CardHeader>
+                <CardContent className="grow">
+                  <p className="text-muted-foreground line-clamp-3">
+                    {renderContent(post.content)}
+                  </p>
+                </CardContent>
+                <CardFooter>
+                  <Link 
+                    to={`/blog/${post.slug || post.id}`} 
+                    className="text-primary font-medium hover:underline"
+                  >
+                    Czytaj więcej →
+                  </Link>
+                </CardFooter>
+              </Card>
+            ))}
+          </div>
+        )}
+      </div>
+    </>
   );
 };
 

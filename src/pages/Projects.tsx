@@ -2,6 +2,7 @@ import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import CTA from '@/components/CTA';
 import { Button } from '@/components/ui/button';
+import { Helmet } from 'react-helmet';
 
 const projects = [
   {
@@ -70,123 +71,132 @@ const Projects = () => {
   };
 
   return (
-    <main className="bg-darkBg min-h-screen">
-      {/* Hero Section */}
-      <section className="pt-32 pb-20 bg-darkBg">
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 0.8 }}
-            className="max-w-4xl mx-auto text-center"
-          >
-            <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
-              Sprawdź wyniki naszych <span className="text-orange">klientów!</span>
-            </h1>
-            <p className="text-lg md:text-xl text-gray-300 mb-8">
-              Zobacz nasze najlepsze projekty i przekonaj się, jak możemy pomóc Twojej marce osiągnąć sukces.
-            </p>
-          </motion.div>
-        </div>
-      </section>
-
-      {/* Projects Section */}
-      <section className="py-20 bg-darkBg">
-        <div className="container">
-          <motion.div
-            variants={containerVariants}
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            className="space-y-20"
-          >
-            {projects.map((project, index) => (
-              <motion.div
-                key={project.id}
-                variants={itemVariants}
-                className={`flex flex-col ${
-                  index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
-                } gap-10 items-center`}
-              >
-                <div className="lg:w-1/2">
-                  <div className="aspect-[4/3] rounded-lg overflow-hidden mb-6">
-                    <img
-                      src={project.image}
-                      alt={project.title}
-                      className="w-full h-full object-cover"
-                    />
-                  </div>
-                </div>
-                <div className="lg:w-1/2">
-                  <div className="text-xs font-semibold text-orange mb-2 uppercase tracking-wider">
-                    {project.category}
-                  </div>
-                  <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
-                    {project.title}
-                  </h2>
-                  <p className="text-gray-300 mb-6">{project.description}</p>
-                  
-                  <div className="grid grid-cols-2 gap-4 mb-6">
-                    {project.stats.map((stat, i) => (
-                      <div key={i} className="bg-darkCard p-4 rounded-lg">
-                        <div className="text-orange text-2xl font-bold">
-                          {stat.value}
-                        </div>
-                        <div className="text-gray-400 text-sm">{stat.label}</div>
-                      </div>
-                    ))}
-                  </div>
-
-                  <Button asChild className="w-full sm:w-auto">
-                    <Link to={`/case-studies/${project.slug}`}>
-                      Zobacz całe case study
-                    </Link>
-                  </Button>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
-        </div>
-      </section>
-      
-      {/* Media Gallery */}
-      {/* <section className="py-20 bg-darkBg">
-        <div className="container">
-          <motion.div
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.6 }}
-            className="text-center mb-12"
-          >
-            <h2 className="section-title">
-              Nasze <span className="text-orange">portfolio</span>
-            </h2>
-          </motion.div>
-          
-          <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
-            {[...Array(9)].map((_, index) => (
-              <motion.div
-                key={index}
-                initial={{ opacity: 0, scale: 0.95 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                viewport={{ once: true }}
-                transition={{ duration: 0.5, delay: index * 0.1 }}
-                className="aspect-square rounded-lg overflow-hidden"
-              >
-                <img
-                  src={`/images/portfolio-${index + 1}.jpg`}
-                  alt={`Portfolio item ${index + 1}`}
-                  className="w-full h-full object-cover"
-                />
-              </motion.div>
-            ))}
+    <>
+      <Helmet>
+        <title>Projekty – DKW Group | Portfolio filmów i kampanii social media</title>
+        <meta 
+          name="description" 
+          content="Zobacz nasze najlepsze realizacje: filmy reklamowe, kampanie social media, podcasty i transmisje live. Portfolio DKW Group – inspiruj się naszymi projektami!"
+        />
+      </Helmet>
+      <main className="bg-darkBg min-h-screen">
+        {/* Hero Section */}
+        <section className="pt-32 pb-20 bg-darkBg">
+          <div className="container">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.8 }}
+              className="max-w-4xl mx-auto text-center"
+            >
+              <h1 className="text-4xl md:text-5xl lg:text-6xl font-bold text-white mb-6 leading-tight">
+                Sprawdź wyniki naszych <span className="text-orange">klientów!</span>
+              </h1>
+              <p className="text-lg md:text-xl text-gray-300 mb-8">
+                Zobacz nasze najlepsze projekty i przekonaj się, jak możemy pomóc Twojej marce osiągnąć sukces.
+              </p>
+            </motion.div>
           </div>
-        </div>
-      </section> */}
+        </section>
 
-      <CTA />
-    </main>
+        {/* Projects Section */}
+        <section className="py-20 bg-darkBg">
+          <div className="container">
+            <motion.div
+              variants={containerVariants}
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              className="space-y-20"
+            >
+              {projects.map((project, index) => (
+                <motion.div
+                  key={project.id}
+                  variants={itemVariants}
+                  className={`flex flex-col ${
+                    index % 2 === 0 ? 'lg:flex-row' : 'lg:flex-row-reverse'
+                  } gap-10 items-center`}
+                >
+                  <div className="lg:w-1/2">
+                    <div className="aspect-[4/3] rounded-lg overflow-hidden mb-6">
+                      <img
+                        src={project.image}
+                        alt={project.title}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
+                  </div>
+                  <div className="lg:w-1/2">
+                    <div className="text-xs font-semibold text-orange mb-2 uppercase tracking-wider">
+                      {project.category}
+                    </div>
+                    <h2 className="text-2xl md:text-3xl font-bold text-white mb-4">
+                      {project.title}
+                    </h2>
+                    <p className="text-gray-300 mb-6">{project.description}</p>
+                    
+                    <div className="grid grid-cols-2 gap-4 mb-6">
+                      {project.stats.map((stat, i) => (
+                        <div key={i} className="bg-darkCard p-4 rounded-lg">
+                          <div className="text-orange text-2xl font-bold">
+                            {stat.value}
+                          </div>
+                          <div className="text-gray-400 text-sm">{stat.label}</div>
+                        </div>
+                      ))}
+                    </div>
+
+                    <Button asChild className="w-full sm:w-auto">
+                      <Link to={`/case-studies/${project.slug}`}>
+                        Zobacz całe case study
+                      </Link>
+                    </Button>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          </div>
+        </section>
+        
+        {/* Media Gallery */}
+        {/* <section className="py-20 bg-darkBg">
+          <div className="container">
+            <motion.div
+              initial={{ opacity: 0, y: 20 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              viewport={{ once: true }}
+              transition={{ duration: 0.6 }}
+              className="text-center mb-12"
+            >
+              <h2 className="section-title">
+                Nasze <span className="text-orange">portfolio</span>
+              </h2>
+            </motion.div>
+            
+            <div className="grid grid-cols-2 md:grid-cols-3 gap-4">
+              {[...Array(9)].map((_, index) => (
+                <motion.div
+                  key={index}
+                  initial={{ opacity: 0, scale: 0.95 }}
+                  whileInView={{ opacity: 1, scale: 1 }}
+                  viewport={{ once: true }}
+                  transition={{ duration: 0.5, delay: index * 0.1 }}
+                  className="aspect-square rounded-lg overflow-hidden"
+                >
+                  <img
+                    src={`/images/portfolio-${index + 1}.jpg`}
+                    alt={`Portfolio item ${index + 1}`}
+                    className="w-full h-full object-cover"
+                  />
+                </motion.div>
+              ))}
+            </div>
+          </div>
+        </section> */}
+
+        <CTA />
+      </main>
+    </>
   );
 };
 
