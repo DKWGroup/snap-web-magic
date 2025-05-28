@@ -5,7 +5,8 @@ import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { Skeleton } from '@/components/ui/skeleton';
 import { Button } from '@/components/ui/button';
-import { ArrowLeftIcon, ExternalLink, ChevronLeft, ChevronRight } from 'lucide-react';
+import { ArrowLeftIcon, ExternalLink, ChevronLeft, ChevronRight, Target, AlertTriangle, Cog, TrendingUp, Quote, CheckCircle, ArrowRight } from 'lucide-react';
+import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 
 interface CaseStudy {
   id: string;
@@ -76,8 +77,73 @@ const CaseStudyDetail = () => {
     fetchCaseStudy();
   }, [caseId, navigate]);
 
+  // Function to extract sections from content
+  const extractSections = (content: string) => {
+    const sections = {
+      introduction: '',
+      problem: '',
+      process: '',
+      results: '',
+      testimonial: '',
+      summary: '',
+      cta: ''
+    };
+
+    const lines = content.split('\n');
+    let currentSection = '';
+    let currentContent = '';
+
+    for (const line of lines) {
+      if (line.toLowerCase().includes('wprowadzenie') || line.toLowerCase().includes('cel projektu')) {
+        if (currentSection) sections[currentSection as keyof typeof sections] = currentContent.trim();
+        currentSection = 'introduction';
+        currentContent = '';
+      } else if (line.toLowerCase().includes('problem') || line.toLowerCase().includes('wyzwanie')) {
+        if (currentSection) sections[currentSection as keyof typeof sections] = currentContent.trim();
+        currentSection = 'problem';
+        currentContent = '';
+      } else if (line.toLowerCase().includes('proces') || line.toLowerCase().includes('realizacja')) {
+        if (currentSection) sections[currentSection as keyof typeof sections] = currentContent.trim();
+        currentSection = 'process';
+        currentContent = '';
+      } else if (line.toLowerCase().includes('wyniki') || line.toLowerCase().includes('rezultat')) {
+        if (currentSection) sections[currentSection as keyof typeof sections] = currentContent.trim();
+        currentSection = 'results';
+        currentContent = '';
+      } else if (line.toLowerCase().includes('opinia') || line.toLowerCase().includes('testimonial')) {
+        if (currentSection) sections[currentSection as keyof typeof sections] = currentContent.trim();
+        currentSection = 'testimonial';
+        currentContent = '';
+      } else if (line.toLowerCase().includes('podsumowanie') || line.toLowerCase().includes('wnioski')) {
+        if (currentSection) sections[currentSection as keyof typeof sections] = currentContent.trim();
+        currentSection = 'summary';
+        currentContent = '';
+      } else if (line.toLowerCase().includes('cta') || line.toLowerCase().includes('kontakt')) {
+        if (currentSection) sections[currentSection as keyof typeof sections] = currentContent.trim();
+        currentSection = 'cta';
+        currentContent = '';
+      } else if (currentSection) {
+        currentContent += line + '\n';
+      }
+    }
+
+    // Add the last section
+    if (currentSection) {
+      sections[currentSection as keyof typeof sections] = currentContent.trim();
+    }
+
+    // If no structured sections found, put all content in introduction
+    if (!sections.introduction && !sections.problem && !sections.process) {
+      sections.introduction = content;
+    }
+
+    return sections;
+  };
+
   // Function to convert markdown-like text to HTML-like formatting
   const formatContent = (content: string) => {
+    if (!content) return null;
+    
     const lines = content.split('\n');
     return lines.map((line, index) => {
       // Handle headers
@@ -102,11 +168,6 @@ const CaseStudyDetail = () => {
       }
       if (line.startsWith('- ')) {
         return <li key={index} className="ml-4 my-1 list-disc">{line.substring(2)}</li>;
-      }
-      
-      // Handle code blocks
-      if (line.startsWith('```')) {
-        return null; // Handle in a more complex way if needed
       }
       
       // Handle regular paragraphs with inline formatting
@@ -184,6 +245,8 @@ const CaseStudyDetail = () => {
     );
   }
 
+  const sections = extractSections(caseStudy.content);
+
   return (
     <div className="container py-12 max-w-4xl">
       <div className="mb-6">
@@ -210,94 +273,235 @@ const CaseStudyDetail = () => {
         </div>
       )}
 
+      {/* Summary Section */}
+      <Card className="mb-10">
+        <CardHeader>
+          <CardTitle className="flex items-center gap-2">
+            <CheckCircle className="h-5 w-5 text-primary" />
+            Podsumowanie projektu
+          </CardTitle>
+        </CardHeader>
+        <CardContent>
+          <p className="text-muted-foreground text-lg leading-relaxed">{caseStudy.summary}</p>
+        </CardContent>
+      </Card>
+
+      {/* Introduction Section */}
+      {sections.introduction && (
+        <Card className="mb-10">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Target className="h-5 w-5 text-blue-600" />
+              Wprowadzenie i cel projektu
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="prose prose-lg max-w-none">
+              {formatContent(sections.introduction)}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Problem Section */}
+      {sections.problem && (
+        <Card className="mb-10">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <AlertTriangle className="h-5 w-5 text-orange-600" />
+              Opis problemu
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="prose prose-lg max-w-none">
+              {formatContent(sections.problem)}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Process Section */}
+      {sections.process && (
+        <Card className="mb-10">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Cog className="h-5 w-5 text-purple-600" />
+              Proces realizacji
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="prose prose-lg max-w-none">
+              {formatContent(sections.process)}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* YouTube Video Section */}
       {caseStudy.youtube_url && (
-        <div className="mb-10">
-          <h3 className="text-lg font-medium mb-4">Portfolio realizacji</h3>
-          <div className="bg-muted p-4 rounded-lg">
+        <Card className="mb-10">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <ExternalLink className="h-5 w-5 text-red-600" />
+              Portfolio realizacji
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
             <a 
               href={caseStudy.youtube_url} 
               target="_blank" 
               rel="noopener noreferrer"
-              className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors"
+              className="flex items-center gap-2 text-primary hover:text-primary/80 transition-colors text-lg"
             >
               <ExternalLink size={20} />
               <span>Zobacz film na YouTube</span>
             </a>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
       )}
 
-      <div className="prose prose-lg max-w-none">
-        <div className="bg-muted p-6 rounded-lg mb-10">
-          <h3 className="text-lg font-medium mb-3">Podsumowanie</h3>
-          <p className="text-muted-foreground">{caseStudy.summary}</p>
-        </div>
+      {/* Results Section */}
+      {sections.results && (
+        <Card className="mb-10">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <TrendingUp className="h-5 w-5 text-green-600" />
+              Wyniki
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="prose prose-lg max-w-none">
+              {formatContent(sections.results)}
+            </div>
+          </CardContent>
+        </Card>
+      )}
 
-        <div className="text-lg leading-relaxed">
-          {formatContent(caseStudy.content)}
-        </div>
-      </div>
-
+      {/* Gallery Section */}
       {caseStudy.gallery_images && caseStudy.gallery_images.length > 0 && (
-        <div className="mt-12">
-          <h3 className="text-2xl font-bold mb-6">Galeria zdjęć</h3>
-          <div className="relative">
-            <div className="aspect-video mb-4 overflow-hidden rounded-lg">
-              <img
-                src={caseStudy.gallery_images[currentGalleryIndex]}
-                alt={`Gallery image ${currentGalleryIndex + 1}`}
-                className="w-full h-full object-cover"
-              />
-            </div>
-            
-            {caseStudy.gallery_images.length > 1 && (
-              <>
-                <button
-                  onClick={prevGalleryImage}
-                  className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
-                >
-                  <ChevronLeft size={20} />
-                </button>
-                <button
-                  onClick={nextGalleryImage}
-                  className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
-                >
-                  <ChevronRight size={20} />
-                </button>
-                
-                <div className="flex justify-center gap-2 mt-4">
-                  {caseStudy.gallery_images.map((_, index) => (
-                    <button
-                      key={index}
-                      onClick={() => setCurrentGalleryIndex(index)}
-                      className={`w-3 h-3 rounded-full transition-colors ${
-                        index === currentGalleryIndex ? 'bg-primary' : 'bg-muted-foreground/30'
-                      }`}
+        <Card className="mb-10">
+          <CardHeader>
+            <CardTitle>Galeria zdjęć</CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="relative">
+              <div className="aspect-video mb-4 overflow-hidden rounded-lg">
+                <img
+                  src={caseStudy.gallery_images[currentGalleryIndex]}
+                  alt={`Gallery image ${currentGalleryIndex + 1}`}
+                  className="w-full h-full object-cover"
+                />
+              </div>
+              
+              {caseStudy.gallery_images.length > 1 && (
+                <>
+                  <button
+                    onClick={prevGalleryImage}
+                    className="absolute left-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+                  >
+                    <ChevronLeft size={20} />
+                  </button>
+                  <button
+                    onClick={nextGalleryImage}
+                    className="absolute right-4 top-1/2 transform -translate-y-1/2 bg-black/50 text-white p-2 rounded-full hover:bg-black/70 transition-colors"
+                  >
+                    <ChevronRight size={20} />
+                  </button>
+                  
+                  <div className="flex justify-center gap-2 mt-4">
+                    {caseStudy.gallery_images.map((_, index) => (
+                      <button
+                        key={index}
+                        onClick={() => setCurrentGalleryIndex(index)}
+                        className={`w-3 h-3 rounded-full transition-colors ${
+                          index === currentGalleryIndex ? 'bg-primary' : 'bg-muted-foreground/30'
+                        }`}
+                      />
+                    ))}
+                  </div>
+                </>
+              )}
+              
+              <div className="grid grid-cols-4 md:grid-cols-6 gap-2 mt-4">
+                {caseStudy.gallery_images.map((image, index) => (
+                  <button
+                    key={index}
+                    onClick={() => setCurrentGalleryIndex(index)}
+                    className={`aspect-square overflow-hidden rounded border-2 transition-colors ${
+                      index === currentGalleryIndex ? 'border-primary' : 'border-transparent'
+                    }`}
+                  >
+                    <img
+                      src={image}
+                      alt={`Thumbnail ${index + 1}`}
+                      className="w-full h-full object-cover hover:scale-105 transition-transform"
                     />
-                  ))}
-                </div>
-              </>
-            )}
-            
-            <div className="grid grid-cols-4 md:grid-cols-6 gap-2 mt-4">
-              {caseStudy.gallery_images.map((image, index) => (
-                <button
-                  key={index}
-                  onClick={() => setCurrentGalleryIndex(index)}
-                  className={`aspect-square overflow-hidden rounded border-2 transition-colors ${
-                    index === currentGalleryIndex ? 'border-primary' : 'border-transparent'
-                  }`}
-                >
-                  <img
-                    src={image}
-                    alt={`Thumbnail ${index + 1}`}
-                    className="w-full h-full object-cover hover:scale-105 transition-transform"
-                  />
-                </button>
-              ))}
+                  </button>
+                ))}
+              </div>
             </div>
-          </div>
-        </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Testimonial Section */}
+      {sections.testimonial && (
+        <Card className="mb-10">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <Quote className="h-5 w-5 text-indigo-600" />
+              Opinia klienta
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="bg-muted/50 p-6 rounded-lg">
+              <div className="prose prose-lg max-w-none">
+                {formatContent(sections.testimonial)}
+              </div>
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* Summary Section */}
+      {sections.summary && (
+        <Card className="mb-10">
+          <CardHeader>
+            <CardTitle className="flex items-center gap-2">
+              <CheckCircle className="h-5 w-5 text-primary" />
+              Podsumowanie
+            </CardTitle>
+          </CardHeader>
+          <CardContent>
+            <div className="prose prose-lg max-w-none">
+              {formatContent(sections.summary)}
+            </div>
+          </CardContent>
+        </Card>
+      )}
+
+      {/* CTA Section */}
+      {sections.cta ? (
+        <Card className="bg-primary/10 border-primary/20">
+          <CardContent className="pt-6">
+            <div className="prose prose-lg max-w-none">
+              {formatContent(sections.cta)}
+            </div>
+          </CardContent>
+        </Card>
+      ) : (
+        <Card className="bg-primary/10 border-primary/20">
+          <CardContent className="pt-6 text-center">
+            <h3 className="text-2xl font-bold mb-4">Potrzebujesz podobnego rozwiązania?</h3>
+            <p className="text-lg mb-6 text-muted-foreground">
+              Skontaktuj się z nami, aby omówić Twój projekt i poznać nasze możliwości.
+            </p>
+            <Button size="lg" onClick={() => navigate('/contact')}>
+              Skontaktuj się z nami
+              <ArrowRight className="ml-2 h-4 w-4" />
+            </Button>
+          </CardContent>
+        </Card>
       )}
     </div>
   );
