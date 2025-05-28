@@ -1,7 +1,9 @@
+
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
+import { Textarea } from '@/components/ui/textarea';
 import { toast } from 'sonner';
 import { v4 as uuidv4 } from 'uuid';
 import { X, Image as ImageIcon } from 'lucide-react';
@@ -26,10 +28,22 @@ interface CaseStudyFormProps {
   onClose: (refreshData: boolean) => void;
 }
 
+interface CaseStudyContent {
+  project_summary: string;
+  process: string;
+  results: string;
+  conclusions: string;
+  final_summary: string;
+}
+
 const CaseStudyForm = ({ caseStudy, onClose }: CaseStudyFormProps) => {
   const [title, setTitle] = useState('');
   const [summary, setSummary] = useState('');
-  const [content, setContent] = useState('');
+  const [projectSummary, setProjectSummary] = useState('');
+  const [process, setProcess] = useState('');
+  const [results, setResults] = useState('');
+  const [conclusions, setConclusions] = useState('');
+  const [finalSummary, setFinalSummary] = useState('');
   const [imageUrl, setImageUrl] = useState('');
   const [client, setClient] = useState('');
   const [industry, setIndustry] = useState('');
@@ -43,13 +57,30 @@ const CaseStudyForm = ({ caseStudy, onClose }: CaseStudyFormProps) => {
     if (caseStudy) {
       setTitle(caseStudy.title);
       setSummary(caseStudy.summary);
-      setContent(caseStudy.content);
       setImageUrl(caseStudy.image_url || '');
       setClient(caseStudy.client);
       setIndustry(caseStudy.industry);
       setSlug(caseStudy.slug);
       setYoutubeUrl(caseStudy.youtube_url || '');
       setGalleryImages(caseStudy.gallery_images || []);
+
+      // Parse existing content if it's JSON
+      try {
+        const parsedContent = JSON.parse(caseStudy.content);
+        if (typeof parsedContent === 'object' && parsedContent !== null) {
+          setProjectSummary(parsedContent.project_summary || '');
+          setProcess(parsedContent.process || '');
+          setResults(parsedContent.results || '');
+          setConclusions(parsedContent.conclusions || '');
+          setFinalSummary(parsedContent.final_summary || '');
+        } else {
+          // If it's a string, put it in project_summary for backward compatibility
+          setProjectSummary(caseStudy.content);
+        }
+      } catch {
+        // If parsing fails, treat as string content
+        setProjectSummary(caseStudy.content);
+      }
     }
   }, [caseStudy]);
 
@@ -178,10 +209,19 @@ const CaseStudyForm = ({ caseStudy, onClose }: CaseStudyFormProps) => {
     setIsSaving(true);
 
     try {
+      // Structure content as JSON object with sections
+      const structuredContent: CaseStudyContent = {
+        project_summary: projectSummary,
+        process: process,
+        results: results,
+        conclusions: conclusions,
+        final_summary: finalSummary
+      };
+
       const caseStudyData = {
         title,
         summary,
-        content,
+        content: JSON.stringify(structuredContent),
         image_url: imageUrl || null,
         client,
         industry,
@@ -273,32 +313,89 @@ const CaseStudyForm = ({ caseStudy, onClose }: CaseStudyFormProps) => {
 
       <div className="space-y-2">
         <label htmlFor="summary" className="block text-sm font-medium">
-          Podsumowanie
+          Krótkie podsumowanie (wyświetlane na liście)
         </label>
-        <textarea
+        <Textarea
           id="summary"
-          className="flex h-20 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
+          className="h-20"
           value={summary}
           onChange={(e) => setSummary(e.target.value)}
           required
         />
       </div>
 
-      <div className="space-y-2">
-        <label htmlFor="content" className="block text-sm font-medium">
-          Treść (wspiera formatowanie Markdown)
-        </label>
-        <textarea
-          id="content"
-          className="flex h-60 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 font-mono"
-          value={content}
-          onChange={(e) => setContent(e.target.value)}
-          placeholder="Możesz używać formatowania Markdown:&#10;&#10;# Nagłówek 1&#10;## Nagłówek 2&#10;### Nagłówek 3&#10;&#10;**Pogrubiony tekst**&#10;*Kursywa*&#10;&#10;- Lista punktowa&#10;- Drugi punkt&#10;&#10;1. Lista numerowana&#10;2. Drugi punkt&#10;&#10;> Cytat&#10;&#10;`kod inline`&#10;&#10;```&#10;blok kodu&#10;```"
-          required
-        />
-        <p className="text-xs text-muted-foreground">
-          Użyj formatowania Markdown dla nagłówków, list, pogrubień itp.
-        </p>
+      <div className="space-y-6 border-t pt-6">
+        <h3 className="text-lg font-semibold">Treść Case Study</h3>
+        
+        <div className="space-y-2">
+          <label htmlFor="project-summary" className="block text-sm font-medium">
+            Podsumowanie projektu
+          </label>
+          <Textarea
+            id="project-summary"
+            className="h-32 font-mono"
+            value={projectSummary}
+            onChange={(e) => setProjectSummary(e.target.value)}
+            placeholder="Opisz cel i zakres projektu, czego dotyczył..."
+            required
+          />
+        </div>
+
+        <div className="space-y-2">
+          <label htmlFor="process" className="block text-sm font-medium">
+            Proces
+          </label>
+          <Textarea
+            id="process"
+            className="h-32 font-mono"
+            value={process}
+            onChange={(e) => setProcess(e.target.value)}
+            placeholder="Opisz jakie kroki zostały podjęte, jak przebiegał projekt..."
+            required
+          />
+        </div>
+
+        <div className="space-y-2">
+          <label htmlFor="results" className="block text-sm font-medium">
+            Wyniki
+          </label>
+          <Textarea
+            id="results"
+            className="h-32 font-mono"
+            value={results}
+            onChange={(e) => setResults(e.target.value)}
+            placeholder="Jakie konkretne wyniki zostały osiągnięte..."
+            required
+          />
+        </div>
+
+        <div className="space-y-2">
+          <label htmlFor="conclusions" className="block text-sm font-medium">
+            Wnioski
+          </label>
+          <Textarea
+            id="conclusions"
+            className="h-32 font-mono"
+            value={conclusions}
+            onChange={(e) => setConclusions(e.target.value)}
+            placeholder="Jakie wnioski płyną z tego projektu..."
+            required
+          />
+        </div>
+
+        <div className="space-y-2">
+          <label htmlFor="final-summary" className="block text-sm font-medium">
+            Podsumowanie
+          </label>
+          <Textarea
+            id="final-summary"
+            className="h-32 font-mono"
+            value={finalSummary}
+            onChange={(e) => setFinalSummary(e.target.value)}
+            placeholder="Finalne podsumowanie całego case study..."
+            required
+          />
+        </div>
       </div>
 
       <div className="space-y-2">
