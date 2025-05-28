@@ -31,30 +31,36 @@ export type Database = {
         Row: {
           author: string
           content: string
+          content_blocks: Json | null
           created_at: string
           id: string
           image_url: string | null
           published_at: string
+          sources: string[] | null
           title: string
           updated_at: string
         }
         Insert: {
           author: string
           content: string
+          content_blocks?: Json | null
           created_at?: string
           id?: string
           image_url?: string | null
           published_at?: string
+          sources?: string[] | null
           title: string
           updated_at?: string
         }
         Update: {
           author?: string
           content?: string
+          content_blocks?: Json | null
           created_at?: string
           id?: string
           image_url?: string | null
           published_at?: string
+          sources?: string[] | null
           title?: string
           updated_at?: string
         }

@@ -49,8 +49,13 @@ const BlogPreviewSection = () => {
   }, []);
 
   const renderContent = (content: string) => {
-    // Limit content to ~100 characters and add ellipsis
-    return content.length > 100 ? `${content.substring(0, 100)}...` : content;
+    // Usuń formatowanie Markdown dla podglądu i ogranicz do ~100 znaków
+    const plainText = content
+      .replace(/[#*`_~\[\]()]/g, '') // Usuń podstawowe znaki Markdown
+      .replace(/\n/g, ' ') // Zamień nowe linie na spacje
+      .trim();
+    
+    return plainText.length > 100 ? `${plainText.substring(0, 100)}...` : plainText;
   };
 
   const renderBlogPosts = () => {

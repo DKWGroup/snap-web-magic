@@ -15,6 +15,7 @@ interface BlogPost {
   image_url: string | null;
   author: string;
   published_at: string;
+  sources?: string[];
 }
 
 interface ContentBlock {
@@ -33,9 +34,8 @@ const BlogPostForm = ({ post, onClose }: BlogPostFormProps) => {
   const [title, setTitle] = useState('');
   const [author, setAuthor] = useState('');
   const [mainImageUrl, setMainImageUrl] = useState('');
-  const [contentBlocks, setContentBlocks] = useState<ContentBlock[]>([
-    { type: 'text', content: '' }
-  ]);
+  const [markdownContent, setMarkdownContent] = useState('');
+  const [sources, setSources] = useState<string[]>(['']);
   const [isUploading, setIsUploading] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
 
@@ -44,17 +44,12 @@ const BlogPostForm = ({ post, onClose }: BlogPostFormProps) => {
       setTitle(post.title);
       setAuthor(post.author);
       setMainImageUrl(post.image_url || '');
-      
-      // Handle content blocks if they exist, otherwise create from content
-      if (post.content_blocks && post.content_blocks.length > 0) {
-        setContentBlocks(post.content_blocks);
-      } else {
-        setContentBlocks([{ type: 'text', content: post.content || '' }]);
-      }
+      setMarkdownContent(post.content || '');
+      setSources(post.sources && post.sources.length > 0 ? post.sources : ['']);
     }
   }, [post]);
 
-  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>, blockIndex?: number) => {
+  const handleImageUpload = async (e: React.ChangeEvent<HTMLInputElement>) => {
     if (!e.target.files || e.target.files.length === 0) {
       return;
     }
@@ -66,7 +61,6 @@ const BlogPostForm = ({ post, onClose }: BlogPostFormProps) => {
       const fileName = `${uuidv4()}.${fileExt}`;
       const filePath = `blog/${fileName}`;
 
-      // Create storage bucket if it doesn't exist
       const { data: bucketData, error: bucketError } = await supabase
         .storage
         .getBucket('media');
@@ -91,19 +85,7 @@ const BlogPostForm = ({ post, onClose }: BlogPostFormProps) => {
         .from('media')
         .getPublicUrl(filePath);
 
-      if (blockIndex !== undefined) {
-        // Update the specific block with the image URL
-        const updatedBlocks = [...contentBlocks];
-        updatedBlocks[blockIndex] = {
-          ...updatedBlocks[blockIndex],
-          content: data.publicUrl
-        };
-        setContentBlocks(updatedBlocks);
-      } else {
-        // Update main image
-        setMainImageUrl(data.publicUrl);
-      }
-      
+      setMainImageUrl(data.publicUrl);
       toast.success('Zdjęcie zostało przesłane');
     } catch (error: any) {
       console.error('Error uploading image:', error);
@@ -113,52 +95,23 @@ const BlogPostForm = ({ post, onClose }: BlogPostFormProps) => {
     }
   };
 
-  const addContentBlock = (type: 'text' | 'image') => {
-    setContentBlocks([
-      ...contentBlocks, 
-      { type, content: type === 'text' ? '' : '' }
-    ]);
+  const addSource = () => {
+    setSources([...sources, '']);
   };
 
-  const updateBlockContent = (index: number, content: string) => {
-    const updatedBlocks = [...contentBlocks];
-    updatedBlocks[index] = { ...updatedBlocks[index], content };
-    setContentBlocks(updatedBlocks);
+  const updateSource = (index: number, value: string) => {
+    const updatedSources = [...sources];
+    updatedSources[index] = value;
+    setSources(updatedSources);
   };
 
-  const updateBlockCaption = (index: number, caption: string) => {
-    const updatedBlocks = [...contentBlocks];
-    updatedBlocks[index] = { ...updatedBlocks[index], caption };
-    setContentBlocks(updatedBlocks);
-  };
-
-  const updateBlockSource = (index: number, source: string) => {
-    const updatedBlocks = [...contentBlocks];
-    updatedBlocks[index] = { ...updatedBlocks[index], source };
-    setContentBlocks(updatedBlocks);
-  };
-
-  const removeBlock = (index: number) => {
-    if (contentBlocks.length === 1) {
-      toast.error('Musisz mieć co najmniej jeden blok treści');
+  const removeSource = (index: number) => {
+    if (sources.length === 1) {
+      setSources(['']);
       return;
     }
-    const updatedBlocks = contentBlocks.filter((_, i) => i !== index);
-    setContentBlocks(updatedBlocks);
-  };
-
-  const moveBlockUp = (index: number) => {
-    if (index === 0) return;
-    const updatedBlocks = [...contentBlocks];
-    [updatedBlocks[index - 1], updatedBlocks[index]] = [updatedBlocks[index], updatedBlocks[index - 1]];
-    setContentBlocks(updatedBlocks);
-  };
-
-  const moveBlockDown = (index: number) => {
-    if (index === contentBlocks.length - 1) return;
-    const updatedBlocks = [...contentBlocks];
-    [updatedBlocks[index], updatedBlocks[index + 1]] = [updatedBlocks[index + 1], updatedBlocks[index]];
-    setContentBlocks(updatedBlocks);
+    const updatedSources = sources.filter((_, i) => i !== index);
+    setSources(updatedSources);
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -166,35 +119,26 @@ const BlogPostForm = ({ post, onClose }: BlogPostFormProps) => {
     setIsSaving(true);
 
     try {
-      // Generate the legacy content format for backward compatibility
-      const legacyContent = contentBlocks
-        .map(block => {
-          if (block.type === 'text') {
-            return block.content;
-          } else {
-            return `[IMAGE: ${block.content}${block.caption ? ` - ${block.caption}` : ''}${block.source ? ` (Source: ${block.source})` : ''}]`;
-          }
-        })
-        .join('\n\n');
+      // Filtruj puste źródła
+      const filteredSources = sources.filter(source => source.trim() !== '');
 
       const blogPostData = {
         title,
-        content: legacyContent,
-        content_blocks: contentBlocks,
+        content: markdownContent,
+        content_blocks: null, // Używamy tylko content dla Markdown
         image_url: mainImageUrl || null,
-        author
+        author,
+        sources: filteredSources.length > 0 ? filteredSources : null
       };
 
       let result;
       
       if (post) {
-        // Update existing post
         result = await supabase
           .from('blog_posts')
           .update(blogPostData)
           .eq('id', post.id);
       } else {
-        // Create new post
         result = await supabase
           .from('blog_posts')
           .insert([blogPostData]);
@@ -274,125 +218,56 @@ const BlogPostForm = ({ post, onClose }: BlogPostFormProps) => {
         )}
       </div>
 
+      <div className="space-y-2">
+        <label htmlFor="content" className="block text-sm font-medium">
+          Treść (Markdown)
+        </label>
+        <textarea
+          id="content"
+          className="flex h-60 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50 font-mono"
+          value={markdownContent}
+          onChange={(e) => setMarkdownContent(e.target.value)}
+          placeholder="Napisz treść używając formatowania Markdown:&#10;&#10;# Nagłówek 1&#10;## Nagłówek 2&#10;### Nagłówek 3&#10;&#10;**Pogrubiony tekst**&#10;*Kursywa*&#10;&#10;- Lista punktowa&#10;- Drugi punkt&#10;&#10;1. Lista numerowana&#10;2. Drugi punkt&#10;&#10;> Cytat&#10;&#10;`kod inline`&#10;&#10;```&#10;blok kodu&#10;```&#10;&#10;[Link](https://example.com)"
+          required
+        />
+        <p className="text-xs text-muted-foreground">
+          Użyj formatowania Markdown: **pogrubiony**, *kursywa*, # nagłówki, [linki](url), itp.
+        </p>
+      </div>
+
       <div className="space-y-4">
         <div className="flex justify-between items-center">
           <label className="block text-sm font-medium">
-            Treść
+            Źródła
           </label>
-          <div className="flex gap-2">
-            <Button 
-              type="button" 
-              variant="outline" 
-              size="sm"
-              onClick={() => addContentBlock('text')}
-            >
-              <PlusCircle className="w-4 h-4 mr-1" /> Tekst
-            </Button>
-            <Button 
-              type="button" 
-              variant="outline" 
-              size="sm"
-              onClick={() => addContentBlock('image')}
-            >
-              <ImageIcon className="w-4 h-4 mr-1" /> Zdjęcie
-            </Button>
-          </div>
+          <Button 
+            type="button" 
+            variant="outline" 
+            size="sm"
+            onClick={addSource}
+          >
+            <PlusCircle className="w-4 h-4 mr-1" /> Dodaj źródło
+          </Button>
         </div>
         
-        <div className="space-y-6">
-          {contentBlocks.map((block, index) => (
-            <div 
-              key={index} 
-              className="border border-border rounded-md p-4 relative"
-            >
-              <div className="absolute right-2 top-2 flex gap-1">
-                <Button 
-                  type="button" 
-                  variant="ghost" 
-                  size="icon" 
-                  className="h-6 w-6"
-                  onClick={() => moveBlockUp(index)}
-                  disabled={index === 0}
-                >
-                  <MoveUp className="h-4 w-4" />
-                </Button>
-                <Button 
-                  type="button" 
-                  variant="ghost" 
-                  size="icon" 
-                  className="h-6 w-6"
-                  onClick={() => moveBlockDown(index)}
-                  disabled={index === contentBlocks.length - 1}
-                >
-                  <MoveDown className="h-4 w-4" />
-                </Button>
-                <Button 
-                  type="button" 
-                  variant="ghost" 
-                  size="icon" 
-                  className="h-6 w-6 text-destructive"
-                  onClick={() => removeBlock(index)}
-                >
-                  <X className="h-4 w-4" />
-                </Button>
-              </div>
-
-              {block.type === 'text' ? (
-                <div className="pt-6">
-                  <textarea
-                    className="flex h-40 w-full rounded-md border border-input bg-background px-3 py-2 text-sm ring-offset-background placeholder:text-muted-foreground focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:cursor-not-allowed disabled:opacity-50"
-                    value={block.content}
-                    onChange={(e) => updateBlockContent(index, e.target.value)}
-                    placeholder="Wprowadź tekst..."
-                    required={contentBlocks.length === 1}
-                  />
-                </div>
-              ) : (
-                <div className="space-y-3 pt-6">
-                  <div className="flex items-center gap-4">
-                    <Input
-                      type="file"
-                      accept="image/*"
-                      onChange={(e) => handleImageUpload(e, index)}
-                      disabled={isUploading}
-                    />
-                    {isUploading && <div className="animate-spin h-5 w-5 border-b-2 rounded-full border-primary"></div>}
-                  </div>
-                  {block.content && (
-                    <div>
-                      <img 
-                        src={block.content} 
-                        alt="Content" 
-                        className="max-h-40 rounded border border-border" 
-                      />
-                      <Input
-                        value={block.content}
-                        onChange={(e) => updateBlockContent(index, e.target.value)}
-                        placeholder="URL zdjęcia"
-                        className="mt-2"
-                      />
-                    </div>
-                  )}
-                  <div className="grid grid-cols-1 gap-3">
-                    <div>
-                      <label className="block text-xs mb-1">Podpis</label>
-                      <Input
-                        value={block.caption || ''}
-                        onChange={(e) => updateBlockCaption(index, e.target.value)}
-                        placeholder="Podpis pod zdjęciem"
-                      />
-                    </div>
-                    <div>
-                      <label className="block text-xs mb-1">Źródło</label>
-                      <Input
-                        value={block.source || ''}
-                        onChange={(e) => updateBlockSource(index, e.target.value)}
-                        placeholder="Źródło zdjęcia"
-                      />
-                    </div>
-                  </div>
-                </div>
-              )}
+        <div className="space-y-3">
+          {sources.map((source, index) => (
+            <div key={index} className="flex gap-2">
+              <Input
+                value={source}
+                onChange={(e) => updateSource(index, e.target.value)}
+                placeholder="https://example.com - nazwa źródła"
+                className="flex-1"
+              />
+              <Button 
+                type="button" 
+                variant="ghost" 
+                size="icon"
+                onClick={() => removeSource(index)}
+                className="text-destructive"
+              >
+                <X className="h-4 w-4" />
+              </Button>
             </div>
           ))}
         </div>

@@ -1,5 +1,6 @@
 
 import { useState, useEffect } from 'react';
+import { Link } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
 import { format } from 'date-fns';
@@ -46,8 +47,13 @@ const Blog = () => {
   }, []);
 
   const renderContent = (content: string) => {
-    // Limit content to ~200 characters and add ellipsis
-    return content.length > 200 ? `${content.substring(0, 200)}...` : content;
+    // Usuń formatowanie Markdown dla podglądu i ogranicz do ~200 znaków
+    const plainText = content
+      .replace(/[#*`_~\[\]()]/g, '') // Usuń podstawowe znaki Markdown
+      .replace(/\n/g, ' ') // Zamień nowe linie na spacje
+      .trim();
+    
+    return plainText.length > 200 ? `${plainText.substring(0, 200)}...` : plainText;
   };
 
   return (
@@ -86,7 +92,7 @@ const Blog = () => {
       ) : (
         <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
           {blogPosts.map((post) => (
-            <Card key={post.id} className="overflow-hidden flex flex-col">
+            <Card key={post.id} className="overflow-hidden flex flex-col hover:shadow-lg transition-shadow">
               {post.image_url && (
                 <div className="aspect-video overflow-hidden">
                   <img
@@ -103,17 +109,17 @@ const Blog = () => {
                 </CardDescription>
               </CardHeader>
               <CardContent className="grow">
-                <p className="text-muted-foreground">
+                <p className="text-muted-foreground line-clamp-3">
                   {renderContent(post.content)}
                 </p>
               </CardContent>
               <CardFooter>
-                <a 
-                  href={`/blog/${post.id}`} 
+                <Link 
+                  to={`/blog/${post.id}`} 
                   className="text-primary font-medium hover:underline"
                 >
                   Czytaj więcej →
-                </a>
+                </Link>
               </CardFooter>
             </Card>
           ))}
