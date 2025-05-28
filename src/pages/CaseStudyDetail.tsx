@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { supabase } from '@/integrations/supabase/client';
@@ -35,15 +34,19 @@ const CaseStudyDetail = () => {
 
       try {
         setIsLoading(true);
+        console.log('Fetching case study with slug/id:', caseId);
         
-        // Try to fetch by slug first, then by id if not found
+        // Try to fetch by slug first
         let { data, error } = await supabase
           .from('case_studies')
           .select('*')
           .eq('slug', caseId)
           .maybeSingle();
 
+        console.log('First query result (by slug):', { data, error });
+
         if (!data && !error) {
+          console.log('No data found by slug, trying by id...');
           // If not found by slug, try by id
           const result = await supabase
             .from('case_studies')
@@ -53,18 +56,28 @@ const CaseStudyDetail = () => {
           
           data = result.data;
           error = result.error;
+          console.log('Second query result (by id):', { data, error });
         }
 
         if (error) {
+          console.error('Supabase error:', error);
           throw error;
         }
 
         if (!data) {
+          console.log('No case study found for:', caseId);
+          // Let's also try to fetch all case studies to see what's available
+          const { data: allCaseStudies } = await supabase
+            .from('case_studies')
+            .select('slug, title');
+          console.log('Available case studies:', allCaseStudies);
+          
           navigate('/case-studies');
           toast.error('Case study nie zostało znalezione');
           return;
         }
 
+        console.log('Found case study:', data);
         setCaseStudy(data);
       } catch (error) {
         console.error('Error fetching case study:', error);
