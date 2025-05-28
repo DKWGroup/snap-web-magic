@@ -54,7 +54,7 @@ const BlogPost = () => {
           // Convert the data to match our BlogPost interface
           const postData: BlogPost = {
             ...data,
-            content_blocks: data.content_blocks ? data.content_blocks as ContentBlock[] : undefined
+            content_blocks: data.content_blocks ? (data.content_blocks as unknown as ContentBlock[]) : undefined
           };
           setPost(postData);
         }
