@@ -112,8 +112,10 @@ const AdminCaseStudies = () => {
             <TableHeader>
               <TableRow>
                 <TableHead>Tytuł</TableHead>
+                <TableHead>Slug</TableHead>
                 <TableHead>Klient</TableHead>
                 <TableHead>Branża</TableHead>
+                <TableHead>YouTube</TableHead>
                 <TableHead className="text-right">Akcje</TableHead>
               </TableRow>
             </TableHeader>
@@ -121,8 +123,23 @@ const AdminCaseStudies = () => {
               {caseStudies.map((caseStudy) => (
                 <TableRow key={caseStudy.id}>
                   <TableCell className="font-medium">{caseStudy.title}</TableCell>
+                  <TableCell className="text-sm text-muted-foreground">{caseStudy.slug}</TableCell>
                   <TableCell>{caseStudy.client}</TableCell>
                   <TableCell>{caseStudy.industry}</TableCell>
+                  <TableCell>
+                    {caseStudy.youtube_url ? (
+                      <a 
+                        href={caseStudy.youtube_url} 
+                        target="_blank" 
+                        rel="noopener noreferrer"
+                        className="text-primary hover:text-primary/80"
+                      >
+                        YouTube
+                      </a>
+                    ) : (
+                      <span className="text-muted-foreground">Brak</span>
+                    )}
+                  </TableCell>
                   <TableCell className="text-right space-x-2">
                     <Button variant="outline" size="sm" onClick={() => handleEdit(caseStudy)}>
                       Edytuj

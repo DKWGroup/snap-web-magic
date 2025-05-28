@@ -27,7 +27,7 @@ const CaseStudiesPreviewSection = () => {
         setIsLoading(true);
         const { data, error } = await supabase
           .from('case_studies')
-          .select('id, title, summary, client, industry, image_url')
+          .select('id, title, summary, client, industry, image_url, slug')
           .order('published_at', { ascending: false })
           .limit(3);
 
@@ -118,7 +118,7 @@ const CaseStudiesPreviewSection = () => {
               </CardContent>
               <CardFooter>
                 <Link 
-                  to={`/case-studies/${caseStudy.id}`}
+                  to={`/case-studies/${caseStudy.slug || caseStudy.id}`}
                   className="text-orange hover:text-orange-400 transition-colors flex items-center gap-2"
                 >
                   Zobacz case study <ArrowRight size={16} />

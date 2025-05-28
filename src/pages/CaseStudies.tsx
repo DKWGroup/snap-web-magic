@@ -1,4 +1,3 @@
-
 import { useState, useEffect } from 'react';
 import { supabase } from '@/integrations/supabase/client';
 import { toast } from 'sonner';
@@ -15,6 +14,7 @@ interface CaseStudy {
   image_url: string | null;
   client: string;
   industry: string;
+  slug: string;
 }
 
 const CaseStudies = () => {
@@ -106,7 +106,7 @@ const CaseStudies = () => {
               </CardContent>
               <CardFooter>
                 <Button asChild>
-                  <Link to={`/case-studies/${caseStudy.id}`}>Zobacz szczegóły</Link>
+                  <Link to={`/case-studies/${caseStudy.slug || caseStudy.id}`}>Zobacz szczegóły</Link>
                 </Button>
               </CardFooter>
             </Card>

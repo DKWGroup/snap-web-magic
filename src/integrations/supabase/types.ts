@@ -65,37 +65,46 @@ export type Database = {
           client: string
           content: string
           created_at: string
+          gallery_images: string[] | null
           id: string
           image_url: string | null
           industry: string
           published_at: string
+          slug: string
           summary: string
           title: string
           updated_at: string
+          youtube_url: string | null
         }
         Insert: {
           client: string
           content: string
           created_at?: string
+          gallery_images?: string[] | null
           id?: string
           image_url?: string | null
           industry: string
           published_at?: string
+          slug: string
           summary: string
           title: string
           updated_at?: string
+          youtube_url?: string | null
         }
         Update: {
           client?: string
           content?: string
           created_at?: string
+          gallery_images?: string[] | null
           id?: string
           image_url?: string | null
           industry?: string
           published_at?: string
+          slug?: string
           summary?: string
           title?: string
           updated_at?: string
+          youtube_url?: string | null
         }
         Relationships: []
       }
