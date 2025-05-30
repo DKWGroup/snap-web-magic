@@ -1,4 +1,3 @@
-
 import { Mail, Phone } from 'lucide-react';
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
@@ -12,7 +11,7 @@ const teamMembers = [
     role: 'Producent wideo',
     email: 'dm.mymyszka@gmail.com',
     phone: '+48 517 957 875',
-    photo: '/images/kamil-krukowski.png',
+    photo: '/lovable-uploads/bdf54321-26c4-42a0-b0fe-a0f56d3f982e.png',
     bio: 'Dawid to doświadczony producent wideo z ponad 5-letnim doświadczeniem w branży. Specjalizuje się w produkcji wysokiej jakości materiałów marketingowych i korporacyjnych. Jego kreatywne podejście i dbałość o detale sprawiają, że każdy projekt jest wyjątkowy i profesjonalny.'
   },
   {
@@ -22,7 +21,7 @@ const teamMembers = [
     role: 'Operator drona / Strony WWW / SEO',
     email: 'kamil.krukowski00@gmail.com',
     phone: '+48 881 046 689',
-    photo: '/images/kamil-krukowski.png',
+    photo: '/lovable-uploads/b8edff52-ea27-433a-9dc1-87657ee93a24.png',
     bio: 'Kamil to doświadczony operator drona, który realizuje profesjonalne ujęcia z powietrza na potrzeby filmów reklamowych i transmisji live. Specjalizuje się również w tworzeniu stron internetowych oraz pozycjonowaniu stron w Google, przeprowadzając skuteczne audyty SEO i optymalizacje. Dzięki połączeniu umiejętności operatorskich i wiedzy z zakresu SEO, kompleksowo wspiera klientów w budowaniu silnej marki online.'
   },
   {
@@ -32,7 +31,7 @@ const teamMembers = [
     role: 'Specjalistka od marketingu / AI ADS',
     email: 'wskopek.all@gmail.com',
     phone: '+48 537 168 645',
-    photo: '/images/kamil-krukowski.png',
+    photo: '/lovable-uploads/5adcc047-97ec-4720-9469-9b5a32b32338.png',
     bio: 'Wiktoria to specjalistka ds. marketingu z doskonałym wyczuciem trendów i potrzeb klientów. Odpowiada za strategie marketingowe i komunikację z klientami. Jej analityczne podejście i kreatywność pozwalają na tworzenie skutecznych kampanii, które osiągają zamierzone cele.'
   },
 ];
