@@ -10,21 +10,21 @@ const teamMembers = [
     name: 'Dawid',
     surname: 'Myszka',
     role: 'Producent wideo',
-    photo: '/images/kamil-krukowski.png',
+    photo: '/lovable-uploads/95fe4c11-7327-4923-a2d4-fc6a434fc4ce.png',
   },
   {
     id: 2,
     name: 'Kamil',
     surname: 'Krukowski',
     role: 'Operator drona / Strony WWW / SEO',
-    photo: '/images/kamil-krukowski.png',
+    photo: '/lovable-uploads/95fe4c11-7327-4923-a2d4-fc6a434fc4ce.png',
   },
   {
     id: 3,
     name: 'Wiktoria',
     surname: 'Skopek',
     role: 'Specjalistka od marketingu / AI ADS',
-    photo: '/images/kamil-krukowski.png',
+    photo: '/lovable-uploads/95fe4c11-7327-4923-a2d4-fc6a434fc4ce.png',
   },
 ];
 
