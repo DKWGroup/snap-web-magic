@@ -8,33 +8,19 @@ import OptimizedImage from './OptimizedImage';
 
 const Hero = () => {
   const [isVideoLoaded, setIsVideoLoaded] = useState(false);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
   const [shouldLoadVideo, setShouldLoadVideo] = useState(false);
   const videoRef = useRef<HTMLVideoElement>(null);
   const heroRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // Preload video only after hero is in view and on faster connections
-    const observer = new IntersectionObserver(
-      ([entry]) => {
-        if (entry.isIntersecting) {
-          // Check connection quality before loading video
-          const connection = (navigator as any).connection;
-          const isSlowConnection = connection && (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g');
-          
-          if (!isSlowConnection) {
-            setShouldLoadVideo(true);
-          }
-          observer.disconnect();
-        }
-      },
-      { threshold: 0.1 }
-    );
-
-    if (heroRef.current) {
-      observer.observe(heroRef.current);
+    // Start loading video immediately on component mount for better performance
+    const connection = (navigator as any).connection;
+    const isSlowConnection = connection && (connection.effectiveType === 'slow-2g' || connection.effectiveType === '2g');
+    
+    if (!isSlowConnection) {
+      setShouldLoadVideo(true);
     }
-
-    return () => observer.disconnect();
   }, []);
 
   useEffect(() => {
@@ -42,11 +28,30 @@ const Hero = () => {
 
     const videoElement = videoRef.current;
     if (videoElement) {
-      const handleLoadedData = () => setIsVideoLoaded(true);
+      const handleLoadedData = () => {
+        setIsVideoLoaded(true);
+        // Start playing video immediately when loaded
+        videoElement.play().then(() => {
+          setIsVideoPlaying(true);
+        }).catch(console.error);
+      };
+
+      const handleCanPlay = () => {
+        // Ensure smooth transition by preloading enough data
+        if (videoElement.readyState >= 3) {
+          handleLoadedData();
+        }
+      };
+
       videoElement.addEventListener('loadeddata', handleLoadedData);
+      videoElement.addEventListener('canplay', handleCanPlay);
+      
+      // Preload video metadata
+      videoElement.load();
 
       return () => {
         videoElement.removeEventListener('loadeddata', handleLoadedData);
+        videoElement.removeEventListener('canplay', handleCanPlay);
       };
     }
   }, [shouldLoadVideo]);
@@ -55,24 +60,7 @@ const Hero = () => {
     <section ref={heroRef} className="relative h-screen flex items-center overflow-hidden">
       <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/50 to-darkBg z-10"></div>
       
-      {/* Optimized Video Background */}
-      {shouldLoadVideo && (
-        <div className={`absolute inset-0 w-full h-full ${isVideoLoaded ? 'opacity-100' : 'opacity-0'} transition-opacity duration-1000`}>
-          <video
-            ref={videoRef}
-            autoPlay
-            muted
-            loop
-            playsInline
-            preload="none"
-            className="absolute inset-0 w-full h-full object-cover"
-          >
-            <source src="/videos/bg.webm" type="video/webm" />
-          </video>
-        </div>
-      )}
-
-      {/* Optimized Fallback background image */}
+      {/* Optimized background image - always visible */}
       <div className="absolute inset-0">
         <OptimizedImage
           src="/images/hero-bg.jpg"
@@ -82,6 +70,31 @@ const Hero = () => {
           sizes="100vw"
         />
       </div>
+
+      {/* Optimized Video Background - smooth transition */}
+      {shouldLoadVideo && (
+        <div 
+          className={`absolute inset-0 w-full h-full transition-opacity duration-1000 ease-in-out ${
+            isVideoLoaded && isVideoPlaying ? 'opacity-100' : 'opacity-0'
+          }`}
+          style={{ zIndex: 1 }}
+        >
+          <video
+            ref={videoRef}
+            muted
+            loop
+            playsInline
+            preload="metadata"
+            className="absolute inset-0 w-full h-full object-cover"
+            style={{ 
+              filter: isVideoLoaded ? 'none' : 'blur(1px)',
+              transform: isVideoLoaded ? 'scale(1)' : 'scale(1.02)'
+            }}
+          >
+            <source src="/videos/bg.webm" type="video/webm" />
+          </video>
+        </div>
+      )}
       
       <div className="container relative z-20">
         <motion.div
