@@ -1,9 +1,11 @@
 
-import { ReactNode } from 'react';
+import { ReactNode, Suspense, lazy } from 'react';
 import { useLocation } from 'react-router-dom';
 import Navbar from './Navbar';
-import Footer from './Footer';
 import BackgroundEffect from './BackgroundEffect';
+
+// Lazy load footer for non-critical rendering
+const Footer = lazy(() => import('./Footer'));
 
 interface LayoutProps {
   children: ReactNode;
@@ -20,7 +22,11 @@ const Layout = ({ children }: LayoutProps) => {
       <main className={!isAdminPage ? "pt-20" : ""}>
         {children}
       </main>
-      {!isAdminPage && <Footer />}
+      {!isAdminPage && (
+        <Suspense fallback={<div className="h-64 bg-darkBg" />}>
+          <Footer />
+        </Suspense>
+      )}
     </div>
   );
 };
