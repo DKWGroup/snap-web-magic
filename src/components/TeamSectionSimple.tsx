@@ -1,3 +1,4 @@
+
 import { motion } from 'framer-motion';
 import { Link } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -23,7 +24,7 @@ const teamMembers = [
     name: 'Wiktoria',
     surname: 'Skopek',
     role: 'Specjalistka od marketingu / AI ADS',
-    photo: 'https://images.unsplash.com/photo-1494790108755-2616b612b17c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80',
+    photo: '/lovable-uploads/5adcc047-97ec-4720-9469-9b5a32b32338.png',
   },
 ];
 
