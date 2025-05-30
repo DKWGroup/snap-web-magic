@@ -10,21 +10,21 @@ const teamMembers = [
     name: 'Dawid',
     surname: 'Myszka',
     role: 'Producent wideo',
-    photo: '/lovable-uploads/95fe4c11-7327-4923-a2d4-fc6a434fc4ce.png',
+    photo: 'https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80',
   },
   {
     id: 2,
     name: 'Kamil',
     surname: 'Krukowski',
     role: 'Operator drona / Strony WWW / SEO',
-    photo: '/lovable-uploads/95fe4c11-7327-4923-a2d4-fc6a434fc4ce.png',
+    photo: 'https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80',
   },
   {
     id: 3,
     name: 'Wiktoria',
     surname: 'Skopek',
     role: 'Specjalistka od marketingu / AI ADS',
-    photo: '/lovable-uploads/95fe4c11-7327-4923-a2d4-fc6a434fc4ce.png',
+    photo: 'https://images.unsplash.com/photo-1494790108755-2616b612b17c?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=400&q=80',
   },
 ];
 
