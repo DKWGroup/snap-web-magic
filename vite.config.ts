@@ -27,4 +27,10 @@ export default defineConfig(({ command }) => ({
   },
   publicDir: 'public',
   assetsInclude: ['**/*.xml'],
+  // Dodajemy konfigurację dla obsługi plików bez rozszerzenia
+  server: {
+    host: "::",
+    port: 8080,
+    middlewareMode: false,
+  },
 }));
