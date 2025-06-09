@@ -4,6 +4,7 @@ import { Button } from '@/components/ui/button';
 import { Input } from '@/components/ui/input';
 import { Textarea } from '@/components/ui/textarea';
 import { useToast } from '@/components/ui/use-toast';
+import { supabase } from '@/integrations/supabase/client';
 
 const ContactForm = () => {
   const { toast } = useToast();
@@ -29,8 +30,18 @@ const ContactForm = () => {
     setIsSubmitting(true);
 
     try {
-      // Simulate API call
-      await new Promise((resolve) => setTimeout(resolve, 1000));
+      console.log('Wysyłanie formularza:', formData);
+
+      const { data, error } = await supabase.functions.invoke('send-contact-email', {
+        body: formData,
+      });
+
+      if (error) {
+        console.error('Błąd Supabase:', error);
+        throw error;
+      }
+
+      console.log('Odpowiedź z funkcji:', data);
 
       // Reset form
       setFormData({
@@ -41,13 +52,14 @@ const ContactForm = () => {
 
       toast({
         title: 'Wiadomość wysłana!',
-        description: 'Skontaktujemy się z Tobą najszybciej jak to możliwe.',
+        description: 'Dziękujemy za kontakt. Odpowiemy najszybciej jak to możliwe.',
         variant: 'default',
       });
-    } catch (error) {
+    } catch (error: any) {
+      console.error('Błąd podczas wysyłania:', error);
       toast({
         title: 'Błąd',
-        description: 'Wystąpił problem podczas wysyłania wiadomości. Spróbuj ponownie później.',
+        description: error.message || 'Wystąpił problem podczas wysyłania wiadomości. Spróbuj ponownie później.',
         variant: 'destructive',
       });
     } finally {
